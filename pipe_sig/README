@@ -1,0 +1,4 @@
+# run like this and then press ^C
+
+for i in `jot 10`; do echo $i; sleep 1; done | \
+  ./a.out | ./a.out | ./a.out | ./a.out

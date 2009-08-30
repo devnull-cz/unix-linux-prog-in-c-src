@@ -1,0 +1,94 @@
+#
+# Examining a process address space
+#
+
+See the slide with a picture of a process address space on Solaris x86 32-bit.
+Example outputs on Nevada x86 32-bit (~ OpenSolaris):
+
+--- output 1 ---
+
+janp:ananke:snv_102:~$ ./proc-addr-space 
+local variable:         0x8047a64
+noninitialized var:     0x8061504
+initialized var 1:      0x8061134
+initialized var 2:      0x8061138
+
+=== pmap 11467 ===
+11467:  ./proc-addr-space
+08046000       8K rwx--    [ stack ]
+08050000       4K r-x--  /export/home/janp/proc-addr-space
+08060000       8K rwx--  /export/home/janp/proc-addr-space
+CEA35000       4K rwxs-    [ anon ]
+CEA40000      24K rwx--    [ anon ]
+CEA50000    1280K r-x--  /usr/lib/libc/libc_hwcap1.so.1
+CEB90000      32K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEB98000       8K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEBB0000       4K rwx--    [ anon ]
+CEBBE000     184K r-x--  /lib/ld.so.1
+CEBFC000       8K rwx--  /lib/ld.so.1
+CEBFE000       4K rwx--  /lib/ld.so.1
+ total      1568K
+
+	- no heap since malloc() wasn't called at all
+	- all global variables are part of the data segment
+
+--- output 2 ---
+
+janp:ananke:snv_102:~$ ./proc-addr-space 1
+local variable:         0x8061518
+noninitialized var:     0x8061504
+initialized var 1:      0x8061134
+initialized var 2:      0x8061138
+
+=== pmap 11472 ===
+11472:  ./proc-addr-space 1
+08046000       8K rwx--    [ stack ]
+08050000       4K r-x--  /export/home/janp/proc-addr-space
+08060000       8K rwx--  /export/home/janp/proc-addr-space
+08062000       8K rwx--    [ heap ]
+CEA35000       4K rwxs-    [ anon ]
+CEA40000      24K rwx--    [ anon ]
+CEA50000    1280K r-x--  /usr/lib/libc/libc_hwcap1.so.1
+CEB90000      32K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEB98000       8K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEBB0000       4K rwx--    [ anon ]
+CEBBE000     184K r-x--  /lib/ld.so.1
+CEBFC000       8K rwx--  /lib/ld.so.1
+CEBFE000       4K rwx--  /lib/ld.so.1
+ total      1576K
+
+	- malloc() was called we we have a heap now
+	- however, a local variable still point inside of the data segment since
+	  there is some free space that malloc() can use
+	- heap has 8KB which is the minimum for storing internal malloc()
+	  structures for managing the memory
+
+--- output 3 ---
+
+janp:ananke:snv_102:~$ ./proc-addr-space 8192
+local variable:         0x8061510
+noninitialized var:     0x8061504
+initialized var 1:      0x8061134
+initialized var 2:      0x8061138
+
+=== pmap 11480 ===
+11480:  ./proc-addr-space 8192
+08046000       8K rwx--    [ stack ]
+08050000       4K r-x--  /export/home/janp/proc-addr-space
+08060000       8K rwx--  /export/home/janp/proc-addr-space
+08062000      16K rwx--    [ heap ]
+CEA35000       4K rwxs-    [ anon ]
+CEA40000      24K rwx--    [ anon ]
+CEA50000    1280K r-x--  /usr/lib/libc/libc_hwcap1.so.1
+CEB90000      32K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEB98000       8K rwx--  /usr/lib/libc/libc_hwcap1.so.1
+CEBB0000       4K rwx--    [ anon ]
+CEBBE000     184K r-x--  /lib/ld.so.1
+CEBFC000       8K rwx--  /lib/ld.so.1
+CEBFE000       4K rwx--  /lib/ld.so.1
+ total      1584K
+
+	- local variable still points to the data segment but we can see that
+	  the heap is 16KB now which means that some of the memory was allocated
+	  already from the heap.
+
