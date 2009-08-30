@@ -16,7 +16,7 @@
 #include <time.h>
 
 void *
-thread(void *x)
+mythread(void *x)
 {
 	int i = 1;
 	time_t t2, t = time(NULL);
@@ -39,6 +39,10 @@ thread(void *x)
 		;
 	}
 
+	/*
+	 * We will not probably be able to see this since before this is
+	 * printed, we enter some cancellation point and get terminated.
+	 */
 	printf("3 seconds passed; we should be canceled now...\n");
 
 	/*
@@ -49,7 +53,7 @@ thread(void *x)
 	open("fifo", O_RDONLY);
 
 	/* this is here so that you see that we won't get here */
-	fprintf(stderr, "open() finished\n");
+	fprintf(stderr, "ERROR: open() finished - SHOULD NOT HAVE HAPPENED !!!\n");
 
 	return (NULL);
 }
@@ -61,14 +65,16 @@ main(void)
 	void *ptr;
 	pthread_t t;
 
-	pthread_create(&t, NULL, thread, NULL);
+	pthread_create(&t, NULL, mythread, NULL);
 
 	/* let the thread call pthread_setcanceltype() */
-	poll(NULL, 0, 100);
+	poll(NULL, 0, 500);
 
 	/* we will block here until we get out of the while loop above */
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
+
+	printf("main has just called pthread_cancel() on the threads.\n");
 
 	/*
 	 * The pointer for canceled thread is defined in PTHREAD_CANCELED and
@@ -78,7 +84,7 @@ main(void)
 	if ((e = pthread_join(t, &ptr)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
 	else
-		printf("pthread_join value: %x\n", ptr);
+		printf("pthread_join()'s returned pointer: 0x%0X\n", ptr);
 
 	return (0);
 }
