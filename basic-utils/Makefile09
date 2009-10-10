@@ -1,0 +1,13 @@
+# Ukazka na to, ze nektere make programy maji i direktivy pro podminene
+# zpracovani vstupniho souboru. Spustte takto:
+#
+#	make -f Makefile09
+#	D=xxx -f Makefile09
+#
+
+all:
+.       if defined(D)
+	@echo ${D}
+.       else
+	@echo "D not defined"
+.       endif

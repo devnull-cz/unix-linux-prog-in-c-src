@@ -1,0 +1,5 @@
+M=x
+M=$(M) y
+
+all:
+	@echo $(M)

@@ -1,0 +1,11 @@
+# Priklad ukazuje, ze kazdy z prikazu je spusten v ramci samosteho shellu. Pro
+# "if" to znamena, ze oba "echo" prikazy vypisi stejny PID - tj. PID pro (ten
+# jeden) shell, ktery byl spusten pro "if".
+
+all:
+	echo $$$$
+	@echo $$$$
+	@if true; then \
+		echo $$$$; \
+		echo $$$$; \
+	fi

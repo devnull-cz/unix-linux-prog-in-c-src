@@ -1,0 +1,6 @@
+# Run like this: MYVAR="from outside" make -f Makefile06 -e 
+
+MYVAR="from inside"
+
+all:
+	@echo "defined $(MYVAR)"

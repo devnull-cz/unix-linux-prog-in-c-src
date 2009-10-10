@@ -1,0 +1,13 @@
+# Show who '-' is used.
+
+all:
+	false
+	echo "OK"
+
+next:
+	true
+	echo "OK"
+
+ignore:
+	-false
+	echo "OK"

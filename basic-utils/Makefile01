@@ -1,0 +1,13 @@
+# Jednoduchy priklad na Makefile.
+
+a.out:		main.o common.o
+		$(CC) main.o common.o
+# Je mozne pouzit i tyto promennou, ktera se expanduje do zavislosti, tedy do
+# "main.o common.o"
+#		$(CC) $(>)
+
+main.o:		common.h main.c
+		$(CC) -c main.c
+
+common.o:	common.c
+		$(CC) -c common.c
