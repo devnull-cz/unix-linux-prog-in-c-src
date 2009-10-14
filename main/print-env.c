@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 
+/* This variable is defined in libc.so. */
 extern char** environ;
 
 int
