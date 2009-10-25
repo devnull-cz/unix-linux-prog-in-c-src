@@ -18,6 +18,9 @@
 #include <strings.h>
 #include <stdio.h>
 #include <pwd.h>
+#include <siginfo.h>
+
+/* SI_NOINFO */
 
 #define MESSAGE "TERM signal caught !\n"
 
@@ -43,10 +46,11 @@ term_handler(int sig, siginfo_t *info, void *ignored)
 		    (getpwuid(info->si_uid))->pw_name);
 		fflush(stdout);
 	} else {
-		printf("info->si_code is SI_NOINFO.\n");
+		printf("signal not generated from a user process.\n");
 		printf("that means we got just a signal number.\n");
 		sig2str(info->si_signo, signame);
 		printf("sig received: %s\n", signame);
+		fflush(stdout);
 	}
 }
 
@@ -67,11 +71,11 @@ main(void)
 	/* must use this in order to use sa_sigaction field */
 	act.sa_flags = SA_SIGINFO;
 	/*
-	 * You can change to SIGINFO, and if you ^C it from the terminal, you
+	 * You can change to SIGINT, and if you ^C it from the terminal, you
 	 * will get no PID. That's because SIGINT is generated from the pseudo
 	 * terminal driver (ie, kernel).
 	 */
-	(void) sigaction(SIGTERM, &act, NULL);
+	(void) sigaction(SIGINT, &act, NULL);
 
 	/* wait for a signal, anything else than SIGTERM will terminate us */
 	while (1) {
