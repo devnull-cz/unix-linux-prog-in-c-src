@@ -1,11 +1,14 @@
 /*
  * This should show the example of MAP_NOCORE use. Compile the program, run it
- * on the background, gcore(1) it, and use strings(1) with "-a" on it to grep
- * "my-PIN". It should be there for the 1st case and it should be clean for the
- * 2nd case.
+ * on the background, core dump it (eg., "kill -3 <PID"), and use strings(1)
+ * with "-a" on it to grep "my-PIN". It should be there for the 1st case and it
+ * should be clean for the 2nd case.
  *
- * FreeBSD supports the flag, Solaris does not. Unfortunately, I can see that on
- * FreeBSD 6.0 the PIN is still in the core.
+ * FreeBSD supports the flag, Solaris does not. Note that with gcore(1) will
+ * write the whole process to a file, including the NOCORE segment. That's quite
+ * logical since this operation can be done by somebody who can examine the
+ * process memory anyway. The objective is that the mmaped page is not in the
+ * core dump caused by the kernel (on SIGSEGV etc.).
  */
 #include <stdio.h>
 #include <stdlib.h>
