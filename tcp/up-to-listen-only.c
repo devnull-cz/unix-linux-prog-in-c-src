@@ -12,11 +12,17 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <strings.h>
+#include <stdlib.h>
 
 int main(int argc, char **argv)
 {
 	struct sockaddr_in in;
-	int fd, newsock, n, optval = 1;
+	int fd, newsock, n, backlog, optval = 1;
+
+	if (argc == 2)
+		backlog = atoi(argv[1]);
+	else
+		backlog = SOMAXCONN;
 
 	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
@@ -32,7 +38,7 @@ int main(int argc, char **argv)
 	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 	
 	bind(fd, (struct sockaddr *)&in, sizeof(in));
-	listen(fd, SOMAXCONN);
+	listen(fd, backlog);
 
 	/* wait for a signal */
 	pause();
