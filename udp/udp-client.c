@@ -15,6 +15,7 @@
 #include <err.h>
 
 #define	BUF_LEN	1024
+
 int
 main(int argc, char **argv)
 {
