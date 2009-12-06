@@ -1,8 +1,8 @@
 /*
  * Simple TCP client program. Use the 1st command line argument to set the IP
  * address (do not use domain names), and the 2nd one to set the port. Read from
- * the standard input and send the data to the other side. Don't expect any data
- * from there.
+ * the standard input and send the data to the other side. We do not read
+ * anything from the remote side.
  *
  * (c) jp@devnull.cz
  */
@@ -35,7 +35,7 @@ main(int argc, char **argv)
 	in.sin_family = AF_INET;
 	in.sin_port = htons(atoi(argv[2]));
 
-	/* convert a dotted format to 4 bytes suitable for use in sockaddr_in */
+	/* Convert a dotted format to 4 bytes suitable for use in sockaddr_in. */
 	if (inet_pton(AF_INET, argv[1], &(in.sin_addr)) != 1)
 		errx(1, "inet_pton failed for '%s'", argv[1]);
 
@@ -45,12 +45,12 @@ main(int argc, char **argv)
 	if (connect(fd, (struct sockaddr *) &in, sizeof(in)) == -1)
 		err(1, "connect");
 
-	/* now, read from the standard input and send it to the other side */
+	/* Now, read from the standard input and send it to the other side. */
 	do {
 		if ((n = read(0, buf, 100)) <= 0) {
 			close(fd);
 			fprintf(stderr, "read finished\n");
-			/* set that we decided to close down */
+			/* Set that we decided to close down. */
 			n = 1;
 			break;
 		}

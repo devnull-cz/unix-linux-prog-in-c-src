@@ -23,8 +23,8 @@
 #include <strings.h>
 #include <unistd.h>
 
-#define	TIMEOUT 5
-#define	MAX_HOSTS 3
+#define	TIMEOUT 10
+#define	MAX_HOSTS 5
 
 int
 main(int argc, char **argv)
@@ -38,15 +38,25 @@ main(int argc, char **argv)
 	int flags, i, optval, n, timeouts;
 	int sockets[MAX_HOSTS], ports[MAX_HOSTS];
 
-	/* this should connect OK */
+	/* This should connect OK. */
 	hostnames[0] = "www.devnull.cz";
 	ports[0] = 80;
 	hostnames[1] = "www.devnull.cz";
-	/* this will timeout */
-	ports[1] = 22;
-	/* this should refuse the connection */
+	/* This will timeout. */
+	ports[1] = 33;
+	/* This should refuse the connection. */
 	hostnames[2] = "mail.kolej.mff.cuni.cz";
 	ports[2] = 999;
+	/* To see if localhost gets EINPROGRESS as well. */
+	hostnames[3] = "localhost";
+	ports[3] = 22;
+	/*
+	 * To see if localhost gets EINPROGRESS as well. Connection refusal
+	 * might be different from an open port.
+	 */
+	hostnames[4] = "localhost";
+	/* Port 7 is for echo, nobody should run that service these days. */
+	ports[4] = 7;
 
 	printf("will work with those machines/services:\n");
 	for (i = 0; i < MAX_HOSTS; ++i) {
