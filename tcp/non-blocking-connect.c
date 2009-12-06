@@ -98,6 +98,8 @@ main(int argc, char **argv)
 				/*
 				 * This may happen right here, on localhost
 				 * for example (immediate connection refused).
+				 * I can see that happen on FreeBSD but not on
+				 * Solaris, for example.
 				 */
 				printf("    connect: %s\n", strerror(errno));
 				++n;
