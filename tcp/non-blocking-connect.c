@@ -83,7 +83,7 @@ main(int argc, char **argv)
 		if ((sockets[i] = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 			err(1, "socket");
 
-		flags = fcntl(sockets[i], F_GETFL, NULL);
+		flags = fcntl(sockets[i], F_GETFL);
 		if (fcntl(sockets[i], F_SETFL, flags | O_NONBLOCK) == -1)
 			err(1, "fcntl");
 

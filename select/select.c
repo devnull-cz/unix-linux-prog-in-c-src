@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -44,20 +45,14 @@ main(int argc, char **argv)
 	if (bind(fd, (struct sockaddr *) &sa, sizeof(sa)) == -1)
 		err(1, "bind");
 
+	fcntl(1, F_SETFD, O_NONBLOCK);
+
 	if (listen(fd, SOMAXCONN) == -1)
 		err(1, "listen");
 
 	for ( ; ; ) {
-		/* must do this each time before calling select() */
-		FD_ZERO(&rdfds);
-		FD_SET(0, &rdfds);
-		FD_SET(fd, &rdfds);
-		select(fd + 1, &rdfds, NULL, NULL, NULL);
-
-		if (FD_ISSET(0, &rdfds)) {
-			n = read(0, buf, sizeof(buf));
-			write(1, buf, n);
-		}
+		n = read(0, buf, sizeof(buf));
+		write(1, buf, n);
 
 		if (FD_ISSET(fd, &rdfds)) {
 			newsock = accept(fd, NULL, 0);
