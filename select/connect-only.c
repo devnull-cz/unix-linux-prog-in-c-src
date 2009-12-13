@@ -2,6 +2,10 @@
  * Connect only. To show what happens if the remote side starts writing but we
  * do not read. Use with select/write-select.c.
  *
+ * Instead of this program you can easily use netcat(1). For example:
+ *
+ *	nc -i 9999 localhost 2222
+ *
  * (c) jp@devnull.cz
  */
 
@@ -15,8 +19,6 @@
 #include <stdlib.h>
 #include <err.h>
 #include <strings.h>
-
-#define	BUF_LEN	100
 
 int
 main(int argc, char **argv)
@@ -46,5 +48,6 @@ main(int argc, char **argv)
 		pause();
 
 	/* Not reached. */
+	close(fd);
 	return (0);
 }

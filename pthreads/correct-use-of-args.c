@@ -1,6 +1,6 @@
 /*
  * This example program shows a correct use of the 4th parameter in
- * pthread_create(). Compare to wrong-use-of-arg.c.
+ * pthread_create(). Compare to pthreads/wrong-use-of-arg.c.
  *
  * (c) jp@devnull.cz
  */
@@ -9,7 +9,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void *thread(void *x)
+void
+*thread(void *x)
 {
 	int i;
 
@@ -20,11 +21,11 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
-	int i;
-	int id[5];
 	pthread_t t;
+	int i, id[5];
 
 	for (i = 0; i < 5; ++i) {
 		id[i] = i;

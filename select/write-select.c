@@ -7,7 +7,11 @@
  * The program should stop in select() after some data has been written to the
  * kernel buffer. That's because only some data has been sent over the TCP
  * connection (because the other side does not read, we get TCP win 0 after a
- * short while) and the kernel buffer should be limited in size. 
+ * short while) and the kernel buffer should be limited in size.
+ *
+ * To see more, use "-i 1", and truss the server from another terminal. You will
+ * see that from time to time, the select() returns and the kernel buffer is
+ * filled up while the netcat slowly reads the data.
  *
  * (c) jp@devnull.cz
 */
