@@ -37,9 +37,12 @@ main(int argc, char **argv)
 
 	if (argc != 2)
 		errx(1, "Usage: %s <ip4-or-ipv6-address>\n"
-		    "  examples: ./a.out 0:0:2001:1508:1003:4::\n"
-		    "            ./a.out 127.0.0.1\n"
-		    "            ./a.out 01.01.01.01", argv[0]);
+		    "Examples:\n"
+		    "    ./a.out 0:0:2001:1508:1003:4::	# OK\n"
+		    "    ./a.out 0:0:0:0:0:0:0:0:1		# bad (18B)\n"
+		    "    ./a.out 127.0.0.1			# OK\n"
+		    "    ./a.out 10.0.0.299			# bad\n"
+		    "    ./a.out 01.01.01.01			# OK", argv[0]);
 
 	memset(&in, 0, sizeof (in));
 	in.sin_family = AF_INET;
