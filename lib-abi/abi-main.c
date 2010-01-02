@@ -5,13 +5,17 @@
  * The program adds 2 32-bit integers. When lib's ABI changes, the program
  * doesn't know about it and prints an incorrect value. Run like this:
  *
- *   $ cc -shared -o libabi.so libabi-32.c
- *   $ cc -L. -R. -labi abi-main.c
+ *   $ gcc -shared -o libabi.so libabi-32.c
+ *   $ gcc -L. -R. -labi abi-main.c
  *   $ ./a.out 7 4
  *   11
- *   $ cc -shared -o libabi.so libabi-64.c
+ *   $ gcc -shared -o libabi.so libabi-64.c
  *   $ ./a.out 7 4
  *   -1077941116
+ *
+ * For Sun Studio, use "-G" instead of "-shared". Also note that newer GCC does
+ * not support "-R". Use "-Xlinker -R -Xlinker ." instead (note the ``.'' as
+ * part of the option).
  *
  * (c) jp@devnull.cz
  */

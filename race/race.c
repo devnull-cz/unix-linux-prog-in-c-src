@@ -20,13 +20,13 @@
 #include <signal.h>
 #include <err.h>
 
-/* i is number of loops per process, j is number of races detected */
-int i, j;
+unsigned long i;	/* number of loops per process, u_long should enough */
+unsigned int j;		/* j is number of races detected */
 
 void
 print_stat(int sig)
 {
-	printf("\nstats: inconsistency %d of %d\n", j, i);
+	printf("\nstats: inconsistency %u of %u\n", j, i);
 	_exit(0);
 }
 

@@ -13,7 +13,8 @@
 #include <unistd.h>
 #include <poll.h>
 
-void *thread(void *x)
+void
+*thread(void *x)
 {
         int i;
 	pid_t pid;
@@ -26,20 +27,21 @@ void *thread(void *x)
 	else
                 printf("%d: I'm parent\n", getpid());
 
-        for (i = 0; i < 999; ++i) {
+        for (i = 0; i < 20; ++i) {
                 printf("%d: loop #%d\n", getpid(), i);
                 sleep(1);
         }
         return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
         pthread_t t;
 
         pthread_create(&t, NULL, thread, NULL);
         sleep(1);
-	printf("%d: exiting.\n", getpid());
+	printf("%d in main: exiting.\n", getpid());
 
         return (0);
 }

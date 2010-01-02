@@ -1,5 +1,5 @@
 /*
- * Simple TCP sink server running on port 2222 - what is sent to it is just
+ * Simple TCP sink server running on port MY_PORT - what is sent to it is just
  * printed onto stderr. No data is sent back.
  *
  * (c) jp@devnull.cz
@@ -14,6 +14,7 @@
 #include <err.h>
 
 #define	BUF_LEN	100
+#define	MY_PORT	2222
 
 int
 main(int argc, char **argv)
@@ -24,7 +25,8 @@ main(int argc, char **argv)
 
 	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
-	in.sin_port = htons(2222);
+	printf("Will use port %d.\n", MY_PORT);
+	in.sin_port = htons(MY_PORT);
 	in.sin_addr.s_addr = htons(INADDR_ANY);
 
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)

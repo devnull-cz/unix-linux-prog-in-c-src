@@ -1,8 +1,10 @@
 /*
- * Simple TCP client program. Use the 1st command line argument to set the IP
- * address (do not use domain names), and the 2nd one to set the port. Read from
- * the standard input and send the data to the other side. We do not read
- * anything from the remote side.
+ * Connect only. To show what happens if the remote side starts writing but we
+ * do not read. Use with select/write-select.c.
+ *
+ * Instead of this program you can easily use netcat(1). For example:
+ *
+ *	nc -i 9999 localhost 2222
  *
  * (c) jp@devnull.cz
  */
@@ -18,14 +20,10 @@
 #include <err.h>
 #include <strings.h>
 
-#define	BUF_LEN	100
-
 int
 main(int argc, char **argv)
 {
-	int fd, n;
-	char addr[4];
-	char buf[BUF_LEN];
+	int fd;
 	struct sockaddr_in in;
 
 	if (argc != 3)
@@ -45,22 +43,11 @@ main(int argc, char **argv)
 	if (connect(fd, (struct sockaddr *) &in, sizeof(in)) == -1)
 		err(1, "connect");
 
-	/* Now, read from the standard input and send it to the other side. */
-	do {
-		if ((n = read(0, buf, 100)) <= 0) {
-			close(fd);
-			fprintf(stderr, "read finished\n");
-			/* Set that we decided to close down. */
-			n = 1;
-			break;
-		}
+	/* Wait for ever. */
+	while (1)
+		pause();
 
-	} while ((n = write(fd, buf, n)) > 0);
-
-	if (n != 1) {
-		fprintf(stderr, "server closed the connection\n");
-		close(fd);
-	}
-
+	/* Not reached. */
+	close(fd);
 	return (0);
 }
