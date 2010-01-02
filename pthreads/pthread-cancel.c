@@ -1,8 +1,30 @@
 /*
- * A short excercise with cancelling a thread. See comments for more
- * information. Also, use PTHREAD_CANCEL_ASYNCHRONOUS to see the difference.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
  *
- * (c) jp@devnull.cz
+ * 1. Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/*
+ * Copyright 2009 Jan Pechanec, Vladimir Kotal.  All rights reserved.
+ * Use is subject to license terms.
  */
 
 #include <pthread.h>
@@ -14,6 +36,11 @@
 #include <err.h>
 #include <poll.h>
 #include <time.h>
+#include <libgen.h>
+
+#define	NSECS	5
+
+int cancel_type;
 
 void *
 mythread(void *x)
@@ -21,10 +48,15 @@ mythread(void *x)
 	int i = 1;
 	time_t t2, t = time(NULL);
 
-	/* pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL); */
-	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
-	printf("for the next 3 seconds, the thread should not be canceled\n");
-	printf("...unless PTHREAD_CANCEL_ASYNCHRONOUS was used\n");
+	/* Controlled by -a|-d switches, see main(). */
+	pthread_setcanceltype(cancel_type, NULL);
+
+	if (cancel_type == PTHREAD_CANCEL_DEFERRED)
+		printf("For the next %d seconds, the thread should not be "
+		    "cancelled (deferred cancellation was used).\n", NSECS);
+	else
+		printf("The thread will be cancelled right away (asynchronous "
+		    "cancellation was used).\n");
 
 	/*
 	 * We can't use sleep(), poll() or select() since those usually use
@@ -35,7 +67,7 @@ mythread(void *x)
 	 * Don't try to print a dot for every second or anything else since
 	 * those would be cancelations points...
 	 */
-	while (time(NULL) - t < 3) {
+	while (time(NULL) - t < NSECS) {
 		;
 	}
 
@@ -59,18 +91,28 @@ mythread(void *x)
 }
 
 int
-main(void)
+main(int argc, char **argv)
 {
 	int e;
 	void *ptr;
 	pthread_t t;
+
+	if (argc != 2)
+		errx(1, "usage: %s -a|-d", basename(argv[0]));
+
+	if (strcmp(argv[1], "-a") == 0)
+		cancel_type = PTHREAD_CANCEL_ASYNCHRONOUS;
+	else if (strcmp(argv[1], "-d") == 0)
+		cancel_type = PTHREAD_CANCEL_DEFERRED;
+	else
+		errx(1, "usage: %s -a|-d", basename(argv[0]));
 
 	pthread_create(&t, NULL, mythread, NULL);
 
 	/* let the thread call pthread_setcanceltype() */
 	poll(NULL, 0, 500);
 
-	/* we will block here until we get out of the while loop above */
+	/* We will block here until we get out of the while loop above. */
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
 
