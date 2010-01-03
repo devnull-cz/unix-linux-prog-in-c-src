@@ -9,6 +9,13 @@
  *   212.20.96.21 port '22' protocol 'ip'
  *   ::2001:1508:1003:4:0:0 port '22' protocol 'ip'
  *
+ *   $ ./a.out www.google.com http
+ *   address '74.125.87.147' port '80' protocol 'ip'
+ *   address '74.125.87.99' port '80' protocol 'ip'
+ *   address '74.125.87.103' port '80' protocol 'ip'
+ *   address '74.125.87.104' port '80' protocol 'ip'
+ *   address '74.125.87.105' port '80' protocol 'ip'
+ *
  * (c) jp@devnull.cz
  */
 #include <sys/socket.h>
@@ -41,6 +48,7 @@ main(int argc, char **argv)
 		errx(1, "%s", gai_strerror(error));
 
 	for (resorig = res; res != NULL; res = res->ai_next) {
+		/* ai_addr is of type (struct sockaddr *) */
 		sin = (struct sockaddr_in *)res->ai_addr;
 
 		/* always on the watch... */
@@ -49,9 +57,9 @@ main(int argc, char **argv)
 
 		/* use getprotobynumber_r() in a threaded environment */
 		proto = getprotobynumber(res->ai_protocol);
-		printf("%s port '%d' protocol '%s'\n", inet_ntop(sin->sin_family,
-		    &sin->sin_addr, addr, INET6_ADDRSTRLEN), ntohs(sin->sin_port),
-		    proto->p_name);
+		printf("address '%s' port '%d' protocol '%s'\n",
+		    inet_ntop(sin->sin_family, &sin->sin_addr, addr,
+		    INET6_ADDRSTRLEN), ntohs(sin->sin_port), proto->p_name);
 	}
 
 	freeaddrinfo(resorig);

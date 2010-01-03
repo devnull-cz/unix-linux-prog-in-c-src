@@ -5,10 +5,12 @@
  * (c) jp@devnull.cz
  */
 
+#include <sys/wait.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <poll.h>
+#include <err.h>
 
 void
 *thread(void *x)
@@ -43,15 +45,23 @@ main(void)
 	pid = forkall();
 
 	if (pid == 0) {
-		printf("%d: I'm a child, will sleep for a few seconds...\n",
+		printf("%d: I'm a child, will join my threads...\n",
 		    getpid());
-		sleep(4);
-		printf("%d: child exiting\n", getpid());
+		pthread_join(t1, NULL);
+		pthread_join(t2, NULL);
+		printf("%d: child joined all its threads.\n", getpid());
 		return (0);
 	}
 
 	pthread_join(t1, NULL);
 	pthread_join(t2, NULL);
+	printf("%d in main: threads joined.\n", getpid());
+	
+	/* We can even wait for the child here. */
+	if ((pid = wait(NULL)) != -1)
+		printf("%d in main: child %d exited.\n", getpid(), pid);
+	else
+		err(1, "wait");
 
 	return (0);
 }
