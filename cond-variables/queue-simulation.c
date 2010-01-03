@@ -35,8 +35,9 @@ producer(void *x)
 		queue = queue + rnd;
 
 		/*
-		 * The queue was empty and we received a "message". We must
-		 * notifed the consumer.
+		 * The queue was empty and we produced a "message". We must
+		 * notify the consumer so it can start working on the queue
+		 * again.
 		 */
 		if (queue == 1 && rnd == 1)
 			pthread_cond_signal(&cond);
