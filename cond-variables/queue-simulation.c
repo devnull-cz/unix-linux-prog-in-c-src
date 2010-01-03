@@ -96,7 +96,10 @@ main(int argc, char **argv)
 
 	pthread_create(&t, NULL, producer, NULL);
 	pthread_create(&t, NULL, consumer, NULL);
-
+	
+	/*
+	 * Main thread. Periodically print the "contents" of the queue.
+	 */
 	while (1) {
 		pthread_mutex_lock(&mutex);
 		printf(" |");
