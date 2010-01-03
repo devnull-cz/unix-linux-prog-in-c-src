@@ -13,8 +13,8 @@ void *thread(void *x)
 	sleep(1);
 
 	/*
-	 * On Solaris, it won't return any error since the default mutex type
-	 * is NORMAL while it's ERRORCHECK on FreeBSD.
+	 * On Solaris/Linux, it won't return any error since the default
+	 * mutex type is NORMAL while it's ERRORCHECK on FreeBSD.
 	 */
 	if ((err = pthread_mutex_unlock(&mutex)) != 0)
 		fprintf(stderr, "%s\n", strerror(err));
