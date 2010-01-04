@@ -1,6 +1,7 @@
 /*
  * Observe the behavior of unlocking a mutex in a thread which does not own it.
- * Run with multiple types on multiple systems and see how it differs.
+ * Run with multiple types on multiple systems and see how it differs
+ * (especially the DEFAULT type).
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
