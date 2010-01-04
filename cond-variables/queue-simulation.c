@@ -1,7 +1,7 @@
 /*
  * Queue simulation. At every step, the producer randomly generates a message
  * or not, and at each step, the consumer randomly takes a message or not. One
- * condition variable and one mutes is used. Note that if we used semaphores,
+ * condition variable and one mutex is used. Note that if we used semaphores,
  * we would need 2 of them to represent both "sleeping" states.
  *
  * (c) jp@devnull.cz
