@@ -2,10 +2,10 @@
  * Work with 2 global variables from 2 threads. At each loop each thread sets
  * both to its value passed in by pthread_create(). Before the assignment it
  * checks whether our variables are equal. If not, the thread prints its
- * identification character. You should see a lot of races even on single CPU
- * system.
+ * identification character. There should be no races since both variables are
+ * protected by a mutex. No races means no output.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <pthread.h>
@@ -21,6 +21,10 @@ void *thread(void *x)
 
 	while (1) {
 		pthread_mutex_lock(&mutex);
+		/*
+		 * If there is a race, print a character depending on
+		 * which thread is experiencing the inconsistency.
+		 */
 		if (a != b) {
 			if (data == 0)
 				write(1, "|", 1);
