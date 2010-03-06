@@ -3,7 +3,7 @@
  * father reads a character from the terminal, it writes as the 1st character of
  * the shared memory and sends a signal to its child.
  *
- * The child is waiting in sigwai(). When the signals comes it reads the memory
+ * The child is waiting in sigwait(). When the signals comes it reads the memory
  * and prints the character to stdout. Note that we use sigwait() which doesn't
  * use handlers.
  *
