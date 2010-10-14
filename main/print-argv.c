@@ -1,7 +1,5 @@
 /*
  * Print all strings from argv[].
- *
- * (c) jp@devnull.cz
  */
 
 #include <stdio.h>
@@ -14,10 +12,10 @@ main(int argc, char **argv)
 	/* You can do it both ways. */
 #if 1
 	while (argv[i] != NULL)
-		printf("%s\n", argv[i++]);
+		printf("[%d] %s\n", i, argv[i++]);
 #else
 	for (i = 0; i < argc; ++i)
-		printf("%s\n", argv[i]);
+		printf("[%d] %s\n", i, argv[i]);
 #endif
 
 	return (0);
