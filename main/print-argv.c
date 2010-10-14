@@ -11,8 +11,10 @@ main(int argc, char **argv)
 
 	/* You can do it both ways. */
 #if 1
-	while (argv[i] != NULL)
-		printf("[%d] %s\n", i, argv[i++]);
+	while (argv[i] != NULL) {
+		printf("[%d] %s\n", i, argv[i]);
+		++i;
+	}
 #else
 	for (i = 0; i < argc; ++i)
 		printf("[%d] %s\n", i, argv[i]);
