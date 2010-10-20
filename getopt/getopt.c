@@ -35,7 +35,7 @@ main(int argc, char **argv)
 
 	argv++;
 	argc--;
-	while((opt = getopt(argc, argv, "c:")) != -1) {
+	while ((opt = getopt(argc, argv, "c:")) != -1) {
 		switch(opt) {
 		case 'c':
 			printf("option -c set to '%s'\n", optarg);
