@@ -15,23 +15,23 @@ int main(int argc, char *argv[])
 	DIR *d;
 	struct dirent *de;
 
-	if (i == 1)
+	if (argc == 1)
 		errx(1, "usage: %s dir1 [dir2 [dir3 ...]]", argv[0]);
 
 	for (i = 1; i < argc; i++) {
 
-		printf("=== %s ===\n", argv[i]);
+		printf("== [%s] ==\n", argv[i]);
 		if ((d = opendir(argv[i])) == NULL) {
 			warn("%s", argv[i]);
 			continue;
 		}
 
 		/*
-		 * We must distinguish between the end of directory
-		 * and an error.
+		 * We must distinguish between the end of directory and an
+		 * error.
 		 */
 		errno = 0;
-		while ((de = readdir(d)))
+		while ((de = readdir(d)) != NULL)
 			printf("%s\n", de->d_name);
 
 		if (errno != 0)
