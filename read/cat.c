@@ -17,22 +17,23 @@
 int ret;
 
 void
-do_cat(char *file, int blocksize)
+do_cat(char *file, int bufsize)
 {
 	int fd, n;
 	char *buf = NULL;
 
 	/* Bail out right away, we cannot proceed with no memory left. */
-	if ((buf = malloc(blocksize)) == NULL)
+	if ((buf = malloc(bufsize)) == NULL)
 		err(1, "malloc");
 
 	if ((fd = open(file, O_RDONLY)) == -1) {
 		warn("open");
 		ret = 1;
+		free(buf);
 		return;
 	}
 
-	while ((n = read(fd, buf, blocksize)) > 0) {
+	while ((n = read(fd, buf, bufsize)) > 0) {
 		write(1, buf, n);
 	}
 
@@ -47,24 +48,25 @@ do_cat(char *file, int blocksize)
 	 * leaks. Could be a problem for long running applications or daemons.
 	 */
 	close(fd);
+	free(buf);
 }
 
 int
 main(int argc, char **argv)
 {
-	int i, opt, blocksize = 4096;
+	int i, opt, bufsize = 4096;
 
 	if (argc == 1)
-		errx(1, "usage: %s [-b blocksize] <file> [<file2> ...]",
+		errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
 		    basename(argv[0]));
  
 	while ((opt = getopt(argc, argv, "b:")) != -1) {
 		switch(opt) {
 		case 'b':
-			blocksize = atoi(optarg);
+			bufsize = atoi(optarg);
 			break;
 		case '?':
-			errx(1, "usage: %s [-b blocksize] <file> [<file2> ...]",
+			errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
 			    basename(argv[0]));
 			break;
 		}
@@ -72,7 +74,7 @@ main(int argc, char **argv)
 
 	i = optind;
 	while (argv[i] != NULL) {
-		do_cat(argv[i], blocksize);
+		do_cat(argv[i], bufsize);
 		++i;
 	}
 
