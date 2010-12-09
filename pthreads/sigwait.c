@@ -26,7 +26,7 @@ void *thread(void *x)
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
 		sleep(1);
 	}
-	return (NULL)0;
+	return (NULL);
 }
 
 int main(void)
