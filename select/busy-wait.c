@@ -66,14 +66,20 @@ main(int argc, char **argv)
 		err(1, "fcntl");
 
 	for ( ; ; ) {
+		/*
+		 * We set fd 1 to a non-blocking mode above, not 0. Why does it
+		 * still work as expected?
+		 */
 		if ((n = read(0, buf, sizeof(buf))) >= 0) {
-			if (n == 0)
+			if (n == 0) {
 				/* EOF */
 				break;
+			}
 			write(1, buf, n);
-		} else
+		} else {
 			if (errno != EWOULDBLOCK)
 				err(1, "read");
+		}
 
 		if ((newsock = accept(fd, NULL, 0)) == -1) {
 			if (errno != EWOULDBLOCK)
@@ -86,6 +92,12 @@ main(int argc, char **argv)
 			fcntl(newsock, F_SETFL, flags & ~O_NONBLOCK);
 
 			fprintf(stderr, "-- connection accepted --\n");
+			/*
+			 * Note that newsock could be added to the select RD set
+			 * and data could be then read from fd 0 even during the
+			 * socket connection. It is left as an excercise for
+			 * you.
+			 */
 			while ((n = read(newsock, buf, BUF_LEN)) > 0)
 				write(1, buf, n);
 			if (n == -1)
