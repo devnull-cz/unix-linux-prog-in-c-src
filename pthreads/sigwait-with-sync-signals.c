@@ -62,9 +62,9 @@ main(int argc, char **argv)
 		printf("Use '-k' option to use pthread_kill()\n\n");
 	}
 
-	printf("While all the threads block SIGSEGV, process can be killed "
+	printf("While all the threads mask SIGSEGV, process might be killed "
 	    "based on the system.\n");
-	printf("Anyway, pthread_kill() will probably NOT kill the process.\n");
+	printf("No matter what, pthread_kill() will probably NOT kill the process.\n");
 	printf("However, memory curruption probably will.\n");
 	printf("Whatever is the outcome, you should never block _synchronous_ "
 	    "signals.\n\n");
