@@ -16,7 +16,7 @@ void *thread(void *x)
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", (int) x, i);
+		printf("thread %d (loop #%d)\n", (int)x, i);
 		sleep(1);
 	}
 	return (NULL);
@@ -27,14 +27,14 @@ int main(void)
 	pthread_t t;
 	int i;
 
-	/* let's not shoot our leg off */
+	/* Let's not shoot our leg off. */
 	assert(sizeof(int) <= sizeof(void *));
 
 	for (i = 0; i < 5; ++i) {
-		pthread_create(&t, NULL, thread, (void *) i);
+		pthread_create(&t, NULL, thread, (void *)i);
 	}
 
-	/* avoid pthread_join() for now */
+	/* Avoid pthread_join() for now. */
 	sleep(6);
 
 	return (0);
