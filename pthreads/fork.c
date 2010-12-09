@@ -1,5 +1,5 @@
 /*
- * An example to see that fork() will replicate only the thread that called
+ * This program shows that fork() will replicate only the thread that called
  * it - the main() in this case. See that there are only 2 messages from the
  * child process - when it starts and when it exits; there are no thread
  * "loop" messages that are printed from the parent process.
@@ -36,7 +36,7 @@ main(void)
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("%d: before fork()\n", getpid());
+	printf("%d: main program before fork()\n", getpid());
 	pid = fork();
 
 	if (pid == 0) {
