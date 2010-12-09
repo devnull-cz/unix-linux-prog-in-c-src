@@ -45,8 +45,6 @@ main(int argc, char **argv)
 	if (bind(s, (struct sockaddr *) &sa, sizeof(sa)) == -1)
 		err(1, "bind");
 
-	fcntl(1, F_SETFD, O_NONBLOCK);
-
 	if (listen(s, SOMAXCONN) == -1)
 		err(1, "listen");
 
@@ -69,6 +67,12 @@ main(int argc, char **argv)
 		if (FD_ISSET(s, &rdfds)) {
 			newsock = accept(s, NULL, 0);
 			fprintf(stderr, "-- connection accepted --\n");
+			/*
+			 * As with busy-wait.c, the accepted socket could be put
+			 * into the RD set and we could accept data from fd 0
+			 * while connected. It's left as an excercise to the
+			 * reader.
+			 */
 			while ((n = read(newsock, buf, 100)) > 0)
 				write(1, buf, n);
 			if (n == -1)
