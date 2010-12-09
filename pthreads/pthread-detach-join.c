@@ -1,7 +1,7 @@
 /*
  * An example what happens if pthread_join() is called on a detached thread.
- * Join should fail with ESRCH (No such process) error. See also
- * set-detachstate.c.
+ * Join should fail with EINVAL error which means in this context means that the
+ * thread is detached and cannot be joined. See also set-detachstate.c.
  *
  * (c) jp@devnull.cz
  */
@@ -17,6 +17,12 @@ void *thread(void *x)
 	int i;
 	void *p;
 
+	/*
+	 * This "guarantees" that when entering pthread_join() the thread is
+	 * still joinable. However, pthread_join() returns an error as soon as
+	 * the thread is made detachable.
+	 */
+	sleep(1);
 	pthread_detach(pthread_self());
 
 	for (i = 0; i < 5; ++i) {
