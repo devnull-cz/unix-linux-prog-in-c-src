@@ -42,8 +42,6 @@
 
 int cancel_type;
 
-#define	SECS	10
-
 /* Should we use asynchronous cancel or not. */
 int asynch = 0;
 
@@ -53,28 +51,14 @@ mythread(void *x)
 	int i = 1;
 	time_t t2, t = time(NULL);
 
-<<<<<<< local
-	/* Controlled by -a|-d switches, see main(). */
-	pthread_setcanceltype(cancel_type, NULL);
-=======
 	if (asynch == 1)
 		pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 	else
 		pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
->>>>>>> other
 
-<<<<<<< local
-	if (cancel_type == PTHREAD_CANCEL_DEFERRED)
-		printf("For the next %d seconds, the thread should not be "
-		    "cancelled (deferred cancellation was used).\n", NSECS);
-	else
-		printf("The thread will be cancelled right away (asynchronous "
-		    "cancellation was used).\n");
-=======
 	printf("For the next %d seconds, the thread should not be canceled.\n",
-	    SECS);
-	printf("...unless PTHREAD_CANCEL_ASYNCHRONOUS was used\n");
->>>>>>> other
+	    NSECS);
+	printf("...unless PTHREAD_CANCEL_ASYNCHRONOUS (-a) was used\n");
 
 	/*
 	 * We can't use sleep(), poll() or select() since those usually use
@@ -85,11 +69,7 @@ mythread(void *x)
 	 * Don't try to print a dot for every second or anything else since
 	 * those would be cancelations points...
 	 */
-<<<<<<< local
 	while (time(NULL) - t < NSECS) {
-=======
-	while (time(NULL) - t < SECS) {
->>>>>>> other
 		;
 	}
 
@@ -119,26 +99,11 @@ main(int argc, char **argv)
 	void *ptr;
 	pthread_t t;
 
-<<<<<<< local
-	if (argc != 2)
-		errx(1, "usage: %s -a|-d", basename(argv[0]));
-=======
 	fprintf(stderr, "Deferred cancellation in use, use with \"-a\" to get "
 	    "asynchronous cancellation.\n");
 	if (argc > 1 && strcmp(argv[1], "-a") == 0)
 		asynch = 1;
->>>>>>> other
 
-<<<<<<< local
-	if (strcmp(argv[1], "-a") == 0)
-		cancel_type = PTHREAD_CANCEL_ASYNCHRONOUS;
-	else if (strcmp(argv[1], "-d") == 0)
-		cancel_type = PTHREAD_CANCEL_DEFERRED;
-	else
-		errx(1, "usage: %s -a|-d", basename(argv[0]));
-
-=======
->>>>>>> other
 	pthread_create(&t, NULL, mythread, NULL);
 
 	/* Let the thread call pthread_setcanceltype(). */
@@ -153,7 +118,8 @@ main(int argc, char **argv)
 	/*
 	 * The pointer for canceled thread is defined in PTHREAD_CANCELED and
 	 * contains something that does not reference valid memory. For example,
-	 * on FreeBSD it was ((void *) 1), on Solaris I saw (void *)-19.
+	 * on FreeBSD it was ((void *) 1), on Solaris I saw (void *)-19
+	 * (0xFFFFFFED).
 	 */
 	if ((e = pthread_join(t, &ptr)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
