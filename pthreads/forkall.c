@@ -34,14 +34,14 @@ main(void)
 	pthread_t t1, t2;
 
 #if !defined (__SVR4) || !defined (__sun) 
-	fprintf(stderr, "sorry, this example program needs Solaris\n");
+	fprintf(stderr, "Sorry, this example program needs Solaris.\n");
 	return(2);
 #endif
 
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("%d: before forkall()\n", getpid());
+	printf("%d: in main before forkall()\n", getpid());
 	pid = forkall();
 
 	if (pid == 0) {

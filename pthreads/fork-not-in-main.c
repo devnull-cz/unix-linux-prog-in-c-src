@@ -1,8 +1,8 @@
 /*
- * See that when fork(2) is used from a thread that is not main() then such
+ * Note that when fork(2) is used from a thread that is not main() then such
  * a thread can live in the child process as long as it wants since there is no
- * main() thread to exit - the main function is the thread function itself
- * now.
+ * main() thread to exit - the main function from then on is the thread function
+ * itself now.
  *
  * (by) jp@devnull.cz
  */
