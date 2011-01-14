@@ -2,18 +2,20 @@
 #include <signal.h>
 #include <unistd.h>
 
-#define MESSAGE "signal caught !\n"
+#define MESSAGE "Signal caught !\n"
 
-void ctrl_c(int sig)
+void
+ctrl_c(int sig)
 {
 	write(1, MESSAGE, strlen(MESSAGE));
 }
 
-int main(void)
+int
+main(void)
 {
 	struct sigaction act;
 
-	bzero(&act, sizeof(act));
+	bzero(&act, sizeof (act));
 	act.sa_handler = ctrl_c;
 	sigaction(SIGINT, &act, NULL);
 
@@ -21,5 +23,5 @@ int main(void)
 		sleep(1);
 	}
 
-	return 0;
+	return (0);
 }
