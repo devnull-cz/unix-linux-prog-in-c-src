@@ -14,8 +14,8 @@
  *   -1077941116
  *
  * For Sun Studio, use "-G" instead of "-shared". Also note that newer GCC does
- * not support "-R". Use "-Xlinker -R -Xlinker ." instead (note the ``.'' as
- * part of the option).
+ * not support "-R". Use "-Xlinker -R ." instead (note the ``.'' as part
+ * of the option).
  *
  * (c) jp@devnull.cz
  */
