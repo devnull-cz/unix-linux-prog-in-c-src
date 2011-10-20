@@ -22,10 +22,8 @@ main(int argc, char **argv)
 	int opt;
 	char *argv0 = argv[0];
 
-	/* comment out to supress getopt() error messages */
-	/*
+	/* comment out to print getopt() error messages */
 	opterr = 0;
-	*/
 
 	/* 1st param always required */
 	if (argc < 2)
@@ -41,6 +39,7 @@ main(int argc, char **argv)
 			printf("option -c set to '%s'\n", optarg);
 			break;
 		case '?':
+			printf("unknown option: '%c'\n", optopt);
 			usage(argv0);
 			break;
 		}
