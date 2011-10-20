@@ -1,3 +1,9 @@
+/*
+ * Show the difference between exit() and _exit() w.r.t. atexit().
+ *
+ * (c) vlada@devnull.cz
+ */
+
 #include <stdio.h>
 #include <unistd.h> /* _exit() */
 #include <stdlib.h>
