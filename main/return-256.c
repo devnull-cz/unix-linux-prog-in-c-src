@@ -1,5 +1,5 @@
 /*
- * Shell interprets the return value as a 1 byte integerer. So, this must
+ * Shell interprets the return value as a 1 byte integer. So, this must
  * return 0 which might seem unexpected to one who doesn't know...
  *
  *   $ ./a.out
