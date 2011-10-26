@@ -3,18 +3,18 @@
  * we plan to connect to the server and that one must use freeaddrinfo() on
  * exit.
  *
- * As of now, ftp.volny.cz has both IPv4 and IPv6 address:
+ * ftp.volny.cz used to have both IPv4 and IPv6 address:
  *
  *   $ ./a.out ftp.volny.cz ssh
- *   212.20.96.21 port '22' protocol 'ip'
- *   ::2001:1508:1003:4:0:0 port '22' protocol 'ip'
+ *   address 212.20.96.21 port '22' protocol 'tcp'
+ *   address ::2001:1508:1003:4:0:0 port '22' protocol 'tcp'
  *
  *   $ ./a.out www.google.com http
- *   address '74.125.87.147' port '80' protocol 'ip'
- *   address '74.125.87.99' port '80' protocol 'ip'
- *   address '74.125.87.103' port '80' protocol 'ip'
- *   address '74.125.87.104' port '80' protocol 'ip'
- *   address '74.125.87.105' port '80' protocol 'ip'
+ *   address '74.125.87.147' port '80' protocol 'tcp'
+ *   address '74.125.87.99' port '80' protocol 'tcp'
+ *   address '74.125.87.103' port '80' protocol 'tcp'
+ *   address '74.125.87.104' port '80' protocol 'tcp'
+ *   address '74.125.87.105' port '80' protocol 'tcp'
  *
  * (c) jp@devnull.cz
  */
@@ -25,6 +25,7 @@
 #include <err.h>
 #include <string.h>
 #include <libgen.h>
+#include <stdio.h>
 
 int
 main(int argc, char **argv)
