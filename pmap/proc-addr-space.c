@@ -1,8 +1,8 @@
 /*
  * A sample program to see where different parts of memory fit into. You should
  * know what is the exact process address space layout on your system and
- * architecture. You can use pmap(1) on Solaris to see the segments of the
- * running process.
+ * architecture. You can use pmap(1) on Linux or Solaris to see the segments
+ * of the running process.
  *
  * Read README in this directory for some example outputs.
  *
@@ -25,11 +25,6 @@ main(int argc, char **argv)
 	void *p;
 	char buf[16];
 	int to_alloc = 0;
-
-#if !defined (__SVR4) || !defined (__sun) 
-	fprintf(stderr, "sorry, this example program needs Solaris\n");
-	return(2);
-#endif
 
 	if (argc > 1)
 		to_alloc = atoi(argv[1]);
