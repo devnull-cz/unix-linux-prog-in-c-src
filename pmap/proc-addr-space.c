@@ -50,7 +50,7 @@ main(int argc, char **argv)
 	printf("\n=== pmap %d ===\n", getpid());
 	snprintf(buf, sizeof (buf), "%d", getpid());
 
-	/* we must fork so that don't overrite those variables above */
+	/* we must fork so that don't overwrite those variables above */
 	if (fork() == 0) {
 		execl("/usr/bin/pmap", "pmap", buf, NULL);
 		fprintf(stderr, "execl() failed on pmap: %s\n",
