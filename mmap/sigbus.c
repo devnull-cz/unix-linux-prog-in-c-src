@@ -7,24 +7,38 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <err.h>
 #include <sys/mman.h>
 
-int main(void)
+int
+main(void)
 {
 	int fd;
 	char c = (char) 'a';
 	char *addr = NULL;
+	int i;
+
+#if 0
+	printf("pagesize = %ld\n", sysconf(_SC_PAGE_SIZE));
+#endif
 
 	fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666);
 
 	lseek(fd, 100, SEEK_SET);
 	write(fd, &c, 1);
 
-	addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	if ((addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0))
+	    == NULL)
+		err(1, "mmap failed");
 
-	/* On x86, accesing 4095 is OK, 4096 generates SIGSEGV or SIGBUS. */
-	//addr[4095] = 0;
-	addr[4096] = 0;
+	/*
+	 * On Linux 32-bit x86, accesing 0-8191 is OK, 8192 generates
+	 * SIGSEGV or SIGBUS.
+	 */
+	for (i = 4095; i < 16384; i++) {
+		printf("%d\n", i); /* use \n so that output is flushed. */
+		addr[i] = 0;
+	}
 
-	return 0;
+	return (0);
 }
