@@ -1,5 +1,5 @@
 /*
- * Example on MAP_NOCORE use. Built it, run it on the background, dump it (eg.,
+ * Example on MAP_NOCORE use. Build it, run it on the background, dump it (eg.,
  * "kill -3 <PID"), and use strings(1) with "-a" on it to grep "my-PIN". It
  * should be there for the 1st case and it should be clean for the 2nd case.
  *
@@ -17,17 +17,22 @@
 #include <sys/mman.h>
 
 int
-main(void)
+main(int argc, char *argv[])
 {
 	char *addr = NULL;
+	int flags = MAP_SHARED | MAP_ANON;
 
-#if 1
-	addr = mmap(0, 4096, PROT_READ | PROT_WRITE,
-	    MAP_SHARED | MAP_ANON, -1, 0);
+	if (argc != 2)
+		errx(1, "usage: %s <0|1>", argv[0]);
+
+	if (atoi(argv[1]) == 1)
+#if defined(__FreeBSD__)
+		flags =| MAP_NOCORE;
 #else
-	addr = mmap(0, 4096, PROT_READ | PROT_WRITE,
-	    MAP_SHARED | MAP_ANON | MAP_NOCORE, -1, 0);
+		errx(1, "cannot perform the operation, no MAP_NOCORE support");
 #endif
+
+	addr = mmap(0, 4096, PROT_READ | PROT_WRITE, flags, -1, 0);
 
 	if ((void *)addr == MAP_FAILED)
 		err(1, "mmap");
