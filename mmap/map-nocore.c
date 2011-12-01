@@ -27,7 +27,7 @@ main(int argc, char *argv[])
 
 	if (atoi(argv[1]) == 1)
 #if defined(__FreeBSD__)
-		flags =| MAP_NOCORE;
+		flags |= MAP_NOCORE;
 #else
 		errx(1, "cannot perform the operation, no MAP_NOCORE support");
 #endif
