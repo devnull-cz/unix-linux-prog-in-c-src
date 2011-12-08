@@ -6,7 +6,7 @@
  * friendly message, for example. Note that after that, you should always exit,
  * never move on, since what would happen then is also undefined by the spec.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 #include <string.h>
 #include <signal.h>
@@ -15,7 +15,7 @@
 #define MESSAGE "Signal caught !\n"
 
 void
-ctrl_c(int sig)
+handle_segfault(int sig)
 {
 	write(1, MESSAGE, strlen(MESSAGE));
 }
@@ -26,7 +26,7 @@ main(void)
 	struct sigaction act;
 
 	memset(&act, 0, sizeof(act));
-	act.sa_handler = ctrl_c;
+	act.sa_handler = handle_segfault;
 	sigaction(SIGSEGV, &act, NULL);
 
 	/*
@@ -37,7 +37,7 @@ main(void)
 		int *p = NULL;
 
 		sleep(1);
-		/* The following line definitely generates the SIGSEGV signal. */
+		/* The following line definitely generates the SIGSEGV signal */
 		*p = 1;
 	}
 
