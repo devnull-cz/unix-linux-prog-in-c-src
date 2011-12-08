@@ -3,8 +3,13 @@
  * should be in the same directory as this file. You build it like this (don't
  * forget -L/-R options):
  *
+ * Solaris:
  *  $ cc -o libmy.so -G libmy.c
  *  $ cc -L. -R. -lmy dlopen.c
+ *
+ * Linux:
+ *  $ gcc -shared -o libmy.so libmy.c
+ *  $ gcc -L. -Xlinker -R . -ldl -lmy dlopen.c
  *
  * (c) jp@devnull.cz
  */
