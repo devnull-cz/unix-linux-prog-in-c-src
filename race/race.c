@@ -20,7 +20,7 @@
 #include <signal.h>
 #include <err.h>
 
-unsigned long i;	/* number of loops per process, u_long should enough */
+unsigned long i;	/* number of loops per process, u_long should be enough for basic demo */
 unsigned int j;		/* j is number of races detected */
 
 void

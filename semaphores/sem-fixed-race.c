@@ -20,8 +20,8 @@
 #include <signal.h>
 #include <err.h>
 
-/* i is number of loops per process, j is number of races detected */
-int i, j;
+unsigned long i;	/* number of loops per process, u_long should be enough for basic demo */
+unsigned int j;		/* j is number of races detected */
 
 void
 print_stat(int sig)
