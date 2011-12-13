@@ -5,11 +5,11 @@
  *
  * Solaris:
  *  $ cc -o libmy.so -G libmy.c
- *  $ cc -L. -R. -lmy dlopen.c
+ *  $ cc -L. -R. dlopen.c
  *
  * Linux:
  *  $ gcc -shared -o libmy.so libmy.c
- *  $ gcc -L. -Xlinker -R . -ldl -lmy dlopen.c
+ *  $ gcc -L. -Xlinker -R . -ldl dlopen.c
  *
  * (c) jp@devnull.cz
  */
@@ -27,10 +27,10 @@ int main(void)
 	fn f;
 
 	if ((handle = dlopen("./libmy.so", RTLD_LAZY)) == NULL)
-		errx(1, "%s", dlerror());
+		errx(1, "dlopen: %s", dlerror());
 
 	if ((f = (fn) dlsym(handle, "myprint")) == NULL)
-		errx(1, "%s", dlerror());
+		errx(1, "dlsym: %s", dlerror());
 
 	/* now let's call the function */
 	f();
