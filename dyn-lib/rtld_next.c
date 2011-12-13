@@ -9,16 +9,21 @@
  *
  * Use like this:
  *
+ * Solaris:
  *	$ gcc -shared -o myread.so rtld_next.c
+ * Linux:
+ *	$ gcc -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
+ *
+ * Run:
  *	$ LD_PRELOAD=./myread.so cat /etc/passwd
  *
  * (c) jp@devnull.cz
  */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <dlfcn.h>
 
 #define	NOT_FOUND	"read not found\n"
