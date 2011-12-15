@@ -19,6 +19,7 @@
  * (c) jp@devnull.cz
  */
 
+#include <stdio.h>
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
