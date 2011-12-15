@@ -6,7 +6,8 @@
  * statistics. Run with any argument to see races as they happen.
  *
  * Note that with a job control, Ctrl-C makes the shell to send a SIGINT signal
- * to the whole group so we don't have to worry about killing just a father.
+ * to the whole process group so we don't have to worry about killing just
+ * the father process.
  *
  * (c) jp@devnull.cz
  */
