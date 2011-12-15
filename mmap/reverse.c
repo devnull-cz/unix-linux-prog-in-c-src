@@ -1,3 +1,12 @@
+/*
+ * Simple demonstration of memory-mapped access to a file.
+ *
+ * Run like this:
+ *   $ echo "0123456789" > numbers.txt
+ *   $ cc reverse.c
+ *   $ ./a.out
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
