@@ -27,7 +27,7 @@ unsigned int j;		/* j is number of races detected */
 void
 print_stat(int sig)
 {
-	printf("\nstats: inconsistency %u of %u\n", j, i);
+	printf("\nstats: inconsistency %u of %lu\n", j, i);
 	_exit(0);
 }
 
