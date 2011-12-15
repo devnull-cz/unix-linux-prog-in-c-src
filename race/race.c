@@ -40,7 +40,7 @@ main(int argc, char **argv)
 	struct sigaction act;
 
 	if (argc == 1)
-		printf("run with any argument to see some debug info\n");
+		warnx("run with any argument to see some debug info\n");
 	else
 		dbg = 1;
 
