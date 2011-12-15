@@ -1,0 +1,10 @@
+#
+# ignore intermediate files
+#
+
+syntax: glob
+core
+a.out
+*.so
+*.o
+*.dat
