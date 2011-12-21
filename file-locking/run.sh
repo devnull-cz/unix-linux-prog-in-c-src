@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/sh
 
 #
 # Use lock-unlock.c (build it and name it "lock-unlock") for file locking.
