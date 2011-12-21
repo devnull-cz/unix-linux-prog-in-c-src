@@ -4,11 +4,11 @@
  *
  * Solaris:
  *  $ cc -o libmy.so -KPIC -G libmy.c
- *  $ cc -L. -R. dlopen.c
+ *  $ cc dlopen.c
  *
  * Linux:
  *  $ gcc -shared -fPIC -o libmy.so libmy.c
- *  $ gcc -L. -Xlinker -R . -ldl dlopen.c
+ *  $ gcc -ldl dlopen.c
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
