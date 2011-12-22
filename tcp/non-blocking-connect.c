@@ -58,7 +58,7 @@ main(int argc, char **argv)
 	/* Port 7 is for echo, nobody should run that service these days. */
 	ports[4] = 7;
 
-	printf("will work with those machines/services:\n");
+	printf("will work with these machines/services:\n");
 	for (i = 0; i < MAX_HOSTS; ++i) {
 		printf("  %s:%d\n", hostnames[i], ports[i]);
 	}
@@ -107,7 +107,7 @@ main(int argc, char **argv)
 		}
 		else {
 			/* this may happen, on localhost for example */
-			printf("  %s connected OK on %d\n", hostnames[i],
+			printf("  %s connected OK on port %d\n", hostnames[i],
 			    ports[i]);
 			++n;
 		}
@@ -161,10 +161,10 @@ main(int argc, char **argv)
 				 * into optval so 0 means no-error.
 				 */
 				if (optval == 0)
-					printf("  %s connected OK on %d\n",
+					printf("  %s connected OK on port %d\n",
 					    hostnames[i], ports[i]);
 				else {
-					printf("  %s connect failed on %d (%s)\n",
+					printf("  %s connect failed on port %d (%s)\n",
 					    hostnames[i], ports[i],
 					    strerror(optval));
 				}
@@ -183,7 +183,7 @@ main(int argc, char **argv)
 	/* those remaining in the wrfds set are those that timed out on us */
 	for (i = 0; i < MAX_HOSTS; ++i) {
 		if (FD_ISSET(sockets[i], &wrfds_orig))
-			printf("  %s timed out on %d\n", hostnames[i], ports[i]);
+			printf("  %s timed out on port %d\n", hostnames[i], ports[i]);
 	}
 
 	return (0);
