@@ -1,20 +1,19 @@
 /*
- * Simple TCP sink server running on port MY_PORT - what is sent to it is just
+ * Simple TCP sink server running on specified port - what is sent to it is just
  * printed onto stderr. No data is sent back.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#include <stdio.h>
+#include <unistd.h>
+#include <strings.h>
+#include <err.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <unistd.h>
-#include <strings.h>
-#include <stdio.h>
-#include <err.h>
 
 #define	BUF_LEN	100
-#define	MY_PORT	2222
 
 int
 main(int argc, char **argv)
@@ -23,10 +22,13 @@ main(int argc, char **argv)
 	struct sockaddr_in in;
 	int fd, newsock, n, optval = 1;
 
+	if (argc != 2)
+		errx(1, "usage: %s <port_number>", argv[0]);
+
 	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
-	printf("Will use port %d.\n", MY_PORT);
-	in.sin_port = htons(MY_PORT);
+	printf("Will use port: %s\n", argv[1]);
+	in.sin_port = htons(atoi(argv[1]));
 	in.sin_addr.s_addr = htons(INADDR_ANY);
 
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
@@ -36,16 +38,18 @@ main(int argc, char **argv)
 	 * So that we can reuse the port immediately. See the lecture materials
 	 * for more info.
 	 */
-	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
-	
-	if (bind(fd, (struct sockaddr *)&in, sizeof(in)) == -1)
+	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
+	    &optval, sizeof (optval)) == -1)
+		err(1, "setsockopt");
+
+	if (bind(fd, (struct sockaddr *)&in, sizeof (in)) == -1)
 		err(1, "bind");
 
 	if (listen(fd, SOMAXCONN) == -1)
 		err(1, "listen");
 
 	/* we will server one connection at a time */
-	for ( ; ; ) {
+	for (;;) {
 		if ((newsock = accept(fd, NULL, 0)) == -1)
 			err(1, "accept");
 
@@ -57,7 +61,7 @@ main(int argc, char **argv)
 		 * Important since otherwise you will waste a few bytes with
 		 * every connection !!!
 		 */
-		close(newsock);
+		(void) close(newsock);
 		fprintf(stderr, "-- connection closed --\n");
 	}
 
