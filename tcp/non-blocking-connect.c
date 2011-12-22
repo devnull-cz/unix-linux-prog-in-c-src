@@ -34,8 +34,8 @@ main(int argc, char **argv)
 	struct timeval tout;
 	struct sockaddr_in in;
 	fd_set wrfds, wrfds_orig;
-	char *hostnames[MAX_HOSTS];
 	int flags, i, optval, n, timeouts;
+	char *hostnames[MAX_HOSTS];
 	int sockets[MAX_HOSTS], ports[MAX_HOSTS];
 
 	/* This should connect OK. */
