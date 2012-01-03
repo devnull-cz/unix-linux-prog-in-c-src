@@ -75,7 +75,7 @@ main(int argc, char **argv)
 			err(1, "select");
 
 		if (FD_ISSET(newsock, &wrfds)) {
-			if ((n = write(newsock, buf, BUF_LEN)) == -1)
+			if ((n = write(newsock, buf, sizeof (buf))) == -1)
 				err(1, "write (%d)", errno);
 			total = total + n;
 			fprintf(stderr, "[ %d bytes written (total %d) ]", n, total);
