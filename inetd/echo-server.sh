@@ -13,12 +13,13 @@
 # protected by a firewall) on port 4444, what you send there is sent back and
 # the server exits. When tried from the terminal, what is sent is determined
 # by the newline which is when nc(1) or telnet(1) return from read(2). You can
-# run the test in parallel since inetd spanws a new server and is immediatelly
-# ready to accept other connections. Example:
+# run the test in parallel since inetd spanws a new server and is immediately
+# ready to accept other connections.
 #
-# $ nc -v localhost 4444
+# Example:
+#
+# $ echo 'hello there!' | nc -v localhost 4444
 # Connection to localhost 4444 port [tcp/krb524] succeeded!
-# hello there!
 # hello there!
 # $
 #
