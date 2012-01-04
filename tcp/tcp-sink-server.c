@@ -29,7 +29,7 @@ main(int argc, char **argv)
 	in.sin_family = AF_INET;
 	printf("Will use port: %s\n", argv[1]);
 	in.sin_port = htons(atoi(argv[1]));
-	in.sin_addr.s_addr = htons(INADDR_ANY);
+	in.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		err(1, "socket");
