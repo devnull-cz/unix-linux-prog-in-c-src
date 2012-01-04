@@ -3,16 +3,19 @@
  * use getnameinfo() instead. Use with "www.google.com", for example, to see
  * aliases as well.
  *
+ * Note that gethostbyname() is obsolete and should not be used.
+ * Use getaddrinfo() instead.
+ *
  * (c) jp@devnull.cz
  */
 
+#include <stdio.h>
+#include <err.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <stdio.h>
 #include <libgen.h>
-#include <err.h>
 
 int
 main(int argc, char **argv)
