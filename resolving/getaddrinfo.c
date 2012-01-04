@@ -36,7 +36,7 @@ main(int argc, char **argv)
 	struct addrinfo *res, *resorig, hints;
 
 	if (argc != 3)
-		errx(1, "usage: %s hostname service", basename(argv[0]));
+		errx(1, "usage: %s <hostname> <service>", basename(argv[0]));
 
 	memset(&hints, 0, sizeof (hints));
 	hints.ai_family = AF_UNSPEC;
