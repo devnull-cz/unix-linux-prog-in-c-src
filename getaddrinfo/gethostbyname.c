@@ -3,10 +3,10 @@
  * use getnameinfo() instead. Use with "www.google.com", for example, to see
  * aliases as well.
  *
- * Note that gethostbyname() is obsolete and should not be used.
- * Use getaddrinfo() instead.
+ * Note that gethostbyname() and inet_ntoa() are obsolete and should not be used.
+ * Use getaddrinfo() and inet_ntop() instead.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <stdio.h>
