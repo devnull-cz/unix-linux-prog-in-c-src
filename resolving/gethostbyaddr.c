@@ -1,12 +1,14 @@
 /*
- * Example on how NOT to resolve IP address to hostnames.
+ * Example on how NOT to resolve IP address to hostnames. Also, this program
+ * is IPv4 specific.
  *
- * Instead of gethostbyaddr() use getaddrinfo() because it is standard
- * function.
+ * gethostbyaddr() are int_aton() are obsolete and non standard.
+ * Instead use getnameinfo() and inet_pton().
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <err.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -26,14 +28,18 @@ main(int argc, char **argv)
 		errx(1, "usage: %s <ip_address>", argv[0]);
 
 	inet_aton(argv[1], &ip);
-	hp = gethostbyaddr((char *) &ip, sizeof(ip), AF_INET);
+	hp = gethostbyaddr((char *) &ip, sizeof (ip), AF_INET);
 
-	if (hp == NULL)
+	if (hp == NULL) {
+		herror("gethostbyaddr");
 		exit(1);
+	}
 
+	/* Print the hostname corresponding to this IP address. */
 	printf("%s\n", hp->h_name);
 
 	i = 0;
+	/* Print the aliases. */
 	while (*(hp->h_aliases + i))
 		printf("%s\n", *(hp->h_aliases + i));
 
