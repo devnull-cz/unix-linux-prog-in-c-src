@@ -47,12 +47,12 @@ main(int argc, char **argv)
 	sa.sin_family = AF_INET;
 	sa.sin_port = htons((short)atoi(argv[1]));
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
-	
+
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optval,
-	    sizeof(optval)) == -1)
+	    sizeof (optval)) == -1)
 		err(1, "setsockopt");
 
-	if (bind(fd, (struct sockaddr *) &sa, sizeof(sa)) == -1)
+	if (bind(fd, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
 
 	if (listen(fd, SOMAXCONN) == -1)
@@ -67,12 +67,12 @@ main(int argc, char **argv)
 	if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1)
 		err(1, "fcntl");
 
-	for ( ; ; ) {
+	for (;;) {
 		/*
 		 * We set fd 1 to a non-blocking mode above, not 0. Why does it
 		 * still work as expected?
 		 */
-		if ((n = read(0, buf, sizeof(buf))) >= 0) {
+		if ((n = read(0, buf, sizeof (buf))) >= 0) {
 			if (n == 0) {
 				/* EOF */
 				break;
