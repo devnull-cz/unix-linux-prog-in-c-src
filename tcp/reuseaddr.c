@@ -9,6 +9,8 @@
  * 3. terminate the server (e.g. with Ctrl-C) and run it again
  *    ./a.out 0 <port>
  *
+ * Note: this example is IPv4 specific.
+ *
  * (c) vlada@devnull.cz
  */
 
