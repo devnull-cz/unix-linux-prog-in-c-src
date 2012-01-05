@@ -52,7 +52,8 @@ main(int argc, char **argv)
 		err(1, "listen");
 
 	for (;;) {
-		newsock = accept(fd, NULL, 0);
+		if ((newsock = accept(fd, NULL, 0)) == -1)
+			err(1, "accept");
 		while ((n = read(newsock, buf, 100)) != 0)
 			write(1, buf, n);
 		(void) close(newsock);
