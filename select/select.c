@@ -8,18 +8,18 @@
  * easily rewrite this program to be truly select()ive...
  *
  * (c) jp@devnull.cz
-*/
+ */
 
+#include <stdio.h>
+#include <strings.h>
+#include <err.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <strings.h>
-#include <err.h>
 
 #define	BUF_LEN	100
 
@@ -40,15 +40,15 @@ main(int argc, char **argv)
 	sa.sin_family = AF_INET;
 	sa.sin_port = htons((short) atoi(argv[1]));
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
-	
-	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
-	if (bind(s, (struct sockaddr *) &sa, sizeof(sa)) == -1)
+
+	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval));
+	if (bind(s, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
 
 	if (listen(s, SOMAXCONN) == -1)
 		err(1, "listen");
 
-	for ( ; ; ) {
+	for (;;) {
 		/* Must do this each time before calling select(). */
 		FD_ZERO(&rdfds);
 		FD_SET(0, &rdfds);
@@ -57,7 +57,7 @@ main(int argc, char **argv)
 			err(1, "select");
 
 		if (FD_ISSET(0, &rdfds)) {
-			if ((n = read(0, buf, sizeof(buf))) == 0)
+			if ((n = read(0, buf, sizeof (buf))) == 0)
 				break;
 			if (n == -1)
 				err(1, "read");
