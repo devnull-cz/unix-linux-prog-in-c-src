@@ -11,19 +11,21 @@
  * Busy waiting is bad and since we have ways on how not to do that, do not use
  * it. You will NOT get away with that at your exam.
  *
+ * Note: this example is IPv4 specific which is also bad.
+ *
  * (c) jp@devnull.cz
-*/
+ */
 
+#include <stdio.h>
+#include <strings.h>
+#include <stdlib.h>
+#include <err.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <strings.h>
-#include <err.h>
 #include <errno.h>
 
 #define	BUF_LEN	100
