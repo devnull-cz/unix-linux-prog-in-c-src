@@ -100,7 +100,7 @@ main(int argc, char **argv)
 
 	pthread_create(&t, NULL, producer, NULL);
 	pthread_create(&t, NULL, consumer, NULL);
-	
+
 	/*
 	 * Main thread. Periodically print the "contents" of the queue.
 	 */
