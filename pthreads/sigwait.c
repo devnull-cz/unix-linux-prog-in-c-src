@@ -9,16 +9,17 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <pthread.h>
 
-#define CYCLES	100
+#define	CYCLES	100
 
 sigset_t sset;
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 
@@ -29,7 +30,8 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	pthread_t t;
 	int sig, n1 = 1, n2 = 2;
