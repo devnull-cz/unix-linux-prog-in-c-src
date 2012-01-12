@@ -20,8 +20,8 @@ thread(void *x)
 
 	/*
 	 * This "guarantees" that when entering pthread_join() the thread is
-	 * still joinable. However, pthread_join() returns an error as soon as
-	 * the thread is made detachable.
+	 * still joinable. However, pthread_join() should return an error as
+	 * soon as the thread is made detachable.
 	 */
 	printf("thread started\n");
 	sleep(1);
