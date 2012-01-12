@@ -93,9 +93,10 @@ main(int argc, char **argv)
 		max = DEFAULT_MAX;
 
 	/* Seed random device */
-	/* XXX make it work universally on FreeBSD/Linux/OpenSolaris */
 #ifdef __FreeBSD__
 	srandomdev();
+#else
+	srandom(time(NULL));
 #endif
 
 	pthread_create(&t, NULL, producer, NULL);
