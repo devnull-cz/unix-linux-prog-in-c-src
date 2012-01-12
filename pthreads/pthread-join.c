@@ -9,8 +9,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
-void
-*thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 	void *p;
