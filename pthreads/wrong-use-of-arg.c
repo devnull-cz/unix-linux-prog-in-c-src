@@ -10,13 +10,12 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-/* For thr_yield. */
-#include <thread.h>
+#include <pthread.h>
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 
@@ -27,21 +26,22 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	int i;
 	pthread_t t;
 
 	for (i = 0; i < 5; ++i) {
 		pthread_create(&t, NULL, thread, &i);
-#if 0
 		/*
 		 * This is not from POSIX thread API. This is Solaris Threads.
 		 * Those calls can be combined though.
 		 */
-		thr_yield();
-	}
+#if 0
+		pthread_yield();
 #endif
+	}
 
 	/* avoiding pthread_join() for now */
 	sleep(6);
