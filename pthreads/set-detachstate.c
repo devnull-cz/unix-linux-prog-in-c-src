@@ -11,7 +11,8 @@
 #include <string.h>
 #include <err.h>
 
-void *thread(void *x)
+void
+*thread(void *x)
 {
 	int i;
 
@@ -26,7 +27,8 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	int e;
 	pthread_t t, t2;
@@ -39,6 +41,9 @@ int main(void)
 	pthread_create(&t, &a, thread, &n1);
 	pthread_create(&t2, &a, thread, &n2);
 	printf("threads created, will try to join them now\n");
+
+	/* wait half a second for the threads to start */
+	(void) poll(NULL, 0, 500);
 
 	if ((e = pthread_join(t, NULL)) != 0)
 		errx(1, "pthread_join: %s\n", strerror(e));
