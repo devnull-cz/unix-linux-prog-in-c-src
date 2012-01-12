@@ -87,7 +87,7 @@ mythread(void *x)
 	open("fifo", O_RDONLY);
 
 	/* This is here so that you see that we won't get here. */
-	fprintf(stderr, "ERROR: open() finished - SHOULD NOT HAVE HAPPENED !!!\n");
+	fprintf(stderr, "ERROR: open() finished - SHOULD NOT HAVE HAPPENED!\n");
 
 	return (NULL);
 }
