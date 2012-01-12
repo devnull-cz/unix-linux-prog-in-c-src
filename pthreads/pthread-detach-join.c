@@ -6,13 +6,14 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <strings.h>
+#include <string.h>
 #include <err.h>
+#include <unistd.h>
+#include <pthread.h>
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 	void *p;
@@ -33,7 +34,8 @@ void *thread(void *x)
 	return ((void *)x);
 }
 
-int main(void)
+int
+main(void)
 {
 	int e;
 	void *p1;
