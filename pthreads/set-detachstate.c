@@ -1,15 +1,15 @@
 /*
  * Another way how to create detached threads. See also pthread-detach-join.c.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <poll.h>
 #include <string.h>
 #include <err.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <poll.h>
 
 void
 *thread(void *x)
@@ -42,14 +42,14 @@ main(void)
 	pthread_create(&t2, &a, thread, &n2);
 	printf("threads created, will try to join them now\n");
 
-	/* wait half a second for the threads to start */
-	(void) poll(NULL, 0, 500);
+	/* wait half a second for the threads to enter the loop */
+	(void) poll(NULL, 0, 800);
 
 	if ((e = pthread_join(t, NULL)) != 0)
-		errx(1, "pthread_join: %s\n", strerror(e));
+		warnx("pthread_join: thread 1: %s", strerror(e));
 
 	if ((e = pthread_join(t2, NULL)) != 0)
-		errx(1, "pthread_join: %s\n", strerror(e));
+		warnx("pthread_join: thread 2: %s", strerror(e));
 
 	return (0);
 }
