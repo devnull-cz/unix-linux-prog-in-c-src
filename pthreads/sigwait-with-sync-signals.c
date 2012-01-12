@@ -12,12 +12,13 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
 #include <libgen.h>
 #include <err.h>
+#include <pthread.h>
 
 #define	CYCLES	100
 
@@ -80,8 +81,8 @@ main(int argc, char **argv)
 	pthread_create(&t, NULL, thread, &n1);
 	pthread_create(&t, NULL, thread, &n2);
 
-	printf("You can ^C or ^\\ me now. Use ^Z + 'kill -9 %%<job-number>' "
-	    "to get rid of me.\n");
+	printf("You can ^C or ^\\ me now. Use 'kill -9 %d' from separate "
+	    "terminal to get rid of me.\n", getpid());
 	while (1) {
 		sigwait(&sset, &sig);
 		printf("---> caught signal #%d\n", sig);
