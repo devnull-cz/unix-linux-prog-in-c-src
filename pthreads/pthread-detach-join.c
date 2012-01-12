@@ -15,7 +15,7 @@
 void *
 thread(void *x)
 {
-	int i;
+	int i, e;
 	void *p;
 
 	/*
@@ -25,7 +25,8 @@ thread(void *x)
 	 */
 	printf("thread started\n");
 	sleep(1);
-	pthread_detach(pthread_self());
+	if ((e = pthread_detach(pthread_self())) != 0)
+		errx(1, "pthread_detach: %s", strerror(e));
 
 	for (i = 0; i < 5; ++i) {
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
