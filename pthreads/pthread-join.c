@@ -5,11 +5,12 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 
-void *thread(void *x)
+void
+*thread(void *x)
 {
 	int i;
 	void *p;
@@ -18,11 +19,12 @@ void *thread(void *x)
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
 		sleep(1);
 	}
-	
+
 	return ((void *)x);
 }
 
-int main(void)
+int
+main(void)
 {
 	void *p1, *p2;
 	pthread_t t1, t2;
@@ -36,7 +38,7 @@ int main(void)
 
 	pthread_join(t1, &p1);
 	pthread_join(t2, &p2);
-	
+
 	printf("thread %d returned %d\n", n1, *((int *)p1));
 	printf("thread %d returned %d\n", n2, *((int *)p2));
 
