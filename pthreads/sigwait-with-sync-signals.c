@@ -19,15 +19,16 @@
 #include <libgen.h>
 #include <err.h>
 
-#define CYCLES	100
+#define	CYCLES	100
 
 sigset_t sset;
 int k_opt = 0;
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int *p = NULL;
-	
+
 	if (k_opt == 1)
 		pthread_kill(pthread_self(), SIGSEGV);
 	else
@@ -43,8 +44,8 @@ main(int argc, char **argv)
 	pthread_t t;
 	int opt, sig, n1 = 1, n2 = 2;
 
-	while((opt = getopt(argc, argv, "k")) != -1) {
-		switch(opt) {
+	while ((opt = getopt(argc, argv, "k")) != -1) {
+		switch (opt) {
 		case 'k':
 			printf(">>> Will use pthread_kill() to send "
 			    "SIGSEGV.<<<\n\n");
@@ -63,10 +64,10 @@ main(int argc, char **argv)
 	}
 
 	printf("While all the threads mask SIGSEGV, process might be killed "
-	    "based on the system.\n");
-	printf("No matter what, pthread_kill() will probably NOT kill the process.\n");
+	    "based on the system.\nNo matter what, pthread_kill() will "
+	    "probably NOT kill the process.\n");
 	printf("However, memory curruption probably will.\n");
-	printf("Whatever is the outcome, you should never block _synchronous_ "
+	printf("Whatever is the outcome, you should never block synchronous "
 	    "signals.\n\n");
 
 	/*
