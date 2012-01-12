@@ -39,7 +39,7 @@ usage()
 	fprintf(stderr, "	-h	this help\n");
 }
 
-void*
+void *
 count(void *arg)
 {
 	int i;
@@ -47,16 +47,14 @@ count(void *arg)
 	if (atomic) {
 		for (i = 1; i < (int) arg; ++i)
 			atomic_add_32(&x, i);
-	}
-	else {
+	} else {
 		if (mutex) {
 			for (i = 1; i < (int) arg; ++i) {
 				pthread_mutex_lock(&m);
 				x = x + i;
 				pthread_mutex_unlock(&m);
 			}
-		}
-		else {
+		} else {
 			for (i = 1; i < (int) arg; ++i)
 				x = x + i;
 		}
@@ -65,14 +63,15 @@ count(void *arg)
 	return (NULL);
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
 	unsigned int i, n, x2 = 0;
 	pthread_t t1, t2;
 	char c;
 
 	while ((c = getopt(argc, argv, "ahm")) != EOF) {
-		switch(c) {
+		switch (c) {
 		case 'a':
 			atomic = 1;
 			break;
