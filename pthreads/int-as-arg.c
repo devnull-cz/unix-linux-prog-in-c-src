@@ -6,12 +6,13 @@
  * (c) jp@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
+#include <pthread.h>
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 
@@ -22,13 +23,14 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	pthread_t t;
 	int i;
 
 	/* Let's not shoot our leg off. */
-	assert(sizeof(int) <= sizeof(void *));
+	assert(sizeof (int) <= sizeof (void *));
 
 	for (i = 0; i < 5; ++i) {
 		pthread_create(&t, NULL, thread, (void *)i);
