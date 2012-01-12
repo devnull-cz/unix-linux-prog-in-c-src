@@ -4,7 +4,7 @@
  * counter is located, not the counter value as was defined on the main()'s
  * stack. What you are going to see is implementation dependent, you can use
  * "thread 5" messages only, or some initial messages with other thread ID's
- * before "i" gets to 5. Also, try to uncomment pthread_yield() to see what
+ * before "i" gets to 5. Also, try to run with any argument to see what
  * happens. Compare to correct-use-of-arg.c.
  *
  * (c) jp@devnull.cz
@@ -27,10 +27,15 @@ thread(void *x)
 }
 
 int
-main(void)
+main(int argc, char *argv[])
 {
-	int i;
+	int i, yield = 0;
 	pthread_t t;
+
+	if (argc > 1) {
+		printf("running with pthread_yield()\n");
+		yield = 1;
+	}
 
 	for (i = 0; i < 5; ++i) {
 		pthread_create(&t, NULL, thread, &i);
@@ -38,9 +43,8 @@ main(void)
 		 * This is not from POSIX thread API. This is Solaris Threads.
 		 * Those calls can be combined though.
 		 */
-#if 0
-		pthread_yield();
-#endif
+		if (yield)
+			pthread_yield();
 	}
 
 	/* avoiding pthread_join() for now */
