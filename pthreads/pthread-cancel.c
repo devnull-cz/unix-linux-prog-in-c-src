@@ -27,16 +27,16 @@
  * Use is subject to license terms.
  */
 
-#include <pthread.h>
 #include <stdio.h>
+#include <string.h>
+#include <err.h>
 #include <unistd.h>
 #include <poll.h>
 #include <fcntl.h>
-#include <strings.h>
-#include <err.h>
 #include <poll.h>
 #include <time.h>
 #include <libgen.h>
+#include <pthread.h>
 
 #define	NSECS	5
 
@@ -124,7 +124,7 @@ main(int argc, char **argv)
 	if ((e = pthread_join(t, &ptr)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
 	else
-		printf("pthread_join()'s returned pointer: 0x%0X\n", ptr);
+		printf("pthread_join()'s returned pointer: %p\n", ptr);
 
 	return (0);
 }
