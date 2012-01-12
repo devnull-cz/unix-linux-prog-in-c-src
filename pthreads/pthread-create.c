@@ -1,9 +1,9 @@
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <poll.h>
+#include <pthread.h>
 
-void *thread(void *x)
+void
+*thread(void *x)
 {
 	int i;
 
@@ -15,7 +15,8 @@ void *thread(void *x)
 	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	pthread_t t;
 
