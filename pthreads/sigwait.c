@@ -10,6 +10,7 @@
  */
 
 #include <stdio.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
 #include <pthread.h>
@@ -49,8 +50,8 @@ main(void)
 	pthread_create(&t, NULL, thread, &n1);
 	pthread_create(&t, NULL, thread, &n2);
 
-	printf("You can ^C or ^\\ me now. Use ^Z + 'kill -9 %%-' to get rid "
-	    "of me.\n");
+	printf("You can ^C or ^\\ me now. Use 'kill -9 %d' " \
+	    "from separate terminal to get rid of me.\n", getpid());
 	while (1) {
 		sigwait(&sset, &sig);
 		printf("---> caught signal #%d\n", sig);
