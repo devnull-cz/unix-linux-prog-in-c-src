@@ -17,7 +17,7 @@ thread(void *x)
 {
 	int i;
 
-	for (i = 0; i < 5; ++i) {
+	for (i = 0; i < 8; ++i) {
 		printf("%d: thread %d (loop #%d)\n", getpid(),
 		    *((int *) x), i);
 		sleep(1);
@@ -37,6 +37,7 @@ main(void)
 	pthread_create(&t2, NULL, thread, &n2);
 
 	printf("%d: main program before fork()\n", getpid());
+	sleep(1);
 	pid = fork();
 
 	if (pid == 0) {
