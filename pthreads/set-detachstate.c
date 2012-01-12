@@ -11,8 +11,8 @@
 #include <unistd.h>
 #include <poll.h>
 
-void
-*thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 
