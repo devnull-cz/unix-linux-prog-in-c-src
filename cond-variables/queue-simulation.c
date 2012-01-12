@@ -94,9 +94,9 @@ main(int argc, char **argv)
 
 	/* Seed random device */
 #ifdef __FreeBSD__
-	srandomdev();
+	srandomdev(); /* good random numbers */
 #else
-	srandom(time(NULL));
+	srandom(time(NULL)); /* not so good but will suffice */
 #endif
 
 	pthread_create(&t, NULL, producer, NULL);
