@@ -14,23 +14,24 @@
  *
  * (c) jp@devnull.cz
  */
+
 #include <stdio.h>
 #include <setjmp.h>
 
 int
 main(void)
 {
-        int i = 0;
-        jmp_buf env;
+	int i = 0;
+	jmp_buf env;
 
-        setjmp(env);
-        fprintf(stderr, "1\n");
+	setjmp(env);
+	fprintf(stderr, "1\n");
 
-        ++i;
-        if (i == 2)
-                return (1);
+	++i;
+	if (i == 2)
+		return (1);
 
-        longjmp(env, 1);
+	longjmp(env, 1);
 
-        return (0);
+	return (0);
 }
