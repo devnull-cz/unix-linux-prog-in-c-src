@@ -23,6 +23,7 @@ thread(void *x)
 	 * still joinable. However, pthread_join() returns an error as soon as
 	 * the thread is made detachable.
 	 */
+	printf("thread started\n");
 	sleep(1);
 	pthread_detach(pthread_self());
 
