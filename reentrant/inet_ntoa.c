@@ -30,8 +30,8 @@ main(void)
 	printf("one+two: %s %s\n",
 	    inet_ntoa(addr1), inet_ntoa(addr2));
 #ifdef __FreeBSD__
-        printf("one+two: %s %s\n",
-            inet_ntoa_r(addr1, buf, sizeof (buf)),
-            inet_ntoa_r(addr2, buf2, sizeof(buf2)));
+	printf("one+two: %s %s\n",
+	    inet_ntoa_r(addr1, buf, sizeof (buf)),
+	    inet_ntoa_r(addr2, buf2, sizeof (buf2)));
 #endif
 }
