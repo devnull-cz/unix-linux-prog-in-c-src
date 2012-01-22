@@ -6,8 +6,8 @@
  *   gcc gethostbyname.c
  *
  * Run like this:
- *   ./a.out www.google.com www.opensolaris.org
- *   ./a.out www.opensolaris.org www.google.com
+ *   ./a.out www.devnull.cz www.opensolaris.org
+ *   ./a.out www.opensolaris.org www.devnull.cz
  *
  * (c) vlada@devnull.cz
  */
