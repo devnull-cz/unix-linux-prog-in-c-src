@@ -1,7 +1,7 @@
 /*
  * Demonstrate that gethostbyname() is not safe to use even in
  * single threaded program.
- * 
+ *
  * Compile:
  *   gcc -o get gethostbyname.c
  *
@@ -22,9 +22,10 @@ print_hp(const char *comment, struct hostent *hp)
 
 	printf("# %s [%p/%p]:\n", comment, hp, hp->h_addr_list);
 	for (p = hp->h_addr_list; *p != 0; p++) {
-                struct in_addr in;
-                (void) memcpy(&in.s_addr, *p, sizeof (in.s_addr));
-                (void) printf("%s [%s]\n", inet_ntoa(in), hp->h_name);
+		struct in_addr in;
+
+		(void) memcpy(&in.s_addr, *p, sizeof (in.s_addr));
+		(void) printf("%s [%s]\n", inet_ntoa(in), hp->h_name);
 	}
 }
 
@@ -40,12 +41,12 @@ main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	if (!strcmp(argv[1], "-s")) {
+	if (strcmp(argv[1], "-s") == 0) {
 		seq = 1;
 		optind++;
 	}
 
-	if (!strcmp(argv[optind], argv[optind + 1])) {
+	if (strcmp(argv[optind], argv[optind + 1]) == 0) {
 		printf("hosts should be different to make the point\n");
 		exit(1);
 	}
