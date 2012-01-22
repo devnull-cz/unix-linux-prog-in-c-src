@@ -3,16 +3,22 @@
  * single threaded program.
  *
  * Compile:
- *   gcc -o get gethostbyname.c
+ *   gcc gethostbyname.c
  *
  * Run like this:
- *   ./get www.google.com www.opensolaris.org
- *   ./get www.opensolaris.org www.google.com
+ *   ./a.out www.google.com www.opensolaris.org
+ *   ./a.out www.opensolaris.org www.google.com
  *
- * Vladimir Kotal, 2010
+ * (c) vlada@devnull.cz
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <netdb.h>
 
 void
