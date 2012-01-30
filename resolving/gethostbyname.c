@@ -3,8 +3,8 @@
  * use getnameinfo() instead. Use with "www.google.com", for example, to see
  * aliases as well.
  *
- * Note that gethostbyname() and inet_ntoa() are obsolete and should not be used.
- * Use getaddrinfo() and inet_ntop() instead.
+ * Note that gethostbyname() and inet_ntoa() are obsolete and should not be
+ * used. Use getaddrinfo() and inet_ntop() instead.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -39,7 +39,7 @@ main(int argc, char **argv)
 		/* go through IP addresses */
 		if (h->h_addrtype != AF_INET)
 			return (0);
-			
+
 		/*
 		 * h_addr_list contains address structures corresponding to
 		 * the h_addrtype.

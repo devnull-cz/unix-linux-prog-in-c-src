@@ -32,7 +32,7 @@ main(int argc, char **argv)
 	if (to_alloc > 0) {
 		if ((p = malloc(to_alloc)) == NULL) {
 			fprintf(stderr, "malloc failed: %s\n", strerror(errno));
-			return(1);
+			return (1);
 		}
 	}
 

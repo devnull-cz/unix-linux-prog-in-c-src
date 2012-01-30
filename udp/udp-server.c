@@ -32,7 +32,7 @@ main(int argc, char **argv)
 	in.sin_port = htons(atoi(argv[1]));
 	in.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	if (bind(s, (struct sockaddr *) &in, sizeof(in)) == -1)
+	if (bind(s, (struct sockaddr *) &in, sizeof (in)) == -1)
 		err(1, "bind");
 
 	while ((n = recvfrom(s, buf, BUF_LEN, 0, (struct sockaddr *)&faddr,

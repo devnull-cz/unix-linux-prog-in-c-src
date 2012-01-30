@@ -23,6 +23,6 @@ main(void)
 		if ((i + 1) % 19 == 0)
 			putc('\n', stderr);
 	}
-	
+
 	return (0);
 }

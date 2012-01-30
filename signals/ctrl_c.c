@@ -2,7 +2,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-#define MESSAGE "Signal caught !\n"
+#define	MESSAGE "Signal caught !\n"
 
 void
 ctrl_c(int sig)

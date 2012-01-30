@@ -36,7 +36,8 @@
 #include <string.h>
 #include <errno.h>
 
-int main(void)
+int
+main(void)
 {
 	int pid, status;
 

@@ -12,8 +12,8 @@
 #include <unistd.h>
 #include <err.h>
 
-#define BUFSIZE	4096
-#define SECS	5
+#define	BUFSIZE	4096
+#define	SECS	5
 
 void
 handler(int sig)
@@ -21,7 +21,8 @@ handler(int sig)
 	printf("TIMEOUT! Exiting...\n");
 }
 
-int main(void)
+int
+main(void)
 {
 	int size;
 	char buf[BUFSIZE];
@@ -32,7 +33,8 @@ int main(void)
 	act.sa_flags = 0;
 
 	sigaction(SIGALRM, &act, NULL);
-	printf("type anything and hit the enter, you have %d seconds...\n", SECS);
+	printf("type anything and hit the enter, you have %d seconds...\n",
+	    SECS);
 	alarm(SECS);
 
 	if ((size = read(0, buf, BUFSIZE)) == -1) {

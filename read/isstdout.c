@@ -30,7 +30,7 @@ main(void)
 	printf("fileno(stdout) = %d\n", fileno(stdout));
 	printf("fileno(stderr) = %d\n", fileno(stderr));
 	printf("before dup\n");
-	if (dup2(2,1) == -1)
+	if (dup2(2, 1) == -1)
 		err(1, "dup2");
 	printf("after dup\n");
 	fprintf(stdout, "std\n");

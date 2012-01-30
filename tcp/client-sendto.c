@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
 	char buf[100];
 	int fd, n;
@@ -18,7 +19,7 @@ int main(int argc, char **argv)
 	inet_aton("127.0.0.1", &sa.sin_addr);
 
 	fd = socket(AF_INET, SOCK_STREAM, 0);
-	
+
 	do {
 		if ((n = read(0, buf, 100)) <= 0) {
 			close(fd);
@@ -28,7 +29,7 @@ int main(int argc, char **argv)
 		}
 
 	} while ((n = sendto(fd, buf, n, 0, (struct sockaddr *) &sa,
-	    sizeof(sa))) > 0);
+	    sizeof (sa))) > 0);
 
 	if (n != 1) {
 		fprintf(stderr, "write closed\n");

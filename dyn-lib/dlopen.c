@@ -20,7 +20,8 @@
 #include <err.h>
 #include <dlfcn.h>
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
 	typedef void (*fn)(void);
 	void *handle;
@@ -30,9 +31,9 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 		errx(1, "usage: %s <now|lazy>", argv[0]);
 
-	if (!strcmp(argv[1], "now"))
+	if (strcmp(argv[1], "now") == 0)
 		flag = RTLD_NOW;
-	else if (!strcmp(argv[1], "lazy"))
+	else if (strcmp(argv[1], "lazy") == 0)
 		flag = RTLD_LAZY;
 	else
 		errx(1, "invalid flag value");

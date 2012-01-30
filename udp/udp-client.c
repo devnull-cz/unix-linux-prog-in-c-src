@@ -42,8 +42,8 @@ main(int argc, char **argv)
 	/* read the standard input and feed the other side */
 	while ((n = read(0, buf, sizeof (buf))) > 0) {
 		fprintf(stderr, "DBG: sending %d bytes...\n", n);
-		if (sendto(s, buf, n, 0, (struct sockaddr *)&taddr, sizeof
-		    (taddr)) == -1) {
+		if (sendto(s, buf, n, 0, (struct sockaddr *)&taddr,
+		    sizeof (taddr)) == -1) {
 			err(1, "sendto");
 		}
 	}

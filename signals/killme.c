@@ -10,19 +10,21 @@
 #include <strings.h>
 #include <stdio.h>
 
-#define MESSAGE "TERM signal caught !\n"
+#define	MESSAGE "TERM signal caught !\n"
 
-void term_handler(int sig)
+void
+term_handler(int sig)
 {
 	write(1, MESSAGE, strlen(MESSAGE));
 }
 
-int main(void)
+int
+main(void)
 {
 	struct sigaction act;
 
 	/* we leave flags and mask empty */
-	bzero(&act, sizeof(act));
+	bzero(&act, sizeof (act));
 	act.sa_handler = term_handler;
 	sigaction(SIGTERM, &act, NULL);
 

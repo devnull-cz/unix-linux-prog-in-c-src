@@ -49,7 +49,7 @@ main(int argc, char *argv[])
 	addr[5] = 'N';
 	addr[6] = '\0';
 
-	sleep (99);
+	sleep(99);
 
 	return (0);
 }

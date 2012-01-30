@@ -17,7 +17,7 @@
  * filled up while the netcat slowly reads the data.
  *
  * (c) jp@devnull.cz
-*/
+ */
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -52,9 +52,9 @@ main(int argc, char **argv)
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	memset(buf, '.', BUF_LEN);
-	
-	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
-	if (bind(s, (struct sockaddr *) &sa, sizeof(sa)) == -1)
+
+	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval));
+	if (bind(s, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
 
 	if (listen(s, SOMAXCONN) == -1)
@@ -67,7 +67,7 @@ main(int argc, char **argv)
 	 * Just write data to the remote side. If the remote side does not read
 	 * the data we should be finally put to sleep in select().
 	 */
-	for ( ; ; ) {
+	for (;;) {
 		/* Must do this each time before calling select(). */
 		FD_ZERO(&wrfds);
 		FD_SET(newsock, &wrfds);
@@ -78,12 +78,14 @@ main(int argc, char **argv)
 			if ((n = write(newsock, buf, sizeof (buf))) == -1)
 				err(1, "write (%d)", errno);
 			total = total + n;
-			fprintf(stderr, "[ %d bytes written (total %d) ]", n, total);
+			fprintf(stderr, "[ %d bytes written (total %d) ]",
+			    n, total);
 		}
 	}
 
 	/* Not reached. */
 	close(newsock);
 	close(s);
+
 	return (0);
 }

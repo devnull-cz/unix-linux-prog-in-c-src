@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-void foo(void)
+void
+foo(void)
 {
 	int a, b, i, j;
 	char *addr;

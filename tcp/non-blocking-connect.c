@@ -2,9 +2,9 @@
  * Example on how to work with a non-blocking connect. Uses fixed input and
  * should show all 3 situations we care about - a successful connect, a refused
  * connect, and a timeout. Uses legacy functions gethostbyname() and
- * inet_ntoa(). Use getaddrinfo() and inet_ntop() to make this work with IPv6 as
- * well.
- * 
+ * inet_ntoa(). Use getaddrinfo() and inet_ntop() to make this work with IPv6
+ * as well.
+ *
  * (c) jp@devnull.cz
  */
 
@@ -29,7 +29,7 @@
 int
 main(int argc, char **argv)
 {
-	socklen_t optlen;	
+	socklen_t optlen;
 	struct hostent *he;
 	struct timeval tout;
 	struct sockaddr_in in;
@@ -78,7 +78,8 @@ main(int argc, char **argv)
 		in.sin_addr = (*((struct in_addr *)he->h_addr_list[0]));
 
 		printf("  we got this IP address for %s: ", hostnames[i]);
-		printf("%s\n", inet_ntoa(*((struct in_addr *)he->h_addr_list[0])));
+		printf("%s\n",
+		    inet_ntoa(*((struct in_addr *)he->h_addr_list[0])));
 
 		if ((sockets[i] = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 			err(1, "socket");
@@ -88,7 +89,7 @@ main(int argc, char **argv)
 			err(1, "fcntl");
 
 		if (connect(sockets[i], (struct sockaddr *)&in,
-		    sizeof(in)) == -1) {
+		    sizeof (in)) == -1) {
 			/* this is what we expect */
 			if (errno == EINPROGRESS) {
 				printf("    connect EINPROGRESS OK "
@@ -104,8 +105,7 @@ main(int argc, char **argv)
 				printf("    connect: %s\n", strerror(errno));
 				++n;
 			}
-		}
-		else {
+		} else {
 			/* this may happen, on localhost for example */
 			printf("  %s connected OK on port %d\n", hostnames[i],
 			    ports[i]);
@@ -149,7 +149,7 @@ main(int argc, char **argv)
 		for (i = 0; i < MAX_HOSTS; ++i) {
 			if (FD_ISSET(sockets[i], &wrfds)) {
 				optval = -1;
-				optlen = sizeof(optval);
+				optlen = sizeof (optval);
 
 				if (getsockopt(sockets[i], SOL_SOCKET, SO_ERROR,
 				    &optval, &optlen) == -1) {
@@ -164,7 +164,8 @@ main(int argc, char **argv)
 					printf("  %s connected OK on port %d\n",
 					    hostnames[i], ports[i]);
 				else {
-					printf("  %s connect failed on port %d (%s)\n",
+					printf("  %s connect failed on "
+					    "port %d (%s)\n",
 					    hostnames[i], ports[i],
 					    strerror(optval));
 				}
@@ -183,7 +184,8 @@ main(int argc, char **argv)
 	/* those remaining in the wrfds set are those that timed out on us */
 	for (i = 0; i < MAX_HOSTS; ++i) {
 		if (FD_ISSET(sockets[i], &wrfds_orig))
-			printf("  %s timed out on port %d\n", hostnames[i], ports[i]);
+			printf("  %s timed out on port %d\n",
+			    hostnames[i], ports[i]);
 	}
 
 	return (0);

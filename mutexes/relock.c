@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(void)
+int
+main(void)
 {
 	int n;
 	pthread_mutexattr_t attr;

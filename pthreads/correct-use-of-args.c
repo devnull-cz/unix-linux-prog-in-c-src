@@ -30,9 +30,9 @@ main(void)
 	for (i = 0; i < 5; ++i) {
 		id[i] = i;
 		pthread_create(&t, NULL, thread, id + i);
-		/*
+#if 0
 		pthread_yield();
-		*/
+#endif
 	}
 
 	/* avoiding pthread_join() for now */

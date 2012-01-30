@@ -13,7 +13,7 @@ bye(void)
 {
 	printf("Taadyadya\n");
 }
-         
+
 int
 main(void)
 {

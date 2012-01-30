@@ -3,11 +3,11 @@
  * versa. Note that the string can change so we really convert back and forth;
  * note the change in the prefix and the suffix:
  *
- *	$ ./a.out 0:0:2001:1508:1003:4::
- *	a.out: inet_pton failed for '0:0:2001:1508:1003:4::'. Will try INET6 now.
- *	Succesfully converted an IPv6 address string.
- *	Succesfully converted a binary IPv6 address to a string.
- *	The address is: ::2001:1508:1003:4:0:0
+ *  $ ./a.out 0:0:2001:1508:1003:4::
+ *  a.out: inet_pton failed for '0:0:2001:1508:1003:4::'. Will try INET6 now.
+ *  Succesfully converted an IPv6 address string.
+ *  Succesfully converted a binary IPv6 address to a string.
+ *  The address is: ::2001:1508:1003:4:0:0
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -51,7 +51,8 @@ main(int argc, char **argv)
 		if (inet_ntop(AF_INET6, &in6, dst, INET6_ADDRSTRLEN) == NULL) {
 			err(1, "inet_ntop");
 		}
-		printf("Succesfully converted a binary IPv6 address to a string.\n");
+		printf("Succesfully converted a binary IPv6 address "
+		    "to a string.\n");
 		printf("The address is: %s\n", dst);
 	} else {
 		printf("Succesfully converted an IPv4 address string to a "
@@ -59,7 +60,8 @@ main(int argc, char **argv)
 		if (inet_ntop(AF_INET, &in, dst, INET6_ADDRSTRLEN) == NULL) {
 			err(1, "inet_ntop");
 		}
-		printf("Succesfully converted a binary IPv4 address to a string.\n");
+		printf("Succesfully converted a binary IPv4 address "
+		    "to a string.\n");
 		printf("The address is: %s\n", dst);
 	}
 

@@ -8,9 +8,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define SOCKETNAME "my_socket"
+#define	SOCKETNAME "my_socket"
 
-int main(void)
+int
+main(void)
 {
 	struct sockaddr_un sa;
 	int fd_skt, fd_client;
@@ -32,24 +33,23 @@ int main(void)
 		}
 		sleep(1);
 
-		connect(fd_skt, (struct sockaddr *) &sa, sizeof(sa));
+		connect(fd_skt, (struct sockaddr *) &sa, sizeof (sa));
 
 		write(fd_skt, "hello!", 7);
-		read(fd_skt, buf, sizeof(buf));
+		read(fd_skt, buf, sizeof (buf));
 		printf("client got \"%s\"\n", buf);
-	}
-	else {
+	} else {
 		if ((fd_skt = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
 			perror("socket");
 			exit(1);
 		}
-		bind(fd_skt, (struct sockaddr *) &sa, sizeof(sa));
+		bind(fd_skt, (struct sockaddr *) &sa, sizeof (sa));
 		listen(fd_skt, SOMAXCONN);
 		fd_client = accept(fd_skt, NULL, 0);
 
-		read(fd_client, buf, sizeof(buf));
+		read(fd_client, buf, sizeof (buf));
 		printf("server got \"%s\"\n", buf);
-		write(fd_client, "get out!", 9 );
+		write(fd_client, "get out!", 9);
 	}
 
 	return (0);

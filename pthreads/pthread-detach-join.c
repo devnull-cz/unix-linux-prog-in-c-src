@@ -32,7 +32,7 @@ thread(void *x)
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
 		sleep(1);
 	}
-	
+
 	return ((void *)x);
 }
 

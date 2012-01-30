@@ -36,7 +36,6 @@ main(int argc, char **argv)
 
 	if (lseek(fd, atoi(argv[3]), SEEK_CUR) == -1)
 		err(1, "lseek");
-	
 
 	if ((n = read(fd, &c, 1)) != 1) {
 		if (n == 0)
@@ -44,7 +43,7 @@ main(int argc, char **argv)
 		else
 			err(1, "read");
 	}
-	
+
 	printf("Character read: '%c'\n", c);
 
 	return (0);

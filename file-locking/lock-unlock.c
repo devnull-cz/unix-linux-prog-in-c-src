@@ -31,7 +31,8 @@ lock(char *filename)
 			err(2, "open");
 		return (1);
 	}
-	return (0);		
+
+	return (0);
 }
 
 int
@@ -39,7 +40,8 @@ unlock(char *filename)
 {
 	if (unlink(filename) == -1)
 		err(2, "unlink");
-	return (0);		
+
+	return (0);
 }
 
 int

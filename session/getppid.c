@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(void)
+int
+main(void)
 {
-  printf("parent pid is: %d\n", getppid());
-  return 0;
+	printf("parent pid is: %d\n", getppid());
+	return (0);
 }

@@ -9,10 +9,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void usage(char *argv0)
+void
+usage(char *argv0)
 {
 	fprintf(stderr,
-	    "usage: %s command [-c code] [filename [filename [...]]]\n", argv0);
+	    "usage: %s command [-c code] [filename [filename [...]]]\n",
+	    argv0);
+
 	exit(1);
 }
 
@@ -34,7 +37,7 @@ main(int argc, char **argv)
 	argv++;
 	argc--;
 	while ((opt = getopt(argc, argv, "c:")) != -1) {
-		switch(opt) {
+		switch (opt) {
 		case 'c':
 			printf("option -c set to '%s'\n", optarg);
 			break;

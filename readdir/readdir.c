@@ -9,7 +9,8 @@
 #include <errno.h>
 #include <err.h>
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
 	int i;
 	DIR *d;
@@ -19,7 +20,6 @@ int main(int argc, char *argv[])
 		errx(1, "usage: %s dir1 [dir2 [dir3 ...]]", argv[0]);
 
 	for (i = 1; i < argc; i++) {
-
 		printf("== [%s] ==\n", argv[i]);
 		if ((d = opendir(argv[i])) == NULL) {
 			warn("%s", argv[i]);

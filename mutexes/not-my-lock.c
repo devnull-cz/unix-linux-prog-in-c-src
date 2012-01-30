@@ -23,7 +23,8 @@
 int a, b;
 pthread_mutex_t mutex, mutex2, mutex3;
 
-void usage()
+void
+usage()
 {
 	printf("Program messes up with mutexes.\n");
 	printf("Usage: not-my-lock [-h|-e|-n|-r]\n");
@@ -36,7 +37,8 @@ void usage()
 	exit(1);
 }
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int e, data = (int) x;
 
@@ -53,15 +55,16 @@ void *thread(void *x)
 	else
 		fprintf(stderr, "No error detected.\n\n");
 
-	return NULL;
+	return (NULL);
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
 	pthread_t t;
 	pthread_mutexattr_t attr;
 	int e, opt;
-	
+
 	pthread_mutexattr_init(&attr);
 
 	while ((opt = getopt(argc, argv, "renh")) != -1) {

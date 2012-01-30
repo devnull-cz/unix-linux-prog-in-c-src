@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int helper(void)
+int
+helper(void)
 {
 	int i = 17;
 	return (i);

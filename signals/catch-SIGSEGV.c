@@ -12,7 +12,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-#define MESSAGE "Signal caught !\n"
+#define	MESSAGE "Signal caught !\n"
 
 void
 handle_segfault(int sig)
@@ -25,7 +25,7 @@ main(void)
 {
 	struct sigaction act;
 
-	memset(&act, 0, sizeof(act));
+	memset(&act, 0, sizeof (act));
 	act.sa_handler = handle_segfault;
 	sigaction(SIGSEGV, &act, NULL);
 

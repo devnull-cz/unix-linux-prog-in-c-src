@@ -22,7 +22,7 @@
 #include <pwd.h>
 #include <siginfo.h>
 
-#define MESSAGE "TERM signal caught !\n"
+#define	MESSAGE "TERM signal caught !\n"
 
 /* NOTE: this is not a safe signal handler ! */
 void
@@ -73,7 +73,7 @@ main(void)
 
 	printf("PID %d started...\n", getpid());
 
-	bzero(&act, sizeof(act));
+	bzero(&act, sizeof (act));
 	act.sa_sigaction = term_handler;
 	/* must use this in order to use sa_sigaction field */
 	act.sa_flags = SA_SIGINFO;

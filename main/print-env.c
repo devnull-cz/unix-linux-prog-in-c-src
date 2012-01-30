@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /* This variable is defined in libc.so. */
-extern char** environ;
+extern char **environ;
 
 int
 main(void)

@@ -1,7 +1,7 @@
 /*
  * Implement this command:
  *
- *	cat <in >out 
+ *	cat <in >out
  *
  * Which means, that after running "./a.out" the program will copy the existing
  * file "in" to a newly created (or an existing truncated) file "out".

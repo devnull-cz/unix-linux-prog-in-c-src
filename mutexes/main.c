@@ -5,7 +5,8 @@
 int a, b;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void *thread(void *x)
+void *
+thread(void *x)
 {
 	int data = (int) x;
 
@@ -26,10 +27,11 @@ void *thread(void *x)
 		pthread_mutex_unlock(&mutex);
 	}
 
-	return NULL;
+	return (NULL);
 }
 
-int main(void)
+int
+main(void)
 {
 	pthread_t t1, t2;
 

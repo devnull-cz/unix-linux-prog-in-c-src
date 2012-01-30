@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
 	char buf[100];
 	int fd, n;
@@ -18,8 +19,8 @@ int main(int argc, char **argv)
 	inet_aton("127.0.0.1", &sa.sin_addr);
 
 	fd = socket(AF_INET, SOCK_STREAM, 0);
-	
-	if (connect(fd, (struct sockaddr *) &sa, sizeof(sa)) == -1) {
+
+	if (connect(fd, (struct sockaddr *) &sa, sizeof (sa)) == -1) {
 		perror("connect");
 		exit(1);
 	}

@@ -21,7 +21,8 @@
 #include <signal.h>
 #include <err.h>
 
-unsigned long i;	/* number of loops per process, u_long should be enough for basic demo */
+unsigned long i;	/* number of loops per process */
+			/* u_long should be enough for basic demo */
 unsigned int j;		/* j is number of races detected */
 
 void
@@ -44,7 +45,7 @@ main(int argc, char **argv)
 	else
 		dbg = 1;
 
-	bzero(&act, sizeof(act));
+	bzero(&act, sizeof (act));
 	act.sa_handler = print_stat;
 	sigaction(SIGINT, &act, NULL);
 
@@ -62,7 +63,7 @@ main(int argc, char **argv)
 	switch (fork()) {
 	case -1:
 		err(1, "fork");
-	case 0: 
+	case 0:
 		while (1) {
 			if (addr[0] != addr[1]) {
 				if (dbg)

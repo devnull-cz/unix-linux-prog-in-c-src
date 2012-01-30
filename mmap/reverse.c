@@ -13,7 +13,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-int main(void)
+int
+main(void)
 {
 	char c;
 	int fd, size;

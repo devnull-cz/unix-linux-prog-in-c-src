@@ -59,9 +59,9 @@ main(int argc, char **argv)
 	if (argc == 1)
 		errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
 		    basename(argv[0]));
- 
+
 	while ((opt = getopt(argc, argv, "b:")) != -1) {
-		switch(opt) {
+		switch (opt) {
 		case 'b':
 			bufsize = atoi(optarg);
 			break;

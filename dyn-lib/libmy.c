@@ -2,7 +2,8 @@
 
 extern void foo(void);
 
-void myprint(void)
+void
+myprint(void)
 {
 	printf("hello\n");
 	foo();

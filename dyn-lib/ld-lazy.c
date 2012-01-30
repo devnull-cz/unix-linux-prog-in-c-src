@@ -4,14 +4,14 @@
  *
  * Normal way: cc -lm ld-lazy.c
  *
- *  $ ./a.out 
+ *  $ ./a.out
  *  7273:   ./a.out
  *  /lib/libm.so.2
  *  /usr/lib/libc/libc_hwcap1.so.1
  *
  * Lazy binding: cc -z lazyload -lm ld-lazy.c
  *
- *  $ ./a.out 
+ *  $ ./a.out
  *  7273:   ./a.out
  *  /usr/lib/libc/libc_hwcap1.so.1
  *
@@ -19,7 +19,7 @@
  * with fork(), for example. The difference in ELF when lazy loading is
  * requested is the LAZY flag:
  *
- *   $ elfdump -d a.out 
+ *   $ elfdump -d a.out
  *   ...
  *   [0]  POSFLAG_1         0x1                 [ LAZY ]
  *   [1]  NEEDED            0x187               libm.so.2

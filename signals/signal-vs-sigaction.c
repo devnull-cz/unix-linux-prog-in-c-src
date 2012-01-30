@@ -23,7 +23,7 @@ sig_handler(int s)
 
 	sleep(10);
 
-        printf("returning from signal handler\n");
+	printf("returning from signal handler\n");
 }
 
 int

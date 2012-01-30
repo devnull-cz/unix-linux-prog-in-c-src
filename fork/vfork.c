@@ -16,7 +16,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(void)
+int
+main(void)
 {
 	int i, pid;
 	char *name;

@@ -9,7 +9,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(void)
+int
+main(void)
 {
 	int i, pid;
 	char *name;
@@ -33,5 +34,5 @@ int main(void)
 		sleep(1);
 	}
 
-	return 0;
+	return (0);
 }

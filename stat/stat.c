@@ -17,7 +17,7 @@ main(int argc, char **argv)
 {
 	int fd;
 	struct stat buf;
-	
+
 	if (argc != 2)
 		errx(1, "Filename missing as a parameter.");
 

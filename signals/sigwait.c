@@ -19,7 +19,8 @@
 #include <stdlib.h>
 #include <err.h>
 
-int main(void)
+int
+main(void)
 {
 	char c = 0;
 	int fd, pid, sig;
