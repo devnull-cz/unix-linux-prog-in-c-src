@@ -32,7 +32,8 @@ main(int argc, char **argv)
 {
 	int error;
 	struct protoent *proto;
-	char addr[INET6_ADDRSTRLEN];
+	char ip_str[INET6_ADDRSTRLEN];
+	char port_str[16]; /* XXX STRLEN for service ? */
 	struct addrinfo *res, *resorig, hints;
 
 	if (argc != 3)
@@ -54,18 +55,13 @@ main(int argc, char **argv)
 
 		/* use getprotobynumber_r() in a threaded environment */
 		proto = getprotobynumber(res->ai_protocol);
-		printf("address '%s' port '%d' protocol '%s'\n",
-		    res->ai_family == AF_INET ?
-		    inet_ntop(res->ai_family,
-		    &((struct sockaddr_in *)(res->ai_addr))->sin_addr,
-		    addr, sizeof (addr)) :
-		    inet_ntop(res->ai_family,
-		    &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr,
-		    addr, sizeof (addr)),
-		    htons(res->ai_family == AF_INET ?
-		    ((struct sockaddr_in *)(res->ai_addr))->sin_port :
-		    ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port),
-		    proto->p_name);
+		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
+		    ip_str, sizeof (ip_str), port_str, sizeof (port_str),
+		    NI_NUMERICHOST|NI_NUMERICSERV) != 0)) {
+			errx(1, "%s", gai_strerror(error));
+		}
+		printf("address '%s' port '%s' protocol '%s'\n",
+		    ip_str, port_str, proto->p_name);
 	}
 
 	freeaddrinfo(resorig);
