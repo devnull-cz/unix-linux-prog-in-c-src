@@ -8,9 +8,9 @@
  * (1) Hostname www.ipv6.cz is an alias for staff.cesnet.cz which has A and AAAA
  * DNS record:
  *
- *   $ ./a.out www.ipv6.cz
- *   host 195.113.144.241 resolves to staff.cesnet.cz
- *   host 2001:718:1:101::6 resolves to staff.cesnet.cz
+ *	$ ./a.out www.ipv6.cz
+ *	host 195.113.144.241 resolves to staff.cesnet.cz
+ *	host 2001:718:1:101::6 resolves to staff.cesnet.cz
  *
  * (2) If a loopback interface looks like this (output from Mac OS X 10.6.8):
  *
@@ -28,7 +28,6 @@
  *
  * (c) vlada@devnull.cz, jp@devnull.cz
  */
-
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
