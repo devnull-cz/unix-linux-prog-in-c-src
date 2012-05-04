@@ -1,6 +1,6 @@
 /*
  * Example of getnameinfo(3socket) usage. Get sockaddr structures from the
- * hostname in argv[1] (can be an IP address, too) via getaddrinfo(3cosket) and
+ * hostname in argv[1] (can be an IP address, too) via getaddrinfo(3socket) and
  * then for each of those in the addrinfo list, lookup a hostname and print it.
  *
  * Examples:
