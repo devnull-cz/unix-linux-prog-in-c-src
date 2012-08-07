@@ -1,17 +1,19 @@
+/*
+ * Create one thread and let it print a few numbers in a loop.
+ */
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
 
-void
-*thread(void *x)
+void *
+thread(void *x)
 {
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread loop #%d\n", i);
-		sleep(1);
+		(void) printf("thread loop #%d\n", i);
+		(void) sleep(1);
 	}
-
 	return (NULL);
 }
 
@@ -20,9 +22,12 @@ main(void)
 {
 	pthread_t t;
 
-	pthread_create(&t, NULL, thread, NULL);
-	/* for now... */
-	sleep(5);
-
+	(void) pthread_create(&t, NULL, thread, NULL);
+	/*
+	 * We have to do this for now so that we do not exit from main before
+	 * the thread has finished. Note that there is a better way (= correct
+	 * way) of doing this.
+	 */
+	(void) sleep(5);
 	return (0);
 }
