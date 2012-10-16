@@ -1,5 +1,8 @@
 /*
  * Will crash and generate a core dump.
+ *
+ * You might want to run 'ulimit -c size' with reasonable non-zero size to
+ * actually get the core file.
  */
 void
 bad_memory_access(void)
