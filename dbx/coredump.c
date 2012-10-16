@@ -5,7 +5,7 @@ void
 bad_memory_access(void)
 {
 	char *x = 0x00;
-	x[0] = '\0';
+	x[0] = 'A';
 }
 
 int
