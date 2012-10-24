@@ -25,10 +25,19 @@ main(int argc, char **argv)
 		err(1, "open");
 
 	fstat(fd, &buf);
+
+	/*
+	 * There is no truly good way how to print most of the
+	 * members of struct stat. For the following prints
+	 * (u)intmax_t and PRI(d|u)MAX (from inttypes.h)
+	 * might be the best way (albeit far from optimal)
+	 * how to deal with that.
+	 */
+
 	/* Verify with "du -s <file>" */
 	printf("Allocated blocks: %ld\n", buf.st_blocks);
 	/* Verify with "ls -i <file>" */
-	printf("Inode number: %ld\n", buf.st_ino);
+	printf("Inode number: %lu\n", (long) buf.st_ino);
 
 	return (0);
 }
