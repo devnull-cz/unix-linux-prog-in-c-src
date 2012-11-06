@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <libgen.h>
 
 void
 usage(char *argv0)
@@ -23,7 +24,7 @@ int
 main(int argc, char **argv)
 {
 	int opt;
-	char *argv0 = argv[0];
+	char *argv0 = basename(argv[0]);
 
 	/* comment out to print getopt() error messages */
 	opterr = 0;
