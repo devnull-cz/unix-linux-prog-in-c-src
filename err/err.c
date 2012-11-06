@@ -1,6 +1,7 @@
 /*
  * Shows how to use err(3C) functions.
  */
+#include <stdio.h>
 #include <errno.h>
 #include <err.h>
 
