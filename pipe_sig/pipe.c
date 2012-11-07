@@ -29,6 +29,7 @@ main(void)
 	int n;
 
 	/* XXX do not use signal() ! */
+	/* XXX does not compile on Solaris (sig_t) */
 	signal(2, (sig_t) xxx);
 	fprintf(stderr, "%d: starting\n", getpid());
 
