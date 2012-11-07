@@ -17,6 +17,7 @@ main(void)
 	char c;
 	int n;
 
+	/* XXX do not use signal() ! */
 	signal(2, (sig_t) xxx);
 	fprintf(stderr, "%d: starting\n", getpid());
 

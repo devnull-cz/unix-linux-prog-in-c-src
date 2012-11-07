@@ -1,4 +1,8 @@
 # run like this and then press ^C
 
-for i in `jot 10`; do echo $i; sleep 1; done | \
+#
+# We could have used `jot 10` for generating the sequence
+# however it is not available on all systems except FreeBSD/Mac OS X.
+#
+for i in 1 2 3 4 5 6 7 8 9 10; do echo $i; sleep 1; done | \
   ./a.out | ./a.out | ./a.out | ./a.out
