@@ -8,11 +8,12 @@
  *
  * (c) jp@devnull.cz
  */
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #include <errno.h>
 
 int nonini1;
@@ -37,10 +38,10 @@ main(int argc, char **argv)
 	}
 
 	printf("addresses:\n");
-	printf("  local variable:\t0x%p\n", buf);
-	printf("  noninitialized var:\t0x%p\n", &nonini1);
-	printf("  initialized var 1:\t0x%p\n", &ini1);
-	printf("  initialized var 2:\t0x%p\n", &ini2);
+	printf("  local variable:\t%p\n", buf);
+	printf("  noninitialized var:\t%p\n", &nonini1);
+	printf("  initialized var 1:\t%p\n", &ini1);
+	printf("  initialized var 2:\t%p\n", &ini2);
 
 	printf("\n=== pmap %d ===\n", getpid());
 	snprintf(buf, sizeof (buf), "%d", getpid());
