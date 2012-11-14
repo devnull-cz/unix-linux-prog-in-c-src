@@ -31,7 +31,7 @@ main(void)
 	}
 
 	/*
-	 * On Linux 32-bit x86, accesing 0-8191 is OK, 8192 generates
+	 * 32-bit x86 process on Solaris, accesing 0-8191 is OK, 8192 generates
 	 * SIGSEGV or SIGBUS.
 	 */
 	for (i = 4095; i < 16384; i++) {
