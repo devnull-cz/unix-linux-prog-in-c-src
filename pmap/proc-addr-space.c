@@ -38,6 +38,7 @@ main(int argc, char **argv)
 	}
 
 	printf("addresses:\n");
+	printf("  variable on the heap:\t%p\n", p);
 	printf("  local variable:\t%p\n", buf);
 	printf("  noninitialized var:\t%p\n", &nonini1);
 	printf("  initialized var 1:\t%p\n", &ini1);
