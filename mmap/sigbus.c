@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <err.h>
 #include <sys/mman.h>
 
 int
@@ -18,9 +17,7 @@ main(void)
 	char *addr = NULL;
 	int i;
 
-#if 0
-	printf("pagesize = %ld\n", sysconf(_SC_PAGE_SIZE));
-#endif
+	printf("pagesize = %ld bytes\n", sysconf(_SC_PAGE_SIZE));
 
 	fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666);
 
@@ -28,8 +25,10 @@ main(void)
 	write(fd, &c, 1);
 
 	if ((addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0))
-	    == NULL)
-		err(1, "mmap failed");
+	    == NULL) {
+		fprintf(stderr, "mmap failed");
+		exit(1);
+	}
 
 	/*
 	 * On Linux 32-bit x86, accesing 0-8191 is OK, 8192 generates
