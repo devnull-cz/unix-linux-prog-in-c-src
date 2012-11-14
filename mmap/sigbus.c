@@ -31,8 +31,8 @@ main(void)
 	}
 
 	/*
-	 * 32-bit x86 process on Solaris, accesing 0-8191 is OK, 8192 generates
-	 * SIGSEGV or SIGBUS.
+	 * 32-bit SPARC process on Solaris (8K pages), accesing 0-8191 is OK,
+	 * 8192 generates SIGSEGV.
 	 */
 	for (i = 4095; i < 16384; i++) {
 		printf("%d\n", i); /* use \n so that output is flushed. */
