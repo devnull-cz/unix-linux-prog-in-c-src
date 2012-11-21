@@ -1,6 +1,11 @@
 /*
  * Demonstrate what is sigqueue() good for.
  *
+ * compile and run:
+ *   cc sigqueue.c
+ *   ./a.out
+ *   echo $?
+ *
  * (c) vlada@devnull.cz
  */
 
@@ -11,6 +16,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+
+#ifndef _POSIX_REALTIME_SIGNALS
+#error	"sorry, POSIX.4 real time signals extensions missing."
+#endif
 
 volatile sig_atomic_t num;
 

@@ -19,6 +19,10 @@
 #include <unistd.h>
 #include <pwd.h>
 
+#ifndef _POSIX_REALTIME_SIGNALS
+#error	"sorry, POSIX.4 real time signals extensions missing."
+#endif
+
 /*
  * NOTE: this is not a safe signal handler since it is using unsafe functions
  * 	 like printf/fflush.
@@ -59,11 +63,6 @@ int
 main(void)
 {
 	struct sigaction act;
-
-#ifndef _POSIX_REALTIME_SIGNALS
-	errx(1, "sorry, POSIX.4 real time signals extensions "
-	    "missing.");
-#endif
 
 	printf("PID %d started...\n", getpid());
 
