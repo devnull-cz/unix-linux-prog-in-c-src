@@ -11,7 +11,7 @@
  *
  * Solaris:
  *	$ gcc -shared -o myread.so rtld_next.c
- * Linux:
+ * Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
  *	$ gcc -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
  *
  * Run:
