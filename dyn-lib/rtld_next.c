@@ -10,9 +10,9 @@
  * Use like this:
  *
  * Solaris:
- *	$ gcc -shared -o myread.so rtld_next.c
+ *	$ gcc -KPIC -shared -o myread.so rtld_next.c
  * Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
- *	$ gcc -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
+ *	$ gcc -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
  *
  * Run:
  *	$ LD_PRELOAD=./myread.so cat /etc/passwd
