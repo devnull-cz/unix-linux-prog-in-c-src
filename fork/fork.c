@@ -12,7 +12,8 @@
 int
 main(void)
 {
-	int i, pid;
+	int i;
+	pid_t pid;
 	char *name;
 
 	switch (pid = fork()) {
