@@ -9,7 +9,11 @@
  *  /lib/libm.so.2
  *  /usr/lib/libc/libc_hwcap1.so.1
  *
- * Lazy binding: cc -z lazyload -lm ld-lazy.c
+ * Lazy binding:
+ *   Solaris:
+ *     cc -z lazyload -lm ld-lazy.c
+ *   Linux:
+ *     gcc -z lazy -lm ld-lazy.c
  *
  *  $ ./a.out
  *  7273:   ./a.out
@@ -30,14 +34,15 @@
  *
  * (c) jp@devnull.cz
  */
-#include <sys/wait.h>
-#include <math.h>
+
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 #include <errno.h>
-#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <math.h>
 
 int
 main(int argc, char **argv)
