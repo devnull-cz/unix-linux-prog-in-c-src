@@ -3,36 +3,33 @@
  * other information is provided to the signalled process. Among them is a PID
  * of the process that sent a signal and UID. Example:
  *
- * $ ./a.out 		# and now kill 4114 with SIGTERM (just "kill 4114")
+ * $ ./a.out 		# and now kill 4114 with SIGINT ("kill -INT 4114")
  * PID 4114 started...
  * sig received: TERM
  * signalled by PID: 3764
  * and process was owned by: janp
  *
- * Note: runs on Solaris
- *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <signal.h>
 #include <unistd.h>
-#include <strings.h>
-#include <stdio.h>
 #include <pwd.h>
-#include <siginfo.h>
 
-#define	MESSAGE "TERM signal caught !\n"
-
-/* NOTE: this is not a safe signal handler ! */
+/*
+ * NOTE: this is not a safe signal handler since it is using unsafe functions
+ * 	 like printf/fflush.
+ */
 void
-term_handler(int sig, siginfo_t *info, void *ignored)
+sig_handler(int sig, siginfo_t *info, void *ignored)
 {
-	char signame[SIG2STR_MAX];
-
 	/* Ctrl-C on Solaris makes info to be NULL pointer. */
 	if (info == NULL) {
-		printf("NULL info, returning\n");
+		printf("NULL signal info, we only know the signal number\n");
+		printf("sig received: %s\n", strsignal(sig));
 		return;
 	}
 
@@ -45,20 +42,17 @@ term_handler(int sig, siginfo_t *info, void *ignored)
 	 * si_code is for and what it can carry. Also, you may want to read more
 	 * about sigqueue(3C) with its 2nd parameter.
 	 */
-	if (info->si_code != SI_NOINFO) {
-		sig2str(info->si_signo, signame);
-		printf("sig received: %s\n", signame);
+	if (info->si_code == SI_USER) {
+		printf("sig received: %s\n", strsignal(info->si_signo));
 		printf("signalled by PID: %d\n", info->si_pid);
 		printf("and process was owned by: %s\n",
 		    (getpwuid(info->si_uid))->pw_name);
-		fflush(stdout);
 	} else {
 		printf("signal not generated from a user process.\n");
 		printf("that means we got just a signal number.\n");
-		sig2str(info->si_signo, signame);
-		printf("sig received: %s\n", signame);
-		fflush(stdout);
 	}
+
+	fflush(stdout);
 }
 
 int
@@ -74,13 +68,12 @@ main(void)
 	printf("PID %d started...\n", getpid());
 
 	bzero(&act, sizeof (act));
-	act.sa_sigaction = term_handler;
+	act.sa_sigaction = sig_handler;
 	/* must use this in order to use sa_sigaction field */
 	act.sa_flags = SA_SIGINFO;
 	/*
-	 * You can change to SIGINT, and if you ^C it from the terminal, you
-	 * will get no PID. That's because SIGINT is generated from the pseudo
-	 * terminal driver (ie, kernel).
+	 * If you ^C it from the terminal, you will get no PID. That's because
+	 * SIGINT is generated from the pseudo terminal driver (ie, kernel).
 	 */
 	(void) sigaction(SIGINT, &act, NULL);
 
