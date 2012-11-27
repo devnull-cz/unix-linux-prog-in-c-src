@@ -13,5 +13,6 @@ fi
 
 echo "running $PROG for $SECS seconds"
 $PROG &
+pid=$!
 sleep $SECS
-pkill -INT -U `id -u` `basename $PROG`
+kill -INT $pid
