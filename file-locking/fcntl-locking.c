@@ -97,6 +97,9 @@ main(int argc, char **argv)
 			lseek(fd, j, SEEK_SET);
 			++j;
 			write(fd, c + i, 1);
+
+			// sleep for 10 ms
+			// XXX use nanosleep();
 			poll(NULL, 0, 10);
 
 			if (j == FILE_LEN) {
