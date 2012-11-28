@@ -98,8 +98,7 @@ main(int argc, char **argv)
 			++j;
 			write(fd, c + i, 1);
 
-			// sleep for 10 ms
-			// XXX use nanosleep();
+			/* Use poll() as a trick to sleep for 10 ms. */
 			poll(NULL, 0, 10);
 
 			if (j == FILE_LEN) {
