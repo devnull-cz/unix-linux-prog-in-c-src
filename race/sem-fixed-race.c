@@ -40,10 +40,10 @@ int
 up_down(int n)
 {
 	if (n == 1) {
-		if (semop(sem, &down, 1) == -1)
+		if (semop(sem, &up, 1) == -1)
 			err(1, "semop up");
 	} else if (n == -1) {
-		if (semop(sem, &up, 1) == -1)
+		if (semop(sem, &down, 1) == -1)
 			err(1, "semop down");
 	} else {
 		errx(1, "incorrect use of up_down");
@@ -58,6 +58,7 @@ main(int argc, char **argv)
 	int fd, dbg = 0;
 	char *addr = NULL;
 	struct sigaction act;
+
 	if (argc == 1)
 		printf("run with any argument to see some debug info\n");
 	else
