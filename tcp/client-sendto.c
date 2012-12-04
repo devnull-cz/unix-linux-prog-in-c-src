@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <libgen.h>
 
 int
 main(int argc, char **argv)
@@ -14,8 +15,11 @@ main(int argc, char **argv)
 	int fd, n;
 	struct sockaddr_in sa;
 
+	if (argc != 2)
+		errx(1, "usage: %s <port>", basename(argv[0]));
+
 	sa.sin_family = AF_INET;
-	sa.sin_port = htons(2222);
+	sa.sin_port = htons(atoi(argv[1]));
 	inet_aton("127.0.0.1", &sa.sin_addr);
 
 	fd = socket(AF_INET, SOCK_STREAM, 0);
