@@ -6,3 +6,9 @@ of Charles University in Prague (http://www.mff.cuni.cz/).
 The page of the course: http://mff.devnull.cz/
 
 All the files with examples are in Public Domain, unless marked otherwise.
+
+The source cdde files are kept like this on purpose:
+  - not all return values are checked and reacted upon
+  - each file is self contained (i.e. not libraries of common functions)
+
+This is to help understand the concepts easily.
