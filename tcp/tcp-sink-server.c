@@ -1,6 +1,6 @@
 /*
- * Simple TCP sink server running on specified port - what is sent to it is just
- * printed onto stderr. No data is sent back.
+ * Simple TCP sink server running on specified port - what is sent to it is
+ * just printed onto stdout. No data is sent back.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
