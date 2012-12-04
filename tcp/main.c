@@ -24,9 +24,6 @@ main(int argc, char **argv)
 	fd = socket(AF_INET, SOCK_STREAM, pp->p_proto);
 
 	sa.sin_family = AF_INET;
-#if 0
-	sa.sin_port = htons(2600);
-#endif
 	/* do NOT use htons() here ! */
 	sa.sin_port = sp->s_port;
 	sa.sin_addr.s_addr = INADDR_ANY;
