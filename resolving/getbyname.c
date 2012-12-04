@@ -1,3 +1,7 @@
+/*
+ * Demonstrate the use of getservbyname() and getprotobyname().
+ */
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -14,10 +18,8 @@ main(int argc, char **argv)
 	char buf[100];
 	int fd, newsock, n;
 
-	if (argc != 2) {
-		fprintf(stderr, "bad input\n");
-		return (1);
-	}
+	if (argc != 2)
+		errx(1, "usage: %s <port>", argv[0]);
 
 	sp = getservbyname(argv[1], "tcp");
 	pp = getprotobyname("tcp");
