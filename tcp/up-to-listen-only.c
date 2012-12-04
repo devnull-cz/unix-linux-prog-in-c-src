@@ -1,9 +1,9 @@
 /*
- * Start and then connect to 2222 from another terminal or another machine. You
- * will see that the system initializes the TCP connections even when the
- * program is not in the accept() call, and then accepts some data on it until
- * it reaches the buffer size. After that, it stops accepting more data, waiting
- * for some program to accept() and start reading.
+ * Start and then connect to given port from another terminal or another
+ * machine. You will see that the system initializes the TCP connections even
+ * when the program is not in the accept() call, and then accepts some data on
+ * it until it reaches the buffer size. After that, it stops accepting more
+ * data, waiting for some program to accept() and start reading.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <libgen.h>
 
 int
 main(int argc, char **argv)
@@ -22,8 +23,11 @@ main(int argc, char **argv)
 	struct sockaddr_in in;
 	int fd, newsock, n, backlog, optval = 1;
 
-	if (argc == 2)
-		backlog = atoi(argv[1]);
+	if (argc < 2)
+		errx(1, "usage: %s <port> [backlog]", basename(argv[0]));
+
+	if (argc == 3)
+		backlog = atoi(argv[2]);
 	else
 		backlog = SOMAXCONN;
 
@@ -31,7 +35,7 @@ main(int argc, char **argv)
 
 	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
-	in.sin_port = htons(2222);
+	in.sin_port = htons(atoi(argv[1]));
 	in.sin_addr.s_addr = htons(INADDR_ANY);
 
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
