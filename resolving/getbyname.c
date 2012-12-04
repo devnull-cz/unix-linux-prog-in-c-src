@@ -31,7 +31,7 @@ main(int argc, char **argv)
 	if (sp == NULL) {
 		printf("'%s' not a known service name, trying port number\n",
 		    argv[1]);
-		sp = getservbyport(atoi(argv[1]), argv[2]);
+		sp = getservbyport(htons(atoi(argv[1])), argv[2]);
 		if (sp == NULL)
 			errx(1, "not valid service port number either");
 	}
@@ -48,6 +48,7 @@ main(int argc, char **argv)
 	listen(fd, SOMAXCONN);
 
 	for (;;) {
+		printf("waiting for a connection\n");
 		newsock = accept(fd, NULL, 0);
 		while ((n = read(newsock, buf, 100)) != 0)
 			write(1, buf, n);
