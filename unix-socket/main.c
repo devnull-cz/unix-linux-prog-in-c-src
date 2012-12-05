@@ -15,14 +15,14 @@ main(void)
 {
 	struct sockaddr_un sa;
 	int fd_skt, fd_client;
-	char buf[100];
+	char buf[100]; /* I/O buffer */
 
 	unlink(SOCKETNAME);
-	strcpy(sa.sun_path, SOCKETNAME);
+	/* note: actual size of sun_path array differs accross systems */
+	strncpy(sa.sun_path, SOCKETNAMEi, sizeof (sa.sun_path));
 	sa.sun_family = AF_UNIX;
 
 	if (fork() == 0) {
-
 		/*
 		 * also try with protocol number 6 or 17; why socket returns
 		 * an error then?
