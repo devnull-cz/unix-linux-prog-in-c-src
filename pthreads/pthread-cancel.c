@@ -77,7 +77,7 @@ mythread(void *x)
 	 * We will not probably be able to see this since before this is
 	 * printed, we enter some cancellation point and get terminated.
 	 */
-	printf("3 seconds passed; we should be canceled now...\n");
+	printf("%d seconds passed; we should be canceled now...\n", NSECS);
 
 	/*
 	 * In case we are not terminated in printf(), we wait for a producer
