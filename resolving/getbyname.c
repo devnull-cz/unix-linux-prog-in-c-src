@@ -37,12 +37,13 @@ main(int argc, char **argv)
 	}
 
 	printf("official service name: %s\n", sp->s_name);
-	fd = socket(AF_INET, SOCK_STREAM, pp->p_proto);
+	if ((fd = socket(AF_INET, SOCK_STREAM, pp->p_proto)) == -1)
+		err(1, "socket");
 
 	sa.sin_family = AF_INET;
 	/* do NOT use htons() here, it's already in network byte order ! */
 	sa.sin_port = sp->s_port;
-	sa.sin_addr.s_addr = INADDR_ANY;
+	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	bind(fd, (struct sockaddr *)&sa, sizeof (sa));
 	listen(fd, SOMAXCONN);
@@ -50,7 +51,7 @@ main(int argc, char **argv)
 	for (;;) {
 		printf("waiting for a connection\n");
 		newsock = accept(fd, NULL, 0);
-		while ((n = read(newsock, buf, 100)) != 0)
+		while ((n = read(newsock, buf, sizeof (buf))) > 0)
 			write(1, buf, n);
 		close(newsock);
 		fprintf(stderr, "-- connection closed --\n");
