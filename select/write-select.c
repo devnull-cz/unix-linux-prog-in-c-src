@@ -54,6 +54,7 @@ main(int argc, char **argv)
 	memset(buf, '.', BUF_LEN);
 
 	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval));
+
 	if (bind(s, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
 
