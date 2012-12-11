@@ -11,7 +11,7 @@
 int
 main(int argc, char **argv)
 {
-	char buf[100];
+	char buf[3];
 	int fd, n;
 	struct sockaddr_in sa;
 
@@ -30,7 +30,7 @@ main(int argc, char **argv)
 	}
 
 	do {
-		if ((n = read(0, buf, 100)) <= 0) {
+		if ((n = read(0, buf, sizeof (buf))) <= 0) {
 			close(fd);
 			fprintf(stderr, "read closed\n");
 			n = 1;
