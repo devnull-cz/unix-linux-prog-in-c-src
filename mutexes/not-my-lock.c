@@ -42,7 +42,7 @@ thread(void *x)
 {
 	int e;
 
-	sleep(1);
+	sleep(1); /* Give the main thread some time to lock the mutex. */
 	fprintf(stderr, "Attempting to unlock a mutex owned by somebody "
 	    "else...\n");
 
