@@ -27,7 +27,7 @@ thread(void *x)
 	else
 		printf("%d: I'm parent\n", getpid());
 
-	for (i = 0; i < 20; ++i) {
+	for (i = 0; i < 16; ++i) {
 		printf("%d: loop #%d\n", getpid(), i);
 		sleep(1);
 	}
