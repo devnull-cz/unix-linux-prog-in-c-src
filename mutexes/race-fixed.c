@@ -18,7 +18,7 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 void *
 thread(void *x)
 {
-	int data = (int) x;
+	intptr_t data = (intptr_t) x;
 
 	while (1) {
 		pthread_mutex_lock(&mutex);
