@@ -40,7 +40,7 @@ usage()
 void *
 thread(void *x)
 {
-	int e, data = (int) x;
+	int e;
 
 	sleep(1);
 	fprintf(stderr, "Attempting to unlock a mutex owned by somebody "
