@@ -11,6 +11,8 @@
 #include <assert.h>
 #include <pthread.h>
 
+#define	NUM	5
+
 void *
 thread(void *x)
 {
@@ -26,14 +28,14 @@ thread(void *x)
 int
 main(void)
 {
-	pthread_t t;
+	pthread_t t[NUM];
 	int i;
 
 	/* Let's not shoot our leg off. */
 	assert(sizeof (int) <= sizeof (void *));
 
-	for (i = 0; i < 5; ++i) {
-		pthread_create(&t, NULL, thread, (void *)i);
+	for (i = 0; i < NUM; ++i) {
+		pthread_create(&t[i], NULL, thread, (void *)i);
 	}
 
 	/* Avoid pthread_join() for now. */
