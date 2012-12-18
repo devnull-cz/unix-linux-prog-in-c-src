@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <pthread.h>
 
-#define	NUM	5
+#define	NUM_THREADS	5
 
 void *
 thread(void *x)
@@ -28,13 +28,13 @@ thread(void *x)
 int
 main(void)
 {
-	pthread_t t[NUM];
+	pthread_t t[NUM_THREADS];
 	int i;
 
 	/* Let's not shoot our leg off. */
 	assert(sizeof (int) <= sizeof (void *));
 
-	for (i = 0; i < NUM; ++i) {
+	for (i = 0; i < NUM_THREADS; ++i) {
 		pthread_create(&t[i], NULL, thread, (void *)i);
 	}
 

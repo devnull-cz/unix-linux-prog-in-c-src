@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define	NUM_THREADS	5
+
 void *
 thread(void *x)
 {
@@ -24,12 +26,12 @@ thread(void *x)
 int
 main(void)
 {
-	pthread_t t;
-	int i, id[5];
+	pthread_t t[NUM_THREADS];
+	int i, id[NUM_THREADS];
 
-	for (i = 0; i < 5; ++i) {
+	for (i = 0; i < NUM_THREADS; ++i) {
 		id[i] = i;
-		pthread_create(&t, NULL, thread, id + i);
+		pthread_create(&t[i], NULL, thread, id + i);
 #if 0
 		pthread_yield();
 #endif

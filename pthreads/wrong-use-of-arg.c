@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
+#define	NUM_THREADS	5
+
 void *
 thread(void *x)
 {
@@ -30,15 +32,15 @@ int
 main(int argc, char *argv[])
 {
 	int i, yield = 0;
-	pthread_t t;
+	pthread_t t[NUM_THREADS];
 
 	if (argc > 1) {
 		printf("running with pthread_yield()\n");
 		yield = 1;
 	}
 
-	for (i = 0; i < 5; ++i) {
-		pthread_create(&t, NULL, thread, &i);
+	for (i = 0; i < NUM_THREADS; ++i) {
+		pthread_create(&t[i], NULL, thread, &i);
 		/*
 		 * This is not from POSIX thread API. This is Solaris Threads.
 		 * Those calls can be combined though.
