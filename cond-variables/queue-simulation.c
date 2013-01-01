@@ -85,7 +85,7 @@ int
 main(int argc, char **argv)
 {
 	int i;
-	pthread_t t;
+	pthread_t t_prod, t_cons;
 
 	if (argc == 2)
 		max = atoi(argv[1]);
@@ -99,8 +99,8 @@ main(int argc, char **argv)
 	srandom(time(NULL)); /* not so good but will suffice */
 #endif
 
-	pthread_create(&t, NULL, producer, NULL);
-	pthread_create(&t, NULL, consumer, NULL);
+	pthread_create(&t_prod, NULL, producer, NULL);
+	pthread_create(&t_cons, NULL, consumer, NULL);
 
 	/*
 	 * Main thread. Periodically print the "contents" of the queue.
