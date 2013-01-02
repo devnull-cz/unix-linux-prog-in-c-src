@@ -14,6 +14,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pthread.h>
@@ -45,7 +46,7 @@ forker(void *x)
 	pid_t pid;
 
 	threads[FORKER].t = pthread_self();
-	strlcpy(threads[FORKER].name, "forker", sizeof (threads[FORKER].name));
+	strncpy(threads[FORKER].name, "forker", sizeof (threads[FORKER].name));
 
 	printf("%d/%s: forking\n", getpid(), print_id());
 	pid = fork();
@@ -66,7 +67,7 @@ void *
 counter(void *arg)
 {
 	threads[COUNTER].t = pthread_self();
-	strlcpy(threads[COUNTER].name, "counter",
+	strncpy(threads[COUNTER].name, "counter",
 	    sizeof (threads[COUNTER].name));
 
 	while (1) {
