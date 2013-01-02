@@ -13,7 +13,6 @@
 #include <unistd.h>
 
 int a, b;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *
 thread(void *x)
