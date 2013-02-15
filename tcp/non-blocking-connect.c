@@ -1,11 +1,9 @@
 /*
  * Example on how to work with a non-blocking connect. Uses fixed input and
  * should show all 3 situations we care about - a successful connect, a refused
- * connect, and a timeout. Uses legacy functions gethostbyname() and
- * inet_ntoa(). Use getaddrinfo() and inet_ntop() to make this work with IPv6
- * as well.
+ * connect, and a timeout.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <sys/types.h>
@@ -23,8 +21,33 @@
 #include <strings.h>
 #include <unistd.h>
 
-#define	TIMEOUT 10
-#define	MAX_HOSTS 5
+#define	TIMEOUT		10
+#define	MAX_SOCKETS	3
+
+typedef struct host_s {
+	char *hostname;
+	char *port;
+	int sockets[MAX_SOCKETS];
+	int numsock;
+} host_t;
+
+host_t hosts[] = {
+	/* This should connect OK. */
+	{ "www.devnull.cz", "80", {-1, -1, -1}, 0 },
+	/* This will timeout. */
+	{ "www.devnull.cz", "33", {-1, -1, -1}, 0 },
+	/* This should refuse the connection on both IPv4 and IPv6. */
+	{ "mail.kolej.mff.cuni.cz", "999", {-1, -1, -1}, 0 },
+	/* To see if localhost gets EINPROGRESS as well. */
+	{ "localhost", "22", {-1, -1, -1}, 0 },
+	/*
+	 * To see if localhost gets EINPROGRESS as well. Connection refusal
+	 * might be different from an open port. Port 7 is echo service,
+	 * nobody should run it these days.
+	 */
+	{ "localhost", "7", {-1, -1, -1}, 0 },
+	{ NULL, 0, {-1, -1, -1}, 0 }
+};
 
 int
 main(int argc, char **argv)
@@ -32,147 +55,153 @@ main(int argc, char **argv)
 	socklen_t optlen;
 	struct hostent *he;
 	struct timeval tout;
-	struct sockaddr_in in;
 	fd_set wrfds, wrfds_orig;
-	int flags, i, optval, n, timeouts;
-	char *hostnames[MAX_HOSTS];
-	int sockets[MAX_HOSTS], ports[MAX_HOSTS];
+	int flags, i, optval, n, timeouts, error, num_sockets = 0;
+	struct addrinfo *res, *resorig, hints;
+	host_t *hostp;
+	char ip_str[INET6_ADDRSTRLEN];
 
-	/* This should connect OK. */
-	hostnames[0] = "www.devnull.cz";
-	ports[0] = 80;
-	hostnames[1] = "www.devnull.cz";
-	/* This will timeout. */
-	ports[1] = 33;
-	/* This should refuse the connection. */
-	hostnames[2] = "mail.kolej.mff.cuni.cz";
-	ports[2] = 999;
-	/* To see if localhost gets EINPROGRESS as well. */
-	hostnames[3] = "localhost";
-	ports[3] = 22;
-	/*
-	 * To see if localhost gets EINPROGRESS as well. Connection refusal
-	 * might be different from an open port.
-	 */
-	hostnames[4] = "localhost";
-	/* Port 7 is for echo, nobody should run that service these days. */
-	ports[4] = 7;
+	memset(&hints, 0, sizeof (hints));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
 
 	printf("will work with these machines/services:\n");
-	for (i = 0; i < MAX_HOSTS; ++i) {
-		printf("  %s:%d\n", hostnames[i], ports[i]);
-	}
+	for (hostp = hosts; hostp->hostname != NULL; hostp++)
+		printf("  %s:%s\n", hostp->hostname, hostp->port);
 
 	printf("making all sockets non-blocking, and calling connect...\n");
 	FD_ZERO(&wrfds);
-	/* counts finished connects */
-	n = 0;
-	for (i = 0; i < MAX_HOSTS; ++i) {
+	n = 0; /* counts finished (succeeded/failed) connects */
 
-		if ((he = gethostbyname(hostnames[i])) == NULL)
-			errx(1, "gethostbyname error");
+	/* One hostname can map to multiple addresses. */
+	for (hostp = hosts; hostp->hostname != NULL; hostp++) {
+		if ((error = getaddrinfo(hostp->hostname, hostp->port,
+		    &hints, &res)) != 0)
+			errx(1, "%s", gai_strerror(error));
 
-		bzero(&in, sizeof (in));
-		in.sin_family = AF_INET;
-		in.sin_port = htons(ports[i]);
-		in.sin_addr = (*((struct in_addr *)he->h_addr_list[0]));
+		i = 0;
+		for (resorig = res; res != NULL; res = res->ai_next, i++) {
+			if (res->ai_family != AF_INET &&
+			    res->ai_family != AF_INET6)
+				continue;
 
-		printf("  we got this IP address for %s: ", hostnames[i]);
-		printf("%s\n",
-		    inet_ntoa(*((struct in_addr *)he->h_addr_list[0])));
+			if ((hostp->sockets[i] = socket(res->ai_family,
+			    res->ai_socktype, 0)) == -1)
+				err(1, "socket");
+			hostp->numsock++;
 
-		if ((sockets[i] = socket(AF_INET, SOCK_STREAM, 0)) == -1)
-			err(1, "socket");
+			/* Convert IP address to string. */
+			if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
+			    ip_str, sizeof (ip_str), NULL, 0,
+			    NI_NUMERICHOST) != 0)) {
+				errx(1, "%s", gai_strerror(error));
+			}
+			printf("  %s[%s]:%s socket %d\n", hostp->hostname,
+			    ip_str, hostp->port, hostp->sockets[i]);
 
-		flags = fcntl(sockets[i], F_GETFL);
-		if (fcntl(sockets[i], F_SETFL, flags | O_NONBLOCK) == -1)
-			err(1, "fcntl");
+			flags = fcntl(hostp->sockets[i], F_GETFL);
+			if (fcntl(hostp->sockets[i], F_SETFL,
+			    flags | O_NONBLOCK) == -1)
+				err(1, "fcntl");
 
-		if (connect(sockets[i], (struct sockaddr *)&in,
-		    sizeof (in)) == -1) {
-			/* this is what we expect */
-			if (errno == EINPROGRESS) {
-				printf("    connect EINPROGRESS OK "
-				    "(expected)\n");
-				FD_SET(sockets[i], &wrfds);
+			if (connect(hostp->sockets[i],
+			    (struct sockaddr *)res->ai_addr,
+			    res->ai_addrlen) == -1) {
+				/* This is what we expect. */
+				if (errno == EINPROGRESS) {
+					printf("    connect EINPROGRESS OK "
+					    "(expected)\n");
+					FD_SET(hostp->sockets[i], &wrfds);
+				} else {
+					/*
+					 * This may happen right here, on
+					 * localhost for example (immediate
+					 * connection refused).
+					 * I can see that happen on FreeBSD
+					 * but not on Solaris, for example.
+					 */
+					printf("    connect: %s\n",
+					    strerror(errno));
+					++n;
+				}
 			} else {
-				/*
-				 * This may happen right here, on localhost
-				 * for example (immediate connection refused).
-				 * I can see that happen on FreeBSD but not on
-				 * Solaris, for example.
-				 */
-				printf("    connect: %s\n", strerror(errno));
+				/* This may happen, on localhost for example */
+				printf("  %s connected OK on port %s\n",
+				    hostp->hostname, hostp->port);
 				++n;
 			}
-		} else {
-			/* this may happen, on localhost for example */
-			printf("  %s connected OK on port %d\n", hostnames[i],
-			    ports[i]);
-			++n;
+			num_sockets++;
 		}
+		freeaddrinfo(resorig);
 	}
 
-	/* save our original fd set */
+	/* Save our original fd set. */
 	wrfds_orig = wrfds;
-	/* let's print some progress every seconds */
+	/* Let's print some progress every second. */
 	tout.tv_sec = 1;
 	tout.tv_usec = 0;
 
 	printf("continuing with select now, checking the connect status...\n");
 	timeouts = 0;
-	while (n != MAX_HOSTS) {
+	while (n != num_sockets) {
 		/*
 		 * Note that non-blocking connect uses the WR set, not the RD
 		 * one.
 		 */
-		i = select(FD_SETSIZE, NULL, &wrfds, NULL, &tout);
+		error = select(FD_SETSIZE, NULL, &wrfds, NULL, &tout);
 
-		if (i == 0) {
+		if (error == 0) {
 			if (++timeouts == TIMEOUT) {
 				printf("  TIMEOUT REACHED\n");
 				break;
 			}
 			printf("  .\n");
 			/*
-			 * select may change the timeval structure (see the
-			 * spec)
+			 * Select may change the timeval structure (see the
+			 * spec) so reset it to original values.
 			 */
 			tout.tv_sec = 1;
 			tout.tv_usec = 0;
 			continue;
 		} else {
-			if (i == -1)
+			if (error == -1)
 				err(1, "select");
 		}
 
-		for (i = 0; i < MAX_HOSTS; ++i) {
-			if (FD_ISSET(sockets[i], &wrfds)) {
+		for (hostp = hosts; hostp->hostname != NULL; hostp++) {
+			for (i = 0; i < hostp->numsock; i++) {
+				if (!FD_ISSET(hostp->sockets[i], &wrfds))
+					continue;
+
 				optval = -1;
 				optlen = sizeof (optval);
 
-				if (getsockopt(sockets[i], SOL_SOCKET, SO_ERROR,
-				    &optval, &optlen) == -1) {
+				if (getsockopt(hostp->sockets[i],
+				    SOL_SOCKET, SO_ERROR, &optval,
+				    &optlen) == -1)
 					err(1, "getsockopt");
-				}
 
 				/*
-				 * getsockopt() puts the errno value for connect
-				 * into optval so 0 means no-error.
+				 * getsockopt() puts the errno value
+				 * for connect into optval so 0 means
+				 * no-error.
 				 */
-				if (optval == 0)
-					printf("  %s connected OK on port %d\n",
-					    hostnames[i], ports[i]);
-				else {
+				if (optval == 0) {
+					printf("  %s connected OK on "
+					    "port %s socket %d\n",
+					    hostp->hostname, hostp->port,
+					    hostp->sockets[i]);
+				} else {
 					printf("  %s connect failed on "
-					    "port %d (%s)\n",
-					    hostnames[i], ports[i],
+					    "port %s socket %d (%s)\n",
+					    hostp->hostname, hostp->port,
+					    hostp->sockets[i],
 					    strerror(optval));
 				}
 
-				/* we no longer care about this socket */
-				FD_CLR(sockets[i], &wrfds_orig);
-				close(sockets[i]);
+				/* no longer care about this socket */
+				FD_CLR(hostp->sockets[i], &wrfds_orig);
+				close(hostp->sockets[i]);
 				++n;
 			}
 		}
@@ -182,10 +211,13 @@ main(int argc, char **argv)
 	}
 
 	/* those remaining in the wrfds set are those that timed out on us */
-	for (i = 0; i < MAX_HOSTS; ++i) {
-		if (FD_ISSET(sockets[i], &wrfds_orig))
-			printf("  %s timed out on port %d\n",
-			    hostnames[i], ports[i]);
+	for (hostp = hosts; hostp->hostname != NULL; hostp++) {
+		for (i = 0; i < hostp->numsock; i++) {
+			if (FD_ISSET(hostp->sockets[i], &wrfds_orig))
+				printf("  %s timed out on port %s socket %d\n",
+				    hostp->hostname, hostp->port,
+				    hostp->sockets[i]);
+		}
 	}
 
 	return (0);
