@@ -6,16 +6,16 @@
  * doesn't know about it and prints an incorrect value. Run like this:
  *
  *   $ gcc -shared -o libabi.so libabi-32.c
- *   $ gcc -L. -R. -labi abi-main.c
+ *   $ gcc -L. -Xlinker -R . -labi abi-main.c
  *   $ ./a.out 7 4
  *   11
  *   $ gcc -shared -o libabi.so libabi-64.c
  *   $ ./a.out 7 4
  *   -1077941116
  *
- * For Sun Studio, use "-G" instead of "-shared". Also note that newer GCC does
- * not support "-R". Use "-Xlinker -R ." instead (note the ``.'' as part
- * of the option).
+ * For Sun Studio (cc), use "-G" instead of "-shared". Also note that newer
+ * GCC does not support "-R" so we have to use "-Xlinker -R ." instead
+ * (note the ``.'' as part of the option).
  *
  * (c) jp@devnull.cz
  */
