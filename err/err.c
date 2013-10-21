@@ -14,6 +14,7 @@ main(void)
 
 	/* errx() does not use errno. */
 	errx(3, "grr %s", "GRR");
+	/* Never reached. */
 
 	/* Will not exit. Uses errno. */
 	warn("grr %s", "GRR");

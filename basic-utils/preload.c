@@ -1,7 +1,7 @@
 /*
  * compile:
  *   gcc  -fPIC -c preload.c
- *   gcc -shared -o libpreload.o preload.o
+ *   gcc -shared -o libpreload.so preload.o
  *
  * run e.g. like this:
  *   LD_PRELOAD=./libpreload.so cat /etc/passwd
