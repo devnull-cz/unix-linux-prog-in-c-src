@@ -22,6 +22,7 @@ main(int argc, char **argv)
 	printf("Filetype for '%s': 0x%x\n", argv[1], buf.st_mode & S_IFMT);
 	printf("S_IFREG is: 0x%x\n", S_IFREG);
 	printf("S_IFDIR is: 0x%x\n", S_IFDIR);
+	printf("S_IFLNK is: 0x%x\n", S_IFLNK);
 
 	return (0);
 }
