@@ -5,6 +5,13 @@
  *
  * Which means, that after running "./a.out" the program will copy the existing
  * file "in" to a newly created (or an existing truncated) file "out".
+ *
+ * Run like this:
+ *   gcc redirect.c
+ *   cp /etc/passwd in
+ *   rm -f out
+ *   ./a.out
+ *   diff in out
  */
 #include <sys/stat.h>
 #include <sys/types.h>
