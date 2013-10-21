@@ -1,5 +1,13 @@
 /*
  * See if there is a way how to determine if file descriptor points to stdout.
+ * Run it like this:
+ *
+ *   ./a.out
+ *   ./a.out >/dev/null
+ *   ./a.out 2>/dev/null
+ *
+ * Verify with 'ls -aldi /dev/null' that the long inode number reported
+ * in the last step belongs to /dev/null.
  *
  * (c) vlada@devnull.cz
  */
@@ -29,11 +37,14 @@ main(void)
 
 	printf("fileno(stdout) = %d\n", fileno(stdout));
 	printf("fileno(stderr) = %d\n", fileno(stderr));
-	printf("before dup\n");
+	printf("=== before dup\n");
+	statfd(1);
+	statfd(2);
+
 	if (dup2(2, 1) == -1)
 		err(1, "dup2");
-	printf("after dup\n");
-	fprintf(stdout, "std\n");
+	printf("=== after dup\n");
+	fprintf(stdout, "this is standard output\n");
 
 	statfd(1);
 	statfd(2);
