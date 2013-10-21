@@ -34,8 +34,12 @@ main(int argc, char **argv)
 	 * how to deal with that.
 	 */
 
-	/* Verify with "du -s <file>" */
-	printf("Allocated blocks: %ld\n", buf.st_blocks);
+	/*
+	 * Verify with "POSIXLY_CORRECT=1 du -s <file>"
+	 * (The env var is there for GNU dd(1) to work correctly in 512 byte
+	 * blocks otherwise it would print out size in 1024 byte blocks.)
+	 */
+	printf("Allocated number of 512 byte blocks: %ld\n", buf.st_blocks);
 	/* Verify with "ls -i <file>" */
 	printf("Inode number: %lu\n", (long) buf.st_ino);
 
