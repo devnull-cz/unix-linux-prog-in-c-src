@@ -6,22 +6,25 @@
 #include <err.h>
 
 int
-main(void)
+main(int argc, char *argv[])
 {
-	errno = 13;
-	err(3, "grr %s", "GRR");
-	/* Never reached. */
-
-	/* errx() does not use errno. */
-	errx(3, "grr %s", "GRR");
-	/* Never reached. */
+	errno = 0;
 
 	/* Will not exit. Uses errno. */
-	warn("grr %s", "GRR");
+	warn("warning %s", "GRR");
 
 	/* Will not exit. Does not use errno. */
-	warnx("grr %s", "GRR");
+	warnx("warning without errno %s", "GRR");
 
-	printf("after err()\n");
+	if (argc > 1) {
+		errno = 13;
+		err(3, "error exit %s", "GRR");
+		/* Never reached. */
+	} else {
+		/* errx() does not use errno. */
+		errx(3, "error exit without errno %s", "GRR");
+		/* Never reached. */
+	}
+
 	return (0);
 }
