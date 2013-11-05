@@ -18,7 +18,7 @@ main(int argc, char *argv[])
 
 	if (argc > 1) {
 		errno = 13;
-		err(3, "error exit %s", "GRR");
+		err(4, "error exit %s", "GRR");
 		/* Never reached. */
 	} else {
 		/* errx() does not use errno. */
