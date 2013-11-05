@@ -1,3 +1,13 @@
+/*
+ * See how process writing to pipe without readers will get SIGPIPE.
+ *
+ * Run like this:
+ *   ./a.out
+ *   ret=$?
+ *   echo $ret
+ *   kill -l `expr $ret - 128`
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
