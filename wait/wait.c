@@ -23,7 +23,7 @@
  * notified about the stopped children. Try to remove it and then "kill -STOP"
  * the child to see that. The same stands for continuing the child - the parent
  * wouldn't get notified about continued children unless WCONTINUED is present.
- * Also note that stopping an already stopped process is not reported, the
+ * Also note that stopping an already stopped process is not reported, the same
  * stands for continued processes. See waitpid(3) for more information.
  *
  * (c) jp@devnull.cz
