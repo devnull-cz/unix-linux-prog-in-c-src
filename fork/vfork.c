@@ -1,6 +1,7 @@
 /*
  * vfork() is obsolete but let's see how it works. This is the same program as
- * fork/fork.c aside from changing fork() into vfork(). Now, the parent is
+ * fork/fork.c aside from changing fork() into vfork() and letting both
+ * processes execute the same amount of iterations. Now, the parent is
  * stopped until the child finishes which is easily seen from the output.
  *
  * See vfork() man page for details. This program could core dump if return
@@ -42,7 +43,7 @@ main(void)
 	}
 
 	/*
-	 * if you return from here instead of exit()ing it may core dump based
+	 * If you return from here instead of exit()ing it may core dump based
 	 * on the system used. It does so on FreeBSD 6.1, it doesn't on
 	 * Solaris 10.
 	 */
