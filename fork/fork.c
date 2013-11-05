@@ -1,8 +1,9 @@
 /*
  * The simplest fork() example. You should see how the parent and the child
- * are printing messages in turns.
+ * are printing messages in turns. Parent exits first, child continues along
+ * and its parent is now the init process (with pid = 1).
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <stdio.h>
@@ -12,8 +13,7 @@
 int
 main(void)
 {
-	int i;
-	pid_t pid;
+	int i, pid, limit;
 	char *name;
 
 	switch (pid = fork()) {
@@ -21,17 +21,19 @@ main(void)
 		fprintf(stderr, "error\n");
 		exit(1);
 	case 0:
-		printf("I'm child, PID is %d\n", getpid());
+		printf("I'm child, my PID is %d\n", getpid());
 		name = "child";
+		limit = 8;
 		break;
 	default:
 		printf("I'm parent, PID is %d\n", getpid());
 		name = "parent";
+		limit = 3;
 		break;
 	}
 
-	for (i = 0; i < 6; ++i) {
-		printf("%s: loop %d\n", name, i);
+	for (i = 0; i < limit; ++i) {
+		printf("%s: loop %d [parent %d]\n", name, i, getppid());
 		sleep(1);
 	}
 
