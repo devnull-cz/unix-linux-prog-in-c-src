@@ -17,7 +17,8 @@
  *
  * Note that when the child is killed by a signal, the status word itself
  * may contain just the signal number (tested on OpenSolaris). However, this is
- * just a coincidence and can be implementation dependent!
+ * just a coincidence and can be implementation dependent! Always use the
+ * WIFSIGNALED macro to get the signal number.
  *
  * If WUNTRACED was not used in the flags parameter, the parent wouldn't be
  * notified about the stopped children. Try to remove it and then "kill -STOP"
