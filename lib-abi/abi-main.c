@@ -33,6 +33,10 @@ main(int argc, char **argv)
 	if (argc != 3)
 		errx(1, "usage: a.out <number> <number>");
 
+	/* Put some data on the stack first by calling printf(). */
+	printf("%d%d\n", 1000, 2000);
+
+	/* See the result. */
 	printf("%d\n", abiadd(atoi(argv[1]), atoi(argv[2])));
 
 	return (0);
