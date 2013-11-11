@@ -22,7 +22,7 @@ main(void)
 
 	fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666);
 
-	lseek(fd, 100, SEEK_SET);
+	lseek(fd, 99, SEEK_SET);
 	write(fd, &c, 1);
 
 	if ((addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0))
