@@ -9,6 +9,7 @@
  * process memory anyway. The objective is that the mmaped page is not in the
  * core dump caused by the kernel (on SIGSEGV etc.).
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
