@@ -1,7 +1,11 @@
 /*
  * Map a file and show what happens if one accesses data after the mapped chunk.
  * Mapping is done in page granularity so reaching after the mapped chunk is OK
- * as long we access the same page. x86 has 4KB pages.
+ * as long we access the same page.
+ * x86 has 4KB pages and on Linux we get SIGSEGV when accessing behind the end
+ * of 2nd page (index 12288).
+ * For 32-bit SPARC process on Solaris (8K pages) accesing 0-8191 is OK,
+ * 8192 generates SIGSEGV.
  */
 
 #include <stdio.h>
@@ -31,10 +35,6 @@ main(void)
 		exit(1);
 	}
 
-	/*
-	 * 32-bit SPARC process on Solaris (8K pages), accesing 0-8191 is OK,
-	 * 8192 generates SIGSEGV.
-	 */
 	for (i = 4095; i < 16384; i++) {
 		printf("%d\n", i); /* use \n so that output is flushed. */
 		addr[i] = 0;
