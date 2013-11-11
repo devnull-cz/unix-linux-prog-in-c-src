@@ -40,7 +40,9 @@ main(int argc, char *argv[])
 
 	/*
 	 * The password is "my-PIN". We put the PIN there the way we use because
-	 * if we used a static string it would end up in a data segment.
+	 * if we used a static string it would end up in a .data segment.
+	 * Like this it ends up in .text segment anyway, for any real world use
+	 * it would come from external source (pipe, stdin, ...).
 	 */
 	addr[0] = 'm';
 	addr[1] = 'y';
