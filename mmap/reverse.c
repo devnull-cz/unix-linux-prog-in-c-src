@@ -5,6 +5,7 @@
  *   $ echo "0123456789" > numbers.txt
  *   $ cc reverse.c
  *   $ ./a.out
+ *   $ cat numbers.txt
  */
 
 #include <stdio.h>
