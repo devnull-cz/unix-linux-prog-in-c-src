@@ -6,6 +6,12 @@
  *
  * Read README in this directory for some example outputs.
  *
+ * Run like this:
+ *   gcc proc-addr-space.c
+ *   ./a.out
+ *   ./a.out 16
+ *   ./a.out 1048576
+ *
  * (c) jp@devnull.cz
  */
 
@@ -38,7 +44,8 @@ main(int argc, char **argv)
 	}
 
 	printf("addresses:\n");
-	printf("  variable on the heap:\t%p\n", p);
+	if (to_alloc > 0)
+		printf("  variable on the heap:\t%p\n", p);
 	printf("  local variable:\t%p\n", buf);
 	printf("  noninitialized var:\t%p\n", &nonini1);
 	printf("  initialized var 1:\t%p\n", &ini1);
