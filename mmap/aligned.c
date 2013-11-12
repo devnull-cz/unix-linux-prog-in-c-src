@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
@@ -33,7 +34,7 @@ main(int argc, char *argv[])
 	int i;
 
 	if (argc != 3) {
-		fprintf(stderr, "usage: %s <len1> <len2>", argv[0]);
+		fprintf(stderr, "usage: %s <len1> <len2>\n", argv[0]);
 		exit(1);
 	}
 
