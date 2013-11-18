@@ -1,14 +1,22 @@
 /*
  * Compile with and without -DPOSIX_SIGNALS and try to run like this
  * on {FreeBSD,Linux}/Solaris to see the difference in behavior:
- *   1. run the program
- *      ./sig2
+ *   0. compile 2 programs
+ *      gcc -o sig1 signal-vs-sigaction.c
+ *      gcc -DPOSIX_SIGNALS -o sig2 signal-vs-sigaction.c
+ *   1. run the first program
+ *      ./sig1 &
  *   2. send the 2 signals in quick succession (in the 10 seconds window)
+ *      kill -INT `pgrep sig1`
+ *      kill -INT `pgrep sig1`
+ *   3. run the second program
+ *      ./sig2 &
+ *   4. send the 2 signals in quick succession (in the 10 seconds window)
  *      kill -INT `pgrep sig2`
  *      kill -INT `pgrep sig2`
- *   3. observe the behavior
+ *   5. observe the behavior (check if the programs are still around)
  *
- *  Vladimir Kotal, 2009
+ *  vlada@devnull.cz, 2009
  */
 
 #include <stdio.h>
