@@ -11,11 +11,18 @@
  *
  * Solaris:
  *	$ gcc -KPIC -shared -o myread.so rtld_next.c
+ * OS X:
+ *      $ gcc -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup \
+ *          -o myread.dylib rtld_next.c
  * Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
  *	$ gcc -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
  *
  * Run:
+ *   Solaris/Linux:
  *	$ LD_PRELOAD=./myread.so cat /etc/passwd
+ *   OS X:
+ *      $ DYLD_FORCE_FLAT_NAMESPACE=1 DYLD_INSERT_LIBRARIES=./myread.dylib \
+ *          cat /etc/passwd
  *
  * (c) jp@devnull.cz
  */
@@ -50,7 +57,7 @@ read(int fildes, void *buf, size_t nbyte)
 	ret = f(fildes, buf, nbyte);
 
 	/* print some statistics, including the return value */
-	snprintf(msg, 128, "== [ fd %d, buf %p, nbytes %d, RET (%ld) ] ==\n",
+	snprintf(msg, 128, "== [ fd %d, buf %p, nbytes %zd, RET (%ld) ] ==\n",
 	    fildes, buf, nbyte, (long)ret);
 	/* again, let's not use fprintf() for this, write() is enough here */
 	write(2, msg, strlen(msg));
