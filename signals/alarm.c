@@ -8,6 +8,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <signal.h>
 #include <unistd.h>
 #include <err.h>
@@ -15,10 +16,12 @@
 #define	BUFSIZE	4096
 #define	SECS	5
 
+#define MESSAGE "TIMEOUT! Exiting...\n"
+
 void
 handler(int sig)
 {
-	printf("TIMEOUT! Exiting...\n");
+        write(1, MESSAGE, strlen(MESSAGE));
 }
 
 int
