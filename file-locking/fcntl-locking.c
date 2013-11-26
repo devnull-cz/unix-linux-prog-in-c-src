@@ -37,8 +37,9 @@ sigint_handler(int sig)
 {
 	/* kill the whole group on Ctrl-C */
 	kill(SIGTERM, -1);
+
 	/* should not be neccessary */
-	exit(0);
+	_exit(0);
 }
 
 char c[3] = {'a', 'b', 'c'};
