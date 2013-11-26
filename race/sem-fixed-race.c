@@ -23,18 +23,25 @@
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
 unsigned int j;		/* j is number of races detected */
+int sem, fd, parent;
+struct sembuf down = { 0, -1, 0};
+struct sembuf up = { 0, 1, 0};
+char *addr = NULL;
 
 void
 print_stat(int sig)
 {
 	printf("\nstats: inconsistency %u of %lu\n", j, i);
+
+	/* Perform cleanup before exit. */
+	if (parent)
+		semctl(sem, 1, IPC_RMID);
+
+	munmap(addr, 2);
+	close(fd);
+
 	_exit(0);
 }
-
-int sem;
-struct sembuf down = { 0, -1, 0};
-struct sembuf up = { 0, 1, 0};
-
 /* up_down(1) means UP, up_down(-1) is DOWN */
 int
 up_down(int n)
@@ -55,8 +62,7 @@ main(int argc, char **argv)
 {
 	key_t key;
 	char c = 0;
-	int fd, dbg = 0;
-	char *addr = NULL;
+	int dbg = 0;
 	struct sigaction act;
 
 	if (argc == 1)
@@ -106,6 +112,7 @@ main(int argc, char **argv)
 		}
 		break;
 	default:
+		parent = 1;
 		while (1) {
 			up_down(-1);
 			if (addr[0] != addr[1]) {
