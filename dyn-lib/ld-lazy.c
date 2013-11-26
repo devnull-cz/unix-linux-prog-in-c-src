@@ -15,6 +15,8 @@
  *   Linux:
  *     gcc -z lazy -lm ld-lazy.c
  *
+ * Solaris:
+ *
  *  $ ./a.out
  *  7273:   ./a.out
  *  /usr/lib/libc/libc_hwcap1.so.1
@@ -31,6 +33,14 @@
  *
  * And you can also use LD_BIND_NOW environment variable to force non-lazy
  * binding even when "-z lazyload" was used: LD_BIND_NOW=yes ./a.out
+ *
+ * Linux:
+ *
+ *   $ readelf -d ./a.out
+ *   Dynamic section at offset 0xf04 contains 26 entries:
+ *     Tag        Type                         Name/Value
+ *    0x00000001 (NEEDED)                     Shared library: [libm.so.6]
+ *    0x00000001 (NEEDED)                     Shared library: [libc.so.6]
  *
  * (c) jp@devnull.cz
  */
