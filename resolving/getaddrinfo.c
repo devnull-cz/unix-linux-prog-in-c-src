@@ -58,7 +58,10 @@ main(int argc, char **argv)
 		proto = getprotobynumber(res->ai_protocol);
 		/*
 		 * NI_NUMERICSERV makes sure we get numeric IP address strings
-		 * so that we can print those out.
+		 * so that we can print those out.  Note that NI_NUMERICHOST
+		 * means that *if* we the IP address cannot be located in the
+		 * name service, we return an IP address string instead of
+		 * EAI_NONAME.
 		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    ip_str, sizeof (ip_str), port_str, sizeof (port_str),
