@@ -1,8 +1,9 @@
 /*
  * Example of getaddrinfo(3socket) usage where we try to print the actual
- * converted values back to presentable form. Normally this printing is not
- * required since the members of the addrinfo structure can be passed directly
- * to functions such as bind() or connect().
+ * converted values back to ascii presentable form.  Normally this use of
+ * getnameinfo() is not required since the members of the addrinfo structure can
+ * be passed directly to functions such as bind() or connect().  Note that we
+ * use NI_NUMERICSERV with getnameinfo() to get numeric address strings.
  *
  * Note that we don't use AI_PASSIVE since we plan to connect to the server
  * and that one must use freeaddrinfo() on exit.
@@ -55,6 +56,10 @@ main(int argc, char **argv)
 
 		/* use getprotobynumber_r() in a threaded environment */
 		proto = getprotobynumber(res->ai_protocol);
+		/*
+		 * NI_NUMERICSERV makes sure we get numeric IP address strings
+		 * so that we can print those out.
+		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    ip_str, sizeof (ip_str), port_str, sizeof (port_str),
 		    NI_NUMERICHOST|NI_NUMERICSERV) != 0)) {
