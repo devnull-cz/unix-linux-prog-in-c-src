@@ -48,7 +48,7 @@ main(int argc, char *argv[])
 
 	if (lockf(fd, F_LOCK, size) == -1)
 		err(1, "lockf");
-	
+
 	pause();
 
 	return (0);
