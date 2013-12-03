@@ -1,5 +1,5 @@
 /*
- * Reader
+ * Reader for fcntl-locking.c example.
  *
  * (c) vlada@devnull.cz
  */
@@ -14,8 +14,9 @@
 #include <poll.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <strings.h>
 
-#define	FILE_LEN 70
+#define	FILE_LEN 70	/* should match the constant in fcntl-locking.c */
 
 int
 main(int argc, char **argv)
@@ -23,6 +24,7 @@ main(int argc, char **argv)
 	int i, j, fd, locking = 0;
 	struct flock fl;
 	char buf[FILE_LEN];
+	int n;
 
 	if (argc < 2 || argc > 3)
 		errx(1, "usage: %s [-l] <filename>", argv[0]);
@@ -34,17 +36,16 @@ main(int argc, char **argv)
 		++argv;
 	}
 
-	// if ((fd = open(argv[1], O_RDWR)) == -1)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		err(1, "open");
 
-	/* set the structure */
+	/* Set the structure. */
 	fl.l_whence = SEEK_SET;
 	fl.l_start = FILE_LEN / 2;
 	fl.l_len = FILE_LEN / 2;
 
 	while (1) {
-		/* lock only the 2nd half of the file */
+		/* Lock only the 2nd half of the file. */
 		if (locking == 1) {
 			fl.l_type = F_RDLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
@@ -53,14 +54,12 @@ main(int argc, char **argv)
 
 		printf("Got the lock now\n");
 		lseek(fd, SEEK_SET, 0);
-		read(fd, buf, sizeof (buf));
+		bzero(buf, sizeof (buf));
+		n = read(fd, buf, sizeof (buf));
 		write(1, buf, sizeof (buf));
-		// write(1, "\r", 1);
 
-		/* Use poll() as a trick to sleep for 10 ms. */
-		// poll(NULL, 0, 10);
-		sleep (1);
-		printf("\nReleasing the lock\n");
+		sleep(1);
+		printf(" %d \nReleasing the lock\n", n);
 
 		if (locking == 1) {
 			fl.l_type = F_UNLCK;
@@ -68,7 +67,7 @@ main(int argc, char **argv)
 				err(1, "fcntl");
 		}
 
-		/* let the writers do their job */
+		/* Let the writers do their job. */
 		sleep(1);
 	}
 
