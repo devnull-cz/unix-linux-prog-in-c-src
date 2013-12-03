@@ -24,13 +24,12 @@ main(int argc, char **argv)
 	int s, n;
 	char buf[BUF_LEN];
 	int have_address = 0;
-	struct sockaddr_in taddr, faddr;
+	struct sockaddr_in taddr;
 
 	if (argc != 3)
 		errx(1, "usage: %s <ip-address> <port>", argv[0]);
 
 	bzero(&taddr, sizeof (taddr));
-	bzero(&faddr, sizeof (faddr));
 
 	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
 		err(1, "socket");
