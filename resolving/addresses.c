@@ -57,7 +57,7 @@ main(int argc, char **argv)
 	} else {
 		printf("Succesfully converted an IPv4 address string to a "
 		    "binary form.\n");
-		if (inet_ntop(AF_INET, &in, dst, INET6_ADDRSTRLEN) == NULL) {
+		if (inet_ntop(AF_INET, &in, dst, INET_ADDRSTRLEN) == NULL) {
 			err(1, "inet_ntop");
 		}
 		printf("Succesfully converted a binary IPv4 address "
