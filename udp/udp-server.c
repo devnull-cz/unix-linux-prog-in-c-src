@@ -21,7 +21,7 @@ int
 main(int argc, char **argv)
 {
 	char buf[BUF_LEN + 1];
-	int pid, s, s2, n;
+	int s, n;
 	struct sockaddr_in in, faddr;
 	int addrsize = sizeof (faddr);
 
