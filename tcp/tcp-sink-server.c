@@ -48,7 +48,7 @@ main(int argc, char **argv)
 	if (listen(fd, SOMAXCONN) == -1)
 		err(1, "listen");
 
-	/* we will server one connection at a time */
+	/* We will serve one connection at a time. */
 	for (;;) {
 		if ((newsock = accept(fd, NULL, 0)) == -1)
 			err(1, "accept");
