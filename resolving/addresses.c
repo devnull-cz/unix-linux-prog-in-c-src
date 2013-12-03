@@ -48,7 +48,7 @@ main(int argc, char **argv)
 			errx(1, "inet_pton failed for '%s'.", argv[1]);
 		printf("Succesfully converted an IPv6 address string to a "
 		    "binary form.\n");
-		if (inet_ntop(AF_INET6, &in6, dst, INET6_ADDRSTRLEN) == NULL) {
+		if (inet_ntop(AF_INET6, &in6, dst, sizeof (dst)) == NULL) {
 			err(1, "inet_ntop");
 		}
 		printf("Succesfully converted a binary IPv6 address "
@@ -57,7 +57,7 @@ main(int argc, char **argv)
 	} else {
 		printf("Succesfully converted an IPv4 address string to a "
 		    "binary form.\n");
-		if (inet_ntop(AF_INET, &in, dst, INET_ADDRSTRLEN) == NULL) {
+		if (inet_ntop(AF_INET, &in, dst, sizeof (dst)) == NULL) {
 			err(1, "inet_ntop");
 		}
 		printf("Succesfully converted a binary IPv4 address "
