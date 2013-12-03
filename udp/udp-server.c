@@ -21,6 +21,7 @@ int
 main(int argc, char **argv)
 {
 	char buf[BUF_LEN + 1];
+	char addr[INET_ADDRSTRLEN];
 	int s, n;
 	struct sockaddr_in in, faddr;
 	int addrsize = sizeof (faddr);
@@ -40,7 +41,8 @@ main(int argc, char **argv)
 
 	while ((n = recvfrom(s, buf, BUF_LEN, 0, (struct sockaddr *)&faddr,
 	    &addrsize)) > 0) {
-		fprintf(stderr, "DBG: received %d bytes\n", n);
+	    	inet_ntop(AF_INET, &faddr.sin_addr, addr, sizeof (addr));
+		fprintf(stderr, "DBG: received %d bytes from %s\n", n, addr);
 		buf[n] = '\0';
 		printf("%s", buf);
 	}
