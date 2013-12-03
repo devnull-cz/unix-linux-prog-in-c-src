@@ -2,6 +2,8 @@
  * Simple TCP sink server running on specified port - what is sent to it is
  * just printed onto stdout. No data is sent back.
  *
+ * Note: this example is IPv4-only !
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 

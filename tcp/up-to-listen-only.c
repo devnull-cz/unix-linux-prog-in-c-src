@@ -5,6 +5,8 @@
  * it until it reaches the buffer size. After that, it stops accepting more
  * data, waiting for some program to accept() and start reading.
  *
+ * Note: this example is IPv4-only !
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
