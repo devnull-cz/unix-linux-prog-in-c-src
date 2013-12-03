@@ -4,6 +4,8 @@
  * the standard input and send the data to the other side. We do not read
  * anything from the remote side.
  *
+ * Note: this example is IPv4-only !
+ *
  * (c) jp@devnull.cz
  */
 
