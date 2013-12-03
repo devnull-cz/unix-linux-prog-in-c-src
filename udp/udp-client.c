@@ -1,6 +1,8 @@
 /*
  * UDP client. Read the standard input and feed the other side.
  *
+ * Note: this example is IPv4-only !
+ *
  * (c) jp@devnull.cz
  */
 
