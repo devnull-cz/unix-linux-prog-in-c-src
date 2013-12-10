@@ -7,6 +7,10 @@
  * doesn't read from the terminal until the connection terminates. You can
  * easily rewrite this program to be truly select()ive...
  *
+ * Note that both the file descriptor and the socket are in blocking mode.
+ *
+ * Note: this example is IPv4 specific which is bad.
+ *
  * (c) jp@devnull.cz
  */
 
