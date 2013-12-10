@@ -42,7 +42,7 @@ thread(void *x)
 int
 main(int argc, char **argv)
 {
-	pthread_t t;
+	pthread_t t1, t2;
 	int opt, sig, n1 = 1, n2 = 2;
 
 	while ((opt = getopt(argc, argv, "k")) != -1) {
@@ -78,8 +78,8 @@ main(int argc, char **argv)
 	sigfillset(&sset);
 	pthread_sigmask(SIG_SETMASK, &sset, NULL);
 
-	pthread_create(&t, NULL, thread, &n1);
-	pthread_create(&t, NULL, thread, &n2);
+	pthread_create(&t1, NULL, thread, &n1);
+	pthread_create(&t2, NULL, thread, &n2);
 
 	printf("You can ^C or ^\\ me now. Use 'kill -9 %d' from separate "
 	    "terminal to get rid of me.\n", getpid());
