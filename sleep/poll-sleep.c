@@ -16,10 +16,11 @@ main(void)
 
 	for (i = 0; i < CYCLES; ++i) {
 		putc('.', stderr);
-		/* wait 50 miliseconds between the dots */
+
+		/* Wait 50 miliseconds between the dots. */
 		poll(NULL, 0, 50);
 
-		/* make it nice */
+		/* Make it nice. */
 		if ((i + 1) % 19 == 0)
 			putc('\n', stderr);
 	}
