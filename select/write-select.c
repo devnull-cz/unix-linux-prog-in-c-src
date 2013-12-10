@@ -79,7 +79,7 @@ main(int argc, char **argv)
 			if ((n = write(newsock, buf, sizeof (buf))) == -1)
 				err(1, "write (%d)", errno);
 			total = total + n;
-			fprintf(stderr, "[ %d bytes written (total %d) ]",
+			fprintf(stderr, "[ %d bytes written (total %d) ]\n",
 			    n, total);
 		}
 	}
