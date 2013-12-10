@@ -67,7 +67,7 @@ mythread(void *x)
 	 * poll() below in main() is finished.
 	 *
 	 * Don't try to print a dot for every second or anything else since
-	 * those would be cancelations points...
+	 * those would be cancelations points as well...
 	 */
 	while (time(NULL) - t < NSECS) {
 		;
