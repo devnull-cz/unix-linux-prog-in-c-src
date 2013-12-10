@@ -50,10 +50,11 @@ main(int argc, char **argv)
 		err(1, "listen");
 
 	for (;;) {
-		/* Must do this each time before calling select(). */
+		/* Must initialize the set each time before calling select(). */
 		FD_ZERO(&rdfds);
 		FD_SET(0, &rdfds);
 		FD_SET(s, &rdfds);
+
 		if (select(s + 1, &rdfds, NULL, NULL, NULL) == -1)
 			err(1, "select");
 
