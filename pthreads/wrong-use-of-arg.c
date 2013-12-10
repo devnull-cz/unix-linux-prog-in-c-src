@@ -41,15 +41,16 @@ main(int argc, char *argv[])
 
 	for (i = 0; i < NUM_THREADS; ++i) {
 		pthread_create(&t[i], NULL, thread, &i);
+
 		/*
-		 * This is not from POSIX thread API. This is Solaris Threads.
-		 * Those calls can be combined though.
+		 * pthread_yield() is not from POSIX thread API however it is
+		 * present on many *nix systems.
 		 */
 		if (yield)
 			pthread_yield();
 	}
 
-	/* avoiding pthread_join() for now */
+	/* Avoiding pthread_join() for now. */
 	sleep(6);
 
 	return (0);
