@@ -24,9 +24,9 @@ thread(void *x)
 	 * soon as the thread is made detachable.
 	 */
 	printf("thread started\n");
-	sleep(1);
 	if ((e = pthread_detach(pthread_self())) != 0)
 		errx(1, "pthread_detach: %s", strerror(e));
+	printf("thread detached\n");
 
 	for (i = 0; i < 5; ++i) {
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
@@ -45,10 +45,12 @@ main(void)
 	int n1 = 1;
 
 	pthread_create(&t1, NULL, thread, &n1);
-
 	printf("thread created\n");
-	printf("main thread starts waiting for thread completion...\n");
 
+	/* Give the thread some cycles to detach and run. */
+	sleep(3);
+
+	printf("main thread starts waiting for thread completion...\n");
 	if ((e = pthread_join(t1, &p1)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
 
