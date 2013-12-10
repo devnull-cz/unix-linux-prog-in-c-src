@@ -24,20 +24,29 @@ thread(void *x)
 }
 
 int
-main(void)
+main(int argc, char *argv[])
 {
 	pthread_t t[NUM_THREADS];
-	int i, id[NUM_THREADS];
+	int i, yield = 0, id[NUM_THREADS];
+
+	if (argc > 1) {
+		printf("running with pthread_yield()\n");
+		yield = 1;
+	}
 
 	for (i = 0; i < NUM_THREADS; ++i) {
 		id[i] = i;
 		pthread_create(&t[i], NULL, thread, id + i);
-#if 0
-		pthread_yield();
-#endif
+
+		/*
+		 * pthread_yield() is not from POSIX thread API however it is
+		 * present on many *nix systems.
+		 */
+		if (yield)
+			pthread_yield();
 	}
 
-	/* avoiding pthread_join() for now */
+	/* Avoiding pthread_join() for now. */
 	sleep(6);
 
 	return (0);
