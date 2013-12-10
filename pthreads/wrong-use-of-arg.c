@@ -32,7 +32,7 @@ int
 main(int argc, char *argv[])
 {
 	int i, yield = 0;
-	pthread_t t[NUM_THREADS];
+	pthread_t t;
 
 	if (argc > 1) {
 		printf("running with pthread_yield()\n");
@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 	}
 
 	for (i = 0; i < NUM_THREADS; ++i) {
-		pthread_create(&t[i], NULL, thread, &i);
+		pthread_create(&t, NULL, thread, &i);
 
 		/*
 		 * pthread_yield() is not from POSIX thread API however it is
