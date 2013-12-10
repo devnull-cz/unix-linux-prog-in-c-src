@@ -27,6 +27,14 @@
  * Use is subject to license terms.
  */
 
+/*
+ * Run like this:
+ *
+ *   mkfifo fifo
+ *   gcc pthread-cancel.c -lthread
+ *   ./a.out
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
@@ -113,7 +121,7 @@ main(int argc, char **argv)
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
 
-	printf("Main has just called pthread_cancel() on the threads.\n");
+	printf("Main has just called pthread_cancel() on the thread.\n");
 
 	/*
 	 * The pointer for canceled thread is defined in PTHREAD_CANCELED and
