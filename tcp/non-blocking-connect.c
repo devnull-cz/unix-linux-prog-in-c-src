@@ -73,13 +73,14 @@ main(int argc, char **argv)
 	FD_ZERO(&wrfds);
 	n = 0; /* counts finished (succeeded/failed) connects */
 
-	/* One hostname can map to multiple addresses. */
+	/* In this cycle we initiate connects to all the hosts. */
 	for (hostp = hosts; hostp->hostname != NULL; hostp++) {
 		if ((error = getaddrinfo(hostp->hostname, hostp->port,
 		    &hints, &res)) != 0)
 			errx(1, "%s", gai_strerror(error));
 
 		i = 0;
+		/* One hostname can map to multiple addresses. */
 		for (resorig = res; res != NULL; res = res->ai_next, i++) {
 			if (res->ai_family != AF_INET &&
 			    res->ai_family != AF_INET6)
@@ -168,7 +169,9 @@ main(int argc, char **argv)
 				err(1, "select");
 		}
 
+		/* Check all hosts. */
 		for (hostp = hosts; hostp->hostname != NULL; hostp++) {
+			/* Check all sockets for this host. */
 			for (i = 0; i < hostp->numsock; i++) {
 				if (!FD_ISSET(hostp->sockets[i], &wrfds))
 					continue;
