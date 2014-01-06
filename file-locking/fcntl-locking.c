@@ -68,7 +68,7 @@ main(int argc, char **argv)
 	struct flock fl;
 
 	if (argc < 2 || argc > 3)
-		errx(1, "usage: %s [-l] <filename>", argv[0]);
+		errx(1, "usage: %s <-l|-L> <filename>", argv[0]);
 
 	act.sa_handler = sigint_handler;
 	sigemptyset(&act.sa_mask);
@@ -84,6 +84,9 @@ main(int argc, char **argv)
 		printf("will use locking with private fd's...\n");
 		locking = 2;
 		++argv;
+	} else {
+		printf("use -l or -L\n");
+		exit(1);
 	}
 
 	if (locking == 1) {
