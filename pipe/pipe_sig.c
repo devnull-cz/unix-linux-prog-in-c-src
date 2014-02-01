@@ -15,11 +15,10 @@
 #include <errno.h>
 #include <signal.h>
 
-void *
-xxx(int yyy)
+void
+handler(int yyy)
 {
-	fprintf(stderr, "%d: signal caught\n", getpid());
-	return (NULL);
+	write(2, "signal caught\n", 14);
 }
 
 int
@@ -27,10 +26,12 @@ main(void)
 {
 	char c;
 	int n;
+	struct sigaction act;
 
-	/* XXX do not use signal() ! */
-	/* XXX does not compile on Solaris (sig_t) */
-	signal(2, (sig_t) xxx);
+	(void) sigemptyset(&act.sa_mask);
+	act.sa_handler = handler;
+	act.sa_flags = 0;
+	(void) sigaction(SIGINT, &act, NULL);
 	fprintf(stderr, "%d: starting\n", getpid());
 
 	while ((n = read(0, &c, 1)) != -1) {
