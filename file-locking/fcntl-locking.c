@@ -8,7 +8,7 @@
  * contain only one of possible NPROC characters if written and read under the
  * lock.  Only the -L solution actually works correctly though.
  *
- * The file half is denoted via '|' character.
+ * The file middle is denoted via '|' character.
  *
  * You have three ways of running it.
  *
