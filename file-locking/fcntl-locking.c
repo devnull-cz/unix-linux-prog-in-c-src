@@ -169,7 +169,7 @@ main(int argc, char **argv)
 #endif
 			/*
 			 * NOTE: If locking is set to 1, the file position
-			 *	 is shared among the 3 processes so it could
+			 *	 is shared among the NPROC processes so it could
 			 *	 happen that (timewise):
 			 *
 			 *	   1) process in upper half lseek()'s
