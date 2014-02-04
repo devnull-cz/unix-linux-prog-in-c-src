@@ -50,27 +50,26 @@ main(int argc, char **argv)
 			fl.l_type = F_RDLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
 				err(1, "fcntl");
+			(void) printf("Got the lock now");
 		}
 
-		printf("Got the lock now\n");
-		lseek(fd, SEEK_SET, 0);
+		(void) putchar('\n');
+		(void) lseek(fd, SEEK_SET, 0);
 		bzero(buf, sizeof (buf));
 		n = read(fd, buf, sizeof (buf));
-		write(1, buf, sizeof (buf));
+		(void) write(1, buf, sizeof (buf));
 
 		sleep(1);
-		printf(" %d \nReleasing the lock\n", n);
-
 		if (locking == 1) {
+			(void) printf(" %d \nReleasing the lock\n", n);
 			fl.l_type = F_UNLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
 				err(1, "fcntl");
 		}
-
 		/* Let the writers do their job. */
 		sleep(1);
 	}
 
-	/* notreached */
+	/* not reached */
 	return (0);
 }

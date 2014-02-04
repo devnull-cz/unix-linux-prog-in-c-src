@@ -1,34 +1,59 @@
 /*
- * Example on file locking. Run it like either this:
+ * Example on file locking.  The program creates NPROC processes.  Each child
+ * goes through the file's first 70 bytes and sets the position for every
+ * consequtive byte before writing its id character to it (see array 'c').  When
+ * the middle is reached, if -l/-L is used, get the lock.  In other words, first
+ * half of the file is always written into without any synchronization between
+ * the processes, the other half may be writable to one process only and should
+ * contain only one of possible NPROC characters if written and read under the
+ * lock.  Only the -L solution actually works correctly though.
  *
- * Will not lock:
+ * The file half is denoted via '|' character.
+ *
+ * You have three ways of running it.
+ *
+ * (1) The following will not lock at all:
  *
  *   terminal1$ ./a.out xxx
+ *   terminal2$ gcc -o reader reader.c
+ *   terminal2$ ./reader -l xxx
+ *
+ * You could also use the shell to print the file without locking on read:
+ *
  *   terminal2$ while :; do cat xxx; printf "\r"; done
  *
- * Will use locking for the 2nd half of the file with descriptor sharing:
+ * You will see something like this since there was no locking:
+ *
+ *	####//_/#__##/#_/#/_#//_/####_/__/_|#_#//#//_//_/#/_////_/#/#///#___/_
+ *
+ * (2) Will use locking for the 2nd half of the file with descriptor sharing
+ * (that's the wrong solution, see "NOTE" below in the code):
  *
  *   terminal1$ ./a.out -l xxx
  *   terminal2$ gcc -o reader reader.c
  *   terminal2$ ./reader -l xxx
  *
- * Will use locking for the 2nd half of the file with descriptor sharing:
+ * You will see something "better" but obviously it does not work correctly.
+ * The first half sees contention which is fine but the 2nd half should have
+ * been composed from the same character since only one process is allowed to
+ * write to it and the reader acquired the lock (drop -l to see what happens if
+ * we read it without the lock):
+ *
+ *	/##_######_########################|////////////#////#//#//#//////////
+ *
+ * (3) Will use locking for the 2nd half of the file without descriptor sharing:
  *
  *   terminal1$ ./a.out -L xxx
  *   terminal2$ gcc -o reader reader.c
  *   terminal2$ ./reader -l xxx
  *
- * In the 1st example, you might see just line filled with the same character
- * which is because of the scheduling and the ordering of the processes -
- * the last one always rewrites each character with 'c' before all of them
- * wait 10 miliseconds so it looks like we have just single character there.
+ * You should see something like the following output.  Note that the 1st half
+ * is not much random because of the scheduler and implicit ordering based on
+ * synchronization on the file middle position.  The important thing though is
+ * that the 2nd half does consist of one character only while the 1st does not.
+ * Also, try to use the reader without the -l option to see what happens.
  *
- * In the 2nd example, you will see that the processes synchronize
- * in the middle of the file which however does not work since the processes
- * in lower half of the file steal position in the file from the process
- * in the upper half.
- *
- * The 3rd example is correct way how to deal with this.
+ *	#####/////////////////////////_____|##################################
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -46,7 +71,11 @@
 #include <assert.h>
 
 #define	FILE_LEN 70
+/* if you change this you MUST change the 'c' array below */
 #define	NPROC	3
+
+/* define DEBUG to get some debugging printf's */
+#undef DEBUG
 
 void
 sigint_handler(int sig)
@@ -58,7 +87,7 @@ sigint_handler(int sig)
 	_exit(0);
 }
 
-char c[3] = {'/', '_', '#'};
+char c[NPROC] = {'/', '_', '#'};
 
 int
 main(int argc, char **argv)
@@ -77,22 +106,23 @@ main(int argc, char **argv)
 
 	/* simple way of processing one optional argument */
 	if (strcmp(argv[1], "-l") == 0) {
-		printf("will use locking with shared fd...\n");
+		(void) printf("will use locking with shared fd...\n");
 		locking = 1;
 		++argv;
 	} else if (strcmp(argv[1], "-L") == 0) {
-		printf("will use locking with private fd's...\n");
+		(void) printf("will use locking with private fd's...\n");
 		locking = 2;
 		++argv;
-	} else {
-		printf("use -l or -L\n");
+	} else if (argc > 2) {
+		(void) printf("use -l or -L\n");
 		exit(1);
 	}
 
-	if (locking == 1) {
+	if (locking < 2) {
 		if ((fd = open(argv[1], O_CREAT | O_TRUNC | O_WRONLY,
-		    0666)) == -1)
+		    0666)) == -1) {
 			err(1, "open");
+		}
 	}
 
 	/* extend the file to FILE_LEN bytes */
@@ -104,9 +134,8 @@ main(int argc, char **argv)
 	fl.l_start = FILE_LEN / 2;
 	fl.l_len = FILE_LEN / 2;
 
-	/* create 3 processes */
+	/* create some processes */
 	for (i = 0; i < NPROC; ++i) {
-
 		/* parent */
 		if (fork() != 0)
 			continue;
@@ -119,22 +148,24 @@ main(int argc, char **argv)
 		/* child */
 		j = 0;
 		while (1) {
-
 			/* Lock only the 2nd half of the file. */
-			if (locking > 0 && j == FILE_LEN / 2) {
-				fl.l_type = F_WRLCK;
-				if (fcntl(fd, F_SETLKW, &fl) == -1)
-					err(1, "fcntl");
-
+			if (j == FILE_LEN / 2) {
+				if (locking > 0) {
+					fl.l_type = F_WRLCK;
+					if (fcntl(fd, F_SETLKW, &fl) == -1)
+						err(1, "fcntl");
+				}
 				/* Mark the 2nd half of the file. */
 				lseek(fd, j++, SEEK_SET);
 				write(fd, "|", 1);
 			}
 
+#if defined(DEBUG)
 			if (j >= FILE_LEN / 2) {
-				printf("%c[%d]", c[i], j);
+				(void) printf("%c[%d]", c[i], j);
 				fflush(stdout);
 			}
+#endif
 			/*
 			 * NOTE: If locking is set to 1, the file position
 			 *	 is shared among the 3 processes so it could
@@ -154,9 +185,12 @@ main(int argc, char **argv)
 			++j;
 			write(fd, c + i, 1);
 
-			/* Use poll() as a trick to sleep for 10 ms. */
-			poll(NULL, 0, 10);
-
+			/*
+			 * If we reached the end of file release the lock if we
+			 * used locking (-l or -L).  Restart the counter so the
+			 * next iteration starts from the beginning of the file
+			 * again.
+			 */
 			if (j == FILE_LEN) {
 				j = 0;
 				if (locking > 0) {
