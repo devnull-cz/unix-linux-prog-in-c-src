@@ -24,7 +24,7 @@
  *
  * You will see something like this since there was no locking:
  *
- *	####//_/#__##/#_/#/_#//_/####_/__/_|#_#//#//_//_/#/_////_/#/#///#___/_
+ *	_###./#./////_///.__#_____/_#___._#_|####_//..._#/.##._#.../..#####__#
  *
  * (2) Will use locking for the 2nd half of the file with descriptor sharing
  * (that's the wrong solution, see "NOTE" below in the code):
@@ -39,7 +39,7 @@
  * write to it and the reader acquired the lock (drop -l to see what happens if
  * we read it without the lock):
  *
- *	/##_######_########################|////////////#////#//#//#//////////
+ *	__///////____+_+_+++_______++_++___|///_////////////////_/////////////
  *
  * (3) Will use locking for the 2nd half of the file without descriptor sharing:
  *
@@ -48,12 +48,13 @@
  *   terminal2$ ./reader -l xxx
  *
  * You should see something like the following output.  Note that the 1st half
- * is not much random because of the scheduler and implicit ordering based on
- * synchronization on the file middle position.  The important thing though is
- * that the 2nd half does consist of one character only while the 1st does not.
- * Also, try to use the reader without the -l option to see what happens.
+ * is not much random because of the scheduler and a side effect of the implicit
+ * ordering based on synchronization on the file middle position.  The important
+ * thing though is that the 2nd half does consist of one character only while
+ * the 1st does not.  Also, try to use the reader without the -l option to see
+ * what happens.
  *
- *	#####/////////////////////////_____|##################################
+ *	########_________________________..|##################################
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -70,9 +71,9 @@
 #include <sys/wait.h>
 #include <assert.h>
 
-#define	FILE_LEN 70
+#define	FILE_LEN	70
 /* if you change this you MUST change the 'c' array below */
-#define	NPROC	3
+#define	NPROC		5
 
 /* define DEBUG to get some debugging printf's */
 #undef DEBUG
@@ -87,7 +88,7 @@ sigint_handler(int sig)
 	_exit(0);
 }
 
-char c[NPROC] = {'/', '_', '#'};
+char c[NPROC] = {'/', '_', '#', '+', '.'};
 
 int
 main(int argc, char **argv)
@@ -102,7 +103,7 @@ main(int argc, char **argv)
 	act.sa_handler = sigint_handler;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
-	sigaction(SIGINT, &act, NULL);
+	(void) sigaction(SIGINT, &act, NULL);
 
 	/* simple way of processing one optional argument */
 	if (strcmp(argv[1], "-l") == 0) {
@@ -126,8 +127,8 @@ main(int argc, char **argv)
 	}
 
 	/* extend the file to FILE_LEN bytes */
-	lseek(fd, SEEK_SET, FILE_LEN - 1);
-	write(fd, "", 1);
+	(void) lseek(fd, SEEK_SET, FILE_LEN - 1);
+	(void) write(fd, "", 1);
 
 	/* set the structure */
 	fl.l_whence = SEEK_SET;
@@ -156,14 +157,14 @@ main(int argc, char **argv)
 						err(1, "fcntl");
 				}
 				/* Mark the 2nd half of the file. */
-				lseek(fd, j++, SEEK_SET);
-				write(fd, "|", 1);
+				(void) lseek(fd, j++, SEEK_SET);
+				(void) write(fd, "|", 1);
 			}
 
 #if defined(DEBUG)
 			if (j >= FILE_LEN / 2) {
 				(void) printf("%c[%d]", c[i], j);
-				fflush(stdout);
+				(void) fflush(stdout);
 			}
 #endif
 			/*
@@ -181,9 +182,9 @@ main(int argc, char **argv)
 			 *	 This is thanks to scheduling and the fact
 			 *	 that lseek() does not consult any locks.
 			 */
-			lseek(fd, j, SEEK_SET);
+			(void) lseek(fd, j, SEEK_SET);
 			++j;
-			write(fd, c + i, 1);
+			(void) write(fd, c + i, 1);
 
 			/*
 			 * If we reached the end of file release the lock if we
@@ -204,7 +205,7 @@ main(int argc, char **argv)
 
 	/* not reached... */
 	for (i = 0; i < NPROC; ++i)
-		wait(NULL);
+		(void) wait(NULL);
 
 	return (0);
 }

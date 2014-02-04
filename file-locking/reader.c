@@ -58,10 +58,11 @@ main(int argc, char **argv)
 		bzero(buf, sizeof (buf));
 		n = read(fd, buf, sizeof (buf));
 		(void) write(1, buf, sizeof (buf));
+		(void) printf(" %d\n", n);
 
 		sleep(1);
 		if (locking == 1) {
-			(void) printf(" %d \nReleasing the lock\n", n);
+			(void) printf("Releasing the lock\n");
 			fl.l_type = F_UNLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
 				err(1, "fcntl");
