@@ -2,7 +2,7 @@
  * An example on getopt(). See getopts.sh which is a shell counterpart to this
  * C code.
  *
- * (c) jp@devnull.cz
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <stdio.h>
@@ -26,10 +26,10 @@ main(int argc, char **argv)
 	int opt;
 	char *argv0 = basename(argv[0]);
 
-	/* comment out to print getopt() error messages */
+	/* Comment out to print getopt() error messages. */
 	opterr = 0;
 
-	/* 1st param always required */
+	/* 1st param always required. */
 	if (argc < 2)
 		usage(argv0);
 
@@ -52,18 +52,19 @@ main(int argc, char **argv)
 	printf("...done reading option arguments\n");
 
 	/* optind is the 1st non-option argument */
-	argv = argv + optind;
+	argv += optind;
+	argc -= optind;
 
-	if (argv[0] != NULL) {
+	if (argc >= 1) {
 		printf("filenames:");
 		while (argv[0] != NULL) {
 			printf(" %s", argv[0]);
 			++argv;
 		}
 		printf("\n");
-	}
-	else
+	} else {
 		printf("no filenames entered\n");
+	}
 
 	return (0);
 }
