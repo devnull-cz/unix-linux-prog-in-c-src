@@ -9,22 +9,31 @@
  *
  * Use like this:
  *
- * Solaris:
- *	$ gcc -KPIC -shared -o myread.so rtld_next.c
- * OS X:
+ * Build:
+ *   Solaris (if the gcc version you have does not recognize -KPIC use cc(1)):
+ *	$ gcc -m64 -KPIC -shared -o myread.so rtld_next.c
+ *   OS X:
  *      $ gcc -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup \
  *          -o myread.dylib rtld_next.c
- * Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
- *	$ gcc -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
+ *   Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
+ *	$ gcc -m64 -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
  *
  * Run:
- *   Solaris/Linux:
- *	$ LD_PRELOAD=./myread.so cat /etc/passwd
+ *   Solaris/Linux (if cat(1) is 32-bit remove "-m64" and use LD_PRELOAD_32):
+ *	$ LD_PRELOAD_64=./myread.so cat /etc/passwd
  *   OS X:
  *      $ DYLD_FORCE_FLAT_NAMESPACE=1 DYLD_INSERT_LIBRARIES=./myread.dylib \
  *          cat /etc/passwd
  *
- * (c) jp@devnull.cz
+ * Expected output:
+ *
+ *	== [ fd 3, buf 414020, nbytes 8192, RET (1254) ] ==
+ *	root:x:0:0:Super-User:/root:/usr/bin/bash
+ *	daemon:x:1:1::/:
+ *	bin:x:2:2::/usr/bin:
+ *	...
+ *
+ * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
 #include <stdio.h>
@@ -48,7 +57,7 @@ read(int fildes, void *buf, size_t nbyte)
 	if (f == NULL) {
 		if ((f = (fn) dlsym(RTLD_NEXT, "read")) == NULL) {
 			/* better use simple function for printing out */
-			write(2, NOT_FOUND, strlen(NOT_FOUND));
+			(void) write(2, NOT_FOUND, strlen(NOT_FOUND));
 			exit(1);
 		}
 	}
@@ -57,10 +66,10 @@ read(int fildes, void *buf, size_t nbyte)
 	ret = f(fildes, buf, nbyte);
 
 	/* print some statistics, including the return value */
-	snprintf(msg, 128, "== [ fd %d, buf %p, nbytes %zd, RET (%ld) ] ==\n",
-	    fildes, buf, nbyte, (long)ret);
+	(void) snprintf(msg, 128, "== [ fd %d, buf %p, nbytes %zd, "
+	    "RET (%ld) ] ==\n", fildes, buf, nbyte, (long)ret);
 	/* again, let's not use fprintf() for this, write() is enough here */
-	write(2, msg, strlen(msg));
+	(void) write(2, msg, strlen(msg));
 
 	return (ret);
 }
