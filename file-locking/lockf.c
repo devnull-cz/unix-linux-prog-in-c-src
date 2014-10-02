@@ -26,7 +26,12 @@
  */
 
 #include <stdio.h>
+#ifndef NOERR
 #include <err.h>
+#else
+#define	err(n, ...)	printf(__VA_ARGS__)
+#define	errx(n, ...)	printf(__VA_ARGS__)
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
