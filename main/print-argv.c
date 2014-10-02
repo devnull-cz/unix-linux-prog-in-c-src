@@ -10,15 +10,16 @@ main(int argc, char **argv)
 	int i = 0;
 
 	/* You can do it both ways. */
-#if 1
+
+	printf("argv guided:\n");
 	while (argv[i] != NULL) {
 		printf("[%d] %s\n", i, argv[i]);
 		++i;
 	}
-#else
+
+	printf("argc guided:\n");
 	for (i = 0; i < argc; ++i)
 		printf("[%d] %s\n", i, argv[i]);
-#endif
 
 	return (0);
 }
