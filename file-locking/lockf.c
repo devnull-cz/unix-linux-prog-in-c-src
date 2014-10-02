@@ -3,24 +3,25 @@
  *
  * Run like this:
  *
- *   cp /etc/passwd mandatory.txt
+ *   cp /etc/passwd /tmp/mandatory.txt
  *
  *   # Solaris
- *   chmod 2660 mandatory.txt
+ *   chmod 2660 /tmp/mandatory.txt
  *   # Linux
- *   chmod g-x,g+s mandatory.txt
+ *   chmod g-x,g+s /tmp/mandatory.txt
  *
  *   gcc lockf.c
- *   ./a.out mandatory.txt &
+ *   ./a.out /tmp/mandatory.txt &
  *
- *   # in new terminal run this (the command should hang or the file-system
- *   # does not support or was mounted without mandatory locking):
- *   echo foo >> mandatory.txt
+ *   # in new terminal run this (the command should hang or return with error
+ *   # or succeed if the file-system does not support or was mounted without
+ *   # mandatory locking):
+ *   echo foo >> /tmp/mandatory.txt
  *
  *   # in the original terminal do this:
- *   cat mandatory.txt
+ *   cat /tmp/mandatory.txt
  *   kill $!
- *   cat mandatory.txt
+ *   cat /tmp/mandatory.txt
  *
  * vlada@devnull.cz
  */
