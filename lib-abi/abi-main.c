@@ -1,15 +1,15 @@
 /*
- * An example on how a change in a lib ABI can screw programs that use the
+ * An example on how a change in a lib ABI can screw up programs that use the
  * library.
  *
  * The program adds 2 32-bit integers. When lib's ABI changes, the program
  * doesn't know about it and prints an incorrect value. Run like this:
  *
- *   $ gcc -shared -o libabi.so libabi-32.c
- *   $ gcc -L. -Xlinker -R . -labi abi-main.c
+ *   $ gcc -m32 -shared -o libabi.so libabi-32.c
+ *   $ gcc -m32 -L. -Xlinker -R . -labi abi-main.c
  *   $ ./a.out 7 4
  *   11
- *   $ gcc -shared -o libabi.so libabi-64.c
+ *   $ gcc -m32 -shared -o libabi.so libabi-64.c
  *   $ ./a.out 7 4
  *   -1077941116
  *
