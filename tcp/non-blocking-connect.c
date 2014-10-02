@@ -87,8 +87,10 @@ main(int argc, char **argv)
 				continue;
 
 			if ((hostp->sockets[i] = socket(res->ai_family,
-			    res->ai_socktype, 0)) == -1)
-				err(1, "socket");
+			    res->ai_socktype, 0)) == -1) {
+				warn("socket");
+				continue;
+			}
 			hostp->numsock++;
 
 			/* Convert IP address to string. */
