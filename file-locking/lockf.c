@@ -8,20 +8,21 @@
  *   # Solaris
  *   chmod 2660 mandatory.txt
  *   # Linux
- *   chmod g-x mandatory.txt
- *   chmod g+s mandatory.txt
+ *   chmod g-x,g+s mandatory.txt
  *
  *   gcc lockf.c
- *   ./a.out mandatory.txt
+ *   ./a.out mandatory.txt &
  *
- *   # in new terminal run this
+ *   # in new terminal run this (the command should hang or the file-system
+ *   # does not support or was mounted without mandatory locking):
  *   echo foo >> mandatory.txt
  *
- *   # in the original terminal do this
+ *   # in the original terminal do this:
+ *   cat mandatory.txt
  *   kill $!
  *   cat mandatory.txt
  *
- * vlada@devnull.cz, 2013
+ * vlada@devnull.cz
  */
 
 #include <stdio.h>
