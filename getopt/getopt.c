@@ -18,7 +18,7 @@ void
 usage(char *argv0)
 {
 	fprintf(stderr,
-	    "usage: %s command [-c code] [filename [filename [...]]]\n",
+	    "usage: %s command [-c code] <filename> [filename [...]]\n",
 	    argv0);
 
 	exit(1);
