@@ -1,12 +1,11 @@
 /*
  * run like this and then press ^C
  *
- * We could have used `jot 10` for generating the sequence
- * however it is not available on all systems except FreeBSD/Mac OS X.
- *
  * for i in 1 2 3 4 5 6 7 8 9 10; do echo $i; sleep 1; done | \
  *    ./a.out | ./a.out | ./a.out | ./a.out
  *
+ * Side note: We could have used `jot 10` for generating the sequence however
+ * 	      it is not available on all systems except FreeBSD/Mac OS X.
  */
 
 #include <stdio.h>
@@ -14,6 +13,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <signal.h>
+#include <string.h>
 
 void
 handler(int yyy)
@@ -42,7 +42,7 @@ main(void)
 		write(1, &c, 1);
 	}
 
-	fprintf(stderr, "%d: error %d\n", getpid(), errno);
+	fprintf(stderr, "%d: error %s\n", getpid(), strerror(errno));
 
 	return (1);
 }
