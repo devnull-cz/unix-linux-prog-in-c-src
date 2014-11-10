@@ -1,3 +1,18 @@
+/*
+ * Compile as:
+ *   - Linux:   gcc dbx.c
+ *   - Solaris: cc dbx.c
+ *
+ * Run as:
+ *   - Linux:   ./a.out; gdb ./a.out core
+ *   - Solaris: ./a.out; dbx ./a.out core
+ *
+ * In the debugger type 'where' and see the difference.
+ *
+ * You might want to run 'ulimit -c size' with reasonable non-zero size
+ * before running the program to actually get the core file.
+ */
+
 #include <stdio.h>
 #include <unistd.h>
 
