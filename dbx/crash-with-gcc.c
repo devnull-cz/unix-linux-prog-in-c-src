@@ -1,8 +1,9 @@
 /*
- * Will generate a coredump if built with gcc but will not crash if built with
- * Sun Studio, for example. The reason is that gcc puts all static strings into
- * a read-only segment.
+ * Will generate a coredump if built with gcc or LLVM but will not crash if
+ * built with Solaris Studio compiler, for example. The reason is that the
+ * static string can be put into a read-only segment.
  */
+
 int
 main(void)
 {
