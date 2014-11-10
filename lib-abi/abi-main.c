@@ -11,7 +11,8 @@
  *   11
  *   $ gcc -m32 -shared -o libabi.so libabi-64.c
  *   $ ./a.out 7 4
- *   -1077941116
+ *   10002000
+ *   2007
  *
  * For Sun Studio (cc), use "-G" instead of "-shared". Also note that newer
  * GCC does not support "-R" so we have to use "-Xlinker -R ." instead
