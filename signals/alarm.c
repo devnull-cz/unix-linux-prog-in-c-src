@@ -11,17 +11,18 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
+#include <errno.h>
 #include <err.h>
 
 #define	BUFSIZE	4096
 #define	SECS	5
 
-#define MESSAGE "TIMEOUT! Exiting...\n"
+#define	MESSAGE	"TIMEOUT! Exiting...\n"
 
 void
 handler(int sig)
 {
-        write(1, MESSAGE, strlen(MESSAGE));
+	write(1, MESSAGE, strlen(MESSAGE));
 }
 
 int
@@ -41,20 +42,17 @@ main(void)
 	alarm(SECS);
 
 	if ((size = read(0, buf, BUFSIZE)) == -1) {
-#if 0
 		/*
 		 * That's what we would normally do but let's see that we really
 		 * get it.
 		 */
 		if (errno != EINTR)
-#endif
 			err(1, "read");
-#if 0
 		else
 			printf("interrupted...\n");
-#endif
 	}
 
+	alarm(0); /* disable the timer */
 	if (size > 0) {
 		printf("read %d bytes: ", size);
 		/* without \n it wouldn't print it before write() */
