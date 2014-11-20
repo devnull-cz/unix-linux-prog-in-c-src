@@ -19,8 +19,10 @@
  *	$ gcc -m64 -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
  *
  * Run:
- *   Solaris/Linux (if cat(1) is 32-bit remove "-m64" and use LD_PRELOAD_32):
+ *   Solaris(if cat(1) is 32-bit remove "-m64" and use LD_PRELOAD_32):
  *	$ LD_PRELOAD_64=./myread.so cat /etc/passwd
+ *   Linux:
+ *	$ LD_PRELOAD=./myread.so cat /etc/passwd
  *   OS X:
  *      $ DYLD_FORCE_FLAT_NAMESPACE=1 DYLD_INSERT_LIBRARIES=./myread.dylib \
  *          cat /etc/passwd
