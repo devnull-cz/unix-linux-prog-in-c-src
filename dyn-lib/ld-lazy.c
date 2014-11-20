@@ -75,7 +75,6 @@ main(int argc, char **argv)
 		execl("/usr/bin/pldd", "pldd", buf, NULL);
 		fprintf(stderr, "execl() failed on pldd: %s\n",
 		    strerror(errno));
-		fprintf(stderr, "are you sure this is Solaris?\n");
 		exit(1);
 	} else {
 		/* be sure we don't die before we are pldd'ed */
