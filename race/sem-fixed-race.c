@@ -139,6 +139,7 @@ main(int argc, char **argv)
 	}
 
 	print_stats();
+	cleanup();
 
 	return (0);
 }
