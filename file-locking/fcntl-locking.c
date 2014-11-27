@@ -122,7 +122,7 @@ main(int argc, char **argv)
 	/* Create the file. */
 	if ((fd = open(argv[1], O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
 		err(1, "open");
-	if (locking < 2)
+	if (locking == 2)
 		close(fd);
 
 	/* extend the file to FILE_LEN bytes */
