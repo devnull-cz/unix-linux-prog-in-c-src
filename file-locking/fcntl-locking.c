@@ -119,12 +119,11 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	if (locking < 2) {
-		if ((fd = open(argv[1], O_CREAT | O_TRUNC | O_WRONLY,
-		    0666)) == -1) {
-			err(1, "open");
-		}
-	}
+	/* Create the file. */
+	if ((fd = open(argv[1], O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
+		err(1, "open");
+	if (locking < 2)
+		close(fd);
 
 	/* extend the file to FILE_LEN bytes */
 	(void) lseek(fd, SEEK_SET, FILE_LEN - 1);
