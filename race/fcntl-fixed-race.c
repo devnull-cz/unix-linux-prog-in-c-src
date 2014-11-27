@@ -37,15 +37,14 @@ lock_unlock(int fd, int n, struct flock *fl)
 {
 	if (n == 1) {
 		fl->l_type = F_UNLCK;
-		if (fcntl(fd, F_SETLKW, fl) == -1)
-			err(1, "fcntl lock");
 	} else if (n == -1) {
 		fl->l_type = F_WRLCK;
-		if (fcntl(fd, F_SETLKW, fl) == -1)
-			err(1, "fcntl unlock");
 	} else {
 		errx(1, "incorrect use of lock_unlock");
 	}
+
+	if (fcntl(fd, F_SETLKW, fl) == -1)
+		err(1, "fcntl %s", fl->l_type == F_UNLCK ? "unlock" : "lock");
 }
 
 int
