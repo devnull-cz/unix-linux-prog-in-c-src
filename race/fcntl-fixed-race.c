@@ -18,17 +18,24 @@
 #include <fcntl.h>
 #include <strings.h>
 #include <signal.h>
+#include <errno.h>
 #include <err.h>
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
 unsigned int j;		/* j is number of races detected */
+volatile sig_atomic_t run = 1;
 
-void
-print_stat(int sig)
+static void
+print_stats(void)
 {
 	printf("\nstats: inconsistency %u of %lu\n", j, i);
-	_exit(0);
+}
+
+void
+finish(int sig)
+{
+	run = 0;
 }
 
 /* lock_unlock(1) means unlock, lock_unlock(-1) is lock */
@@ -43,8 +50,11 @@ lock_unlock(int fd, int n, struct flock *fl)
 		errx(1, "incorrect use of lock_unlock");
 	}
 
-	if (fcntl(fd, F_SETLKW, fl) == -1)
+	if (fcntl(fd, F_SETLKW, fl) == -1) {
+		if (errno == EINTR)
+			print_stats();
 		err(1, "fcntl %s", fl->l_type == F_UNLCK ? "unlock" : "lock");
+	}
 }
 
 int
@@ -62,7 +72,7 @@ main(int argc, char **argv)
 		dbg = 1;
 
 	bzero(&act, sizeof (act));
-	act.sa_handler = print_stat;
+	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
 	if ((lockfd = open("lockfile", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1)
@@ -85,7 +95,7 @@ main(int argc, char **argv)
 	case -1:
 		err(1, "fork");
 	case 0:
-		while (1) {
+		while (run) {
 			lock_unlock(lockfd, -1, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
@@ -99,7 +109,7 @@ main(int argc, char **argv)
 		}
 		break;
 	default:
-		while (1) {
+		while (run) {
 			lock_unlock(lockfd, -1, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
@@ -111,11 +121,14 @@ main(int argc, char **argv)
 			lock_unlock(lockfd, 1, &fl);
 			++i;
 		}
+		wait(NULL);
 		break;
 	}
 
 	munmap(addr, 2);
 	close(fd);
+
+	print_stats();
 
 	return (0);
 }

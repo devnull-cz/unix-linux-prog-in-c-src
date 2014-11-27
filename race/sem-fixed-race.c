@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <strings.h>
 #include <signal.h>
+#include <errno.h>
 #include <err.h>
 
 unsigned long i;	/* number of loops per process */
@@ -27,33 +28,41 @@ int sem, fd, parent;
 struct sembuf down = { 0, -1, 0};
 struct sembuf up = { 0, 1, 0};
 char *addr = NULL;
+volatile sig_atomic_t run = 1;
 
-void
-print_stat(int sig)
+static void print_stats(void)
 {
 	printf("\nstats: inconsistency %u of %lu\n", j, i);
+}
 
-	/* Perform cleanup before exit. */
+void
+finish(int sig)
+{
+	run = 0;
+}
+
+static void
+cleanup(void)
+{
 	if (parent)
 		semctl(sem, 1, IPC_RMID);
 
 	munmap(addr, 2);
 	close(fd);
-
-	_exit(0);
 }
+
 /* up_down(1) means UP, up_down(-1) is DOWN */
 int
 up_down(int n)
 {
-	if (n == 1) {
-		if (semop(sem, &up, 1) == -1)
-			err(1, "semop up");
-	} else if (n == -1) {
-		if (semop(sem, &down, 1) == -1)
-			err(1, "semop down");
-	} else {
+	if ((n != 1) && (n != -1))
 		errx(1, "incorrect use of up_down");
+
+	if (semop(sem, n == 1 ? &up : &down, 1) == -1) {
+		if (errno == EINTR)
+			print_stats();
+		cleanup();
+		err(1, "semop %s", n == 1 ? "up" : "down");
 	}
 }
 
@@ -80,7 +89,7 @@ main(int argc, char **argv)
 		err(1, "semctl");
 
 	bzero(&act, sizeof (act));
-	act.sa_handler = print_stat;
+	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
 	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1)
@@ -98,7 +107,7 @@ main(int argc, char **argv)
 	case -1:
 		err(1, "fork");
 	case 0:
-		while (1) {
+		while (run) {
 			up_down(-1);
 			if (addr[0] != addr[1]) {
 				if (dbg)
@@ -113,7 +122,7 @@ main(int argc, char **argv)
 		break;
 	default:
 		parent = 1;
-		while (1) {
+		while (run) {
 			up_down(-1);
 			if (addr[0] != addr[1]) {
 				if (dbg)
@@ -125,11 +134,11 @@ main(int argc, char **argv)
 			up_down(1);
 			++i;
 		}
+		wait(NULL);
 		break;
 	}
 
-	munmap(addr, 2);
-	close(fd);
+	print_stats();
 
 	return (0);
 }
