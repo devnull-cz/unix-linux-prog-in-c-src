@@ -1,7 +1,7 @@
 /*
  * Example on file locking.  The program creates NPROC processes.  Each child
  * goes through the file's first 70 bytes and sets the position for every
- * consequtive byte before writing its id character to it (see array 'c').  When
+ * consecutive byte before writing its id character to it (see array 'c').  When
  * the middle is reached, if -l/-L is used, get the lock.  In other words, first
  * half of the file is always written into without any synchronization between
  * the processes, the other half may be writable to one process only and should
