@@ -86,19 +86,20 @@ main(int argc, char **argv)
 			    res->ai_family != AF_INET6)
 				continue;
 
-			if ((hostp->sockets[i] = socket(res->ai_family,
-			    res->ai_socktype, 0)) == -1) {
-				warn("socket");
-				continue;
-			}
-			hostp->numsock++;
-
 			/* Convert IP address to string. */
 			if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 			    ip_str, sizeof (ip_str), NULL, 0,
 			    NI_NUMERICHOST) != 0)) {
 				errx(1, "%s", gai_strerror(error));
 			}
+
+			if ((hostp->sockets[i] = socket(res->ai_family,
+			    res->ai_socktype, 0)) == -1) {
+				warn("socket() failed for %s", ip_str);
+				continue;
+			}
+			hostp->numsock++;
+
 			printf("  %s[%s]:%s socket %d\n", hostp->hostname,
 			    ip_str, hostp->port, hostp->sockets[i]);
 
