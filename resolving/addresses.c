@@ -65,5 +65,5 @@ main(int argc, char **argv)
 		printf("The address is: %s\n", dst);
 	}
 
-	return (-1);
+	return (0);
 }
