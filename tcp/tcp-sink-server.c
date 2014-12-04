@@ -60,8 +60,9 @@ main(int argc, char **argv)
 			write(1, buf, n);
 
 		/*
-		 * Important since otherwise you will waste a few bytes with
-		 * every connection !!!
+		 * The close() is important cause otherwise you will waste
+		 * a few bytes of memory in the kernel with every connection
+		 * and eventually run out of file descriptors.
 		 */
 		(void) close(newsock);
 		fprintf(stderr, "-- connection closed --\n");
