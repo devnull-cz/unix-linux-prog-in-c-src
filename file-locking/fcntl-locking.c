@@ -140,12 +140,12 @@ main(int argc, char **argv)
 		if (fork() != 0)
 			continue;
 
+		/* child */
 		if (locking == 2) {
 			if ((fd = open(argv[1], O_WRONLY, 0666)) == -1)
 				err(1, "open");
 		}
 
-		/* child */
 		j = 0;
 		while (1) {
 			/* Lock only the 2nd half of the file. */
