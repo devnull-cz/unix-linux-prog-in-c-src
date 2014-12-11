@@ -121,12 +121,12 @@ main(int argc, char **argv)
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
 
-	printf("Main has just called pthread_cancel() on the thread.\n");
+	printf("main() has just called pthread_cancel() on the thread.\n");
 
 	/*
 	 * The pointer for canceled thread is defined in PTHREAD_CANCELED and
 	 * contains something that does not reference valid memory. For example,
-	 * on FreeBSD it was ((void *) 1), on Solaris I saw (void *)-19
+	 * on FreeBSD and OS X it was ((void *) 1), on Solaris I saw (void *)-19
 	 * (0xFFFFFFED).
 	 */
 	if ((e = pthread_join(t, &ptr)) != 0)
