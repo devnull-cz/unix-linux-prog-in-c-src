@@ -6,7 +6,7 @@
  *
  *	nc -i 9999 localhost 2222
  *
- * Note that this program works with IPv4 only.
+ * Note that this program works with IPv4 only which is bad.
  *
  * (c) jp@devnull.cz
  */
