@@ -59,8 +59,8 @@ main(int argc, char **argv)
 		err(1, "listen");
 
 	/*
-	 * Set them to a non-blocking mode so that we can busy wait. Do not
-	 * forget to use F_SETFL, not F_SETFD.
+	 * Set stdout and the listener socket to a non-blocking mode.
+	 * Notice that we are using F_SETFL, not F_SETFD.
 	 */
 	if (fcntl(1, F_SETFL, O_NONBLOCK) == -1)
 		err(1, "fcntl");
@@ -70,7 +70,7 @@ main(int argc, char **argv)
 	for (;;) {
 		/*
 		 * We set fd 1 to a non-blocking mode above, not 0. Why does it
-		 * still work as expected?
+		 * still work as expected ?
 		 */
 		if ((n = read(0, buf, sizeof (buf))) >= 0) {
 			if (n == 0) {
