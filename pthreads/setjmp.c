@@ -10,7 +10,7 @@
  * The program saves the state and prints "0". The first "if" is not satisfied
  * so we longjump() to the saved state. "1" is printed but since "i" is 2 when
  * the check is performed, the program exists. So, as you can see, without any
- * loop or goto statement we print two 1's using just one fprintf() in the code.
+ * loop or goto statement we print twice using just one fprintf() in the code.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
