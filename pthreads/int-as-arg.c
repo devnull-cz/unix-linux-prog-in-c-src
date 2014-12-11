@@ -3,6 +3,10 @@
  * itself. However, this way is defined as not portable in the specification
  * so be careful. Compare to wrong-use-of-arg.c and correct-use-of-arg.c.
  *
+ * Compile as:
+ *
+ *   gcc -m32 -pthread int-as-arg.c
+ *
  * (c) jp@devnull.cz
  */
 
