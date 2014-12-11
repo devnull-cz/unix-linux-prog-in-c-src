@@ -1,5 +1,5 @@
 /*
- * This example program shows a correct use of the 4th parameter in
+ * This example program shows a correct use of the 1st and 4th parameters in
  * pthread_create(). Compare to pthreads/wrong-use-of-arg.c.
  *
  * (c) jp@devnull.cz
