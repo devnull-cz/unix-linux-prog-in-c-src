@@ -13,7 +13,6 @@ void *
 thread(void *x)
 {
 	int i;
-	void *p;
 
 	for (i = 0; i < 5; ++i) {
 		printf("thread %d (loop #%d)\n", *((int *) x), i);
