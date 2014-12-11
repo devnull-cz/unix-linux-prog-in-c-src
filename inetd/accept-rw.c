@@ -21,13 +21,11 @@
 int
 main(void)
 {
-	struct sockaddr_storage addr;
-	socklen_t addrlen = sizeof (addr);
 	int client_fd;
 	char buf[BUFSIZ];
 	int len;
 
-	client_fd = accept(STDIN_FILENO, (struct sockaddr *)&addr, &addrlen);
+	client_fd = accept(STDIN_FILENO, NULL, 0);
 	if (client_fd == -1)
 		err(1, "accept failed");
 
