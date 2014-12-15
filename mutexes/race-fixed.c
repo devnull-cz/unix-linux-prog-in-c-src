@@ -8,9 +8,9 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 
 int a, b;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
