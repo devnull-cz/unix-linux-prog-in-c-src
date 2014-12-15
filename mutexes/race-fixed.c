@@ -5,6 +5,12 @@
  * identification character. There should be no races since both variables are
  * protected by a mutex. No races means no output.
  *
+ * On system with Dtrace you can observe that threads are indeed running:
+ *
+ *   sudo dtrace -n \
+ *       'pid$target::pthread_mutex_lock:entry { @[tid] = count(); }' \
+ *       -c ./a.out
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
