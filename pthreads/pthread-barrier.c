@@ -3,7 +3,10 @@
  * the threads are kept around until the program exits. Another possibility
  * would be to let the threads exit after each stage and recreate them.
  *
- * Vladimir Kotal, 2014
+ * Note that pthread barriers is optional part of POSIX standard and some
+ * UNIX systems (e.g. OS X) do not implement them.
+ *
+ * (c) vlada@devnull.cz
  */
 
 #include <stdio.h>
