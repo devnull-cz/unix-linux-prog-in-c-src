@@ -3,7 +3,7 @@
  * Run with multiple types on multiple systems and see how it differs
  * (especially the DEFAULT type).
  *
- * For example, OpenSolaris sets default to normal, FreeBSD 7.2 to errcheck,
+ * For example, Solaris 11 sets default to normal, FreeBSD 7.2 to errcheck,
  * Linux 2.6.32 kernel to normal.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
