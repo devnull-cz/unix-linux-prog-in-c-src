@@ -92,12 +92,8 @@ main(int argc, char **argv)
 	else
 		max = DEFAULT_MAX;
 
-	/* Seed random device */
-#ifdef __FreeBSD__
-	srandomdev(); /* good random numbers */
-#else
-	srandom(time(NULL)); /* not so good but will suffice */
-#endif
+	/* Seed random device. */
+	srandom(time(NULL));
 
 	pthread_create(&t_prod, NULL, producer, NULL);
 	pthread_create(&t_cons, NULL, consumer, NULL);
