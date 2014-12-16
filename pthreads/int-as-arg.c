@@ -5,7 +5,7 @@
  *
  * Compile as:
  *
- *   gcc -m32 -pthread int-as-arg.c
+ *   cc -pthread int-as-arg.c
  *
  * (c) jp@devnull.cz
  */
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <pthread.h>
+#include <sys/types.h>
 
 #define	NUM_THREADS	5
 
@@ -23,7 +24,7 @@ thread(void *x)
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", (int)x, i);
+		printf("thread %d (loop #%d)\n", (int) x, i);
 		sleep(1);
 	}
 	return (NULL);
@@ -39,7 +40,7 @@ main(void)
 	assert(sizeof (int) <= sizeof (void *));
 
 	for (i = 0; i < NUM_THREADS; ++i) {
-		pthread_create(&t[i], NULL, thread, (void *)i);
+		pthread_create(&t[i], NULL, thread, (void *) (intptr_t) i);
 	}
 
 	/* Avoid pthread_join() for now. */
