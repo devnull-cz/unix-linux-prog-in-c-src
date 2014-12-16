@@ -4,6 +4,8 @@
  *
  * gethostbyaddr() are int_aton() are obsolete and non standard.
  * Instead use getnameinfo() and inet_pton().
+ *
+ * This program is included solely as a demonstration of historic APIs.
  */
 
 #include <stdio.h>

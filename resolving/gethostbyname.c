@@ -1,10 +1,13 @@
 /*
- * Example on gethostbyname(). Note that this function is obsolete. You should
- * use getnameinfo() instead. Use with "www.google.com", for example, to see
- * aliases as well.
+ * Example on gethostbyname().
  *
- * Note that gethostbyname() and inet_ntoa() are obsolete and should not be
- * used. Use getaddrinfo() and inet_ntop() instead.
+ * Use this program with "www.google.com", for example and then
+ * run 'host www.google.com' from command line to see that it also has IPv6
+ * address which with this program cannot be seen.
+ *
+ * Note that gethostbyname() and inet_ntoa() are obsolete, IPv4 specific and
+ * should not be used. Use getaddrinfo() and inet_ntop() instead.
+ * This program is included solely as a demonstration of historic APIs.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
