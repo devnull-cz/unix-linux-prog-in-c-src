@@ -20,13 +20,14 @@
 #include <pthread.h>
 #include <poll.h>
 
-pthread_mutex_t mutex;
-enum { FORKER = 0, COUNTER = 1, MAX = 2 } thread_idx;
 typedef struct {
 	char name[16];
 	pthread_t t;
-} thread_info;
-thread_info threads[MAX];
+} thread_info_t;
+
+enum { FORKER = 0, COUNTER = 1, MAX = 2 } thread_idx;
+pthread_mutex_t mutex;
+thread_info_t threads[MAX];
 
 char *
 print_id(void)
@@ -37,6 +38,8 @@ print_id(void)
 		if (pthread_equal(pthread_self(), threads[i].t) != 0)
 			return (threads[i].name);
 	}
+
+	return (NULL);
 }
 
 void *
