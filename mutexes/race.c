@@ -1,9 +1,9 @@
 /*
- * Work with 2 global variables from 2 threads. At each loop each thread sets
- * both to its value passed in by pthread_create(). Before the assignment it
- * checks whether our variables are equal. If not, the thread prints its
- * identification character. You should see a lot of races even on single CPU
- * system.
+ * Work with members of global variable from 2 threads. At each loop each
+ * thread sets both to its value passed in by pthread_create(). Before the
+ * assignment it checks whether our variables are equal. If not, the thread
+ * prints its identification character. You should see a lot of races even
+ * on single CPU system.
  *
  * (c) jp@devnull.cz
  */
@@ -12,7 +12,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int a, b;
+struct {
+	int a;
+	int b;
+} foo;
 
 void *
 thread(void *x)
@@ -20,15 +23,15 @@ thread(void *x)
 	intptr_t data = (intptr_t) x;
 
 	while (1) {
-		if (a != b) {
+		if (foo.a != foo.b) {
 			if (data == 0)
 				write(1, "|", 1);
 			else
 				write(1, "_", 1);
 		}
 
-		a = data;
-		b = data;
+		foo.a = data;
+		foo.b = data;
 	}
 
 	return (NULL);

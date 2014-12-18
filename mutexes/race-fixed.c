@@ -18,7 +18,11 @@
 #include <unistd.h>
 #include <pthread.h>
 
-int a, b;
+struct {
+	int a;
+	int b;
+} foo;
+
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void *
@@ -32,15 +36,15 @@ thread(void *x)
 		 * If there is a race, print a character depending on
 		 * which thread is experiencing the inconsistency.
 		 */
-		if (a != b) {
+		if (foo.a != foo.b) {
 			if (data == 0)
 				write(1, "|", 1);
 			else
 				write(1, "_", 1);
 		}
 
-		a = data;
-		b = data;
+		foo.a = data;
+		foo.b = data;
 		pthread_mutex_unlock(&mutex);
 	}
 
