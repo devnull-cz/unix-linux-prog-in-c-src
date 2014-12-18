@@ -4,6 +4,10 @@
  * condition variable and one mutex is used. Note that if we used semaphores,
  * we would need 2 of them to represent both "sleeping" states.
  *
+ * There is a randomness factor used to make the queue can get some items in
+ * it and also to hit both boundary cases (empty and full queue) from time to
+ * time and one of the threads gets blocked on the condition variable.
+ *
  * (c) jp@devnull.cz
  */
 
@@ -110,7 +114,7 @@ main(int argc, char **argv)
 			putchar(' ');
 		printf("|\n");
 		pthread_mutex_unlock(&mutex);
-		poll(NULL, 0, 85);
+		poll(NULL, 0, 85); /* sleep 85 ms */
 	}
 
 	/* never reached */
