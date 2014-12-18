@@ -6,8 +6,8 @@
  *   gcc gethostbyname.c
  *
  * Run like this:
- *   ./a.out www.devnull.cz www.opensolaris.org
- *   ./a.out www.opensolaris.org www.devnull.cz
+ *   ./a.out www.devnull.cz www.mff.cuni.cz
+ *   ./a.out www.mff.cuni.cz www.devnull.cz
  *
  * (c) vlada@devnull.cz
  */
