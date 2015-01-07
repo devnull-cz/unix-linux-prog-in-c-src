@@ -6,6 +6,9 @@
  * For example, Solaris 11 sets default to normal, FreeBSD 7.2 to errcheck,
  * Linux 2.6.32 kernel to normal.
  *
+ * Compile with:
+ *   gcc -pthread not-my-lock.c
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
