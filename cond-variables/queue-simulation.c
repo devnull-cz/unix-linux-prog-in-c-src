@@ -51,7 +51,7 @@ producer(void *x)
 		poll(NULL, 0, 95);
 	}
 
-	return (NULL);
+	/* NOTREACHED */
 }
 
 void *
