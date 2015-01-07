@@ -52,7 +52,7 @@ thread(void *x)
 		pthread_mutex_unlock(&mutex);
 	}
 
-	return (NULL);
+	/* NOTREACHED */
 }
 
 int
