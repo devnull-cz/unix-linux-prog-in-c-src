@@ -5,6 +5,10 @@
  * identification character. There should be no races since both variables are
  * protected by a mutex. No races means no output.
  *
+ * Compile with:
+ *
+ *   gcc -pthread race-fixed.c
+ *
  * On system with Dtrace you can observe that threads are indeed running:
  *
  *   sudo dtrace -n \
