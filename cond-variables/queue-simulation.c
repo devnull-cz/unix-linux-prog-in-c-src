@@ -8,6 +8,9 @@
  * it and also to hit both boundary cases (empty and full queue) from time to
  * time and one of the threads gets blocked on the condition variable.
  *
+ * Compile with:
+ *   gcc -pthread queue-simulation.c
+ *
  * (c) jp@devnull.cz
  */
 
@@ -83,7 +86,6 @@ consumer(void *x)
 		poll(NULL, 0, 100);
 	}
 }
-
 
 int
 main(int argc, char **argv)
