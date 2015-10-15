@@ -1,8 +1,11 @@
-# Ukazka na to, ze nektere make programy maji i direktivy pro podminene
-# zpracovani vstupniho souboru. Spustte takto:
+# 
+# Some make programs have directives for conditional processing of input file.
+# Run like this:
 #
 #	make -f Makefile09
 #	D=xxx -f Makefile09
+#
+# NOTE: This works only with BSD make and the like.
 #
 
 all:

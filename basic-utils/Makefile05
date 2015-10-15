@@ -1,3 +1,5 @@
+# Show that recursive macro definition does not work.
+
 M=x
 M=$(M) y
 

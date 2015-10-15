@@ -1,3 +1,4 @@
+# Show that last variable definition takes precedence.
 
 D=3
 

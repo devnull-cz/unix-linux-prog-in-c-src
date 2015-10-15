@@ -1,5 +1,7 @@
+#
 # Shows how '-' might be used and that by default, 1st failed command stops
 # building the target.
+#
 
 all:
 	false

@@ -1,9 +1,9 @@
-# Jednoduchy priklad na Makefile.
+# simple makefile example demonstrating binary assembly from 2 object files
 
 a.out:		main.o common.o
 		$(CC) main.o common.o
-# Je mozne pouzit i tyto promennou, ktera se expanduje do zavislosti, tedy do
-# "main.o common.o"
+# It is possible to use special variable which expands into dependencies
+# "main.o common.o":
 #		$(CC) $(>)
 
 main.o:		common.h main.c

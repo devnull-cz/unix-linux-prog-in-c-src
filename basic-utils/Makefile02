@@ -1,6 +1,7 @@
-# Priklad ukazuje, ze kazdy z prikazu je spusten v ramci samosteho shellu. Pro
-# "if" to znamena, ze oba "echo" prikazy vypisi stejny PID - tj. PID pro (ten
-# jeden) shell, ktery byl spusten pro "if".
+#
+# Show that each command is executed from separate shell. For the "if" clause,
+# both "echo" commands will emit the same PID - .i.e. PID for the single shell.
+#
 
 all:
 	echo $$$$

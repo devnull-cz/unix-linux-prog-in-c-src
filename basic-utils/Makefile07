@@ -1,3 +1,5 @@
+# Show how concatenation works.
+
 xxx=a\
 b
 

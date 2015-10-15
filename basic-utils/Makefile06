@@ -1,4 +1,11 @@
-# Run like this: MYVAR="from outside" make -f Makefile06 -e 
+#
+# Demonstrate handling of environment variables.
+#
+# Run like this:
+#
+#   MYVAR="from outside" make -f Makefile06
+#   MYVAR="from outside" make -f Makefile06 -e
+#
 
 MYVAR="from inside"
 
