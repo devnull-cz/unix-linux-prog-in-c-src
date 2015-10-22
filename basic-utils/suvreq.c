@@ -6,6 +6,7 @@
 #define	_XOPEN_SOURCE	600
 
 #include <stdio.h>
+#include <unistd.h>
 
 int
 main(void)
