@@ -25,7 +25,6 @@
 #endif
 #include <stdio.h>
 #include <unistd.h>
-#include <err.h>
 
 int
 main(void)
