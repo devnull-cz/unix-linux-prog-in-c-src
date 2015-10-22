@@ -5,6 +5,8 @@
  *
  * run e.g. like this:
  *   LD_PRELOAD=./libpreload.so cat /etc/passwd
+ *
+ * Note: this example does not work on OS X
  */
 
 #include <unistd.h>
