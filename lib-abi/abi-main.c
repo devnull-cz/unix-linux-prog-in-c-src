@@ -8,11 +8,12 @@
  *   $ gcc -m32 -shared -o libabi.so libabi-32.c
  *   $ gcc -m32 -L. -Xlinker -R . -labi abi-main.c
  *   $ ./a.out 7 4
- *   11
+ *   10002000
+ *   result: 11
  *   $ gcc -m32 -shared -o libabi.so libabi-64.c
  *   $ ./a.out 7 4
  *   10002000
- *   2007
+ *   result: 2007
  *
  * For Sun Studio (cc), use "-G" instead of "-shared". Also note that newer
  * GCC does not support "-R" so we have to use "-Xlinker -R ." instead
@@ -38,7 +39,7 @@ main(int argc, char **argv)
 	printf("%d%d\n", 1000, 2000);
 
 	/* See the result. */
-	printf("%d\n", abiadd(atoi(argv[1]), atoi(argv[2])));
+	printf("result: %d\n", abiadd(atoi(argv[1]), atoi(argv[2])));
 
 	return (0);
 }
