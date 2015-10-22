@@ -9,6 +9,8 @@
  *
  * In the debugger type 'where' and see the difference.
  *
+ * Use the -g option when compiling with gcc and try again.
+ *
  * You might want to run 'ulimit -c size' with reasonable non-zero size
  * before running the program to actually get the core file.
  */
