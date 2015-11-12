@@ -24,7 +24,7 @@ main(void)
 {
 	int fd;
 
-	if ((fd = open("BIG", O_CREAT | O_RDWR, 0666)) == -1)
+	if ((fd = open("BIG", O_CREAT | O_TRUNC | O_RDWR, 0666)) == -1)
 		err(1, "open");
 
 	lseek(fd, 1000000, SEEK_SET);
