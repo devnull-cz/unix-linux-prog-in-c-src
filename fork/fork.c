@@ -1,7 +1,7 @@
 /*
  * The simplest fork() example. You should see how the parent and the child
  * are printing messages in turns. Parent exits first, child continues along
- * and its parent is now the init process (with pid = 1).
+ * and its parent is now the init process (which *usually* has pid = 1).
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
