@@ -3,12 +3,13 @@
  * you can do 4 different things:
  *
  *   (1) wait quietly for 30 seconds to see the parent report sleep's return
- *   value which should be 0
- *   (2) kill sleep (use the child's PID printed upon startup) to see the signal
- *   number used. Try different signals (kill <PID>, kill -9 <PID>, ...)
- *   (3) stop the child to see that the parent gets notified about that. You can
- *   stop a process by sending it a stop signal: kill -STOP <PID>. Again, use
- *   the child's PID.
+ *       value which should be 0
+ *   (2) kill sleep (use the child's PID printed upon startup) to see the
+ *       signal number used. Try different signals (kill <PID>, kill -9 <PID>,
+ *       ...)
+ *   (3) stop the child to see that the parent gets notified about that. You
+ *       can stop a process by sending it a stop signal: kill -STOP <PID>.
+ *       Again, use the child's PID.
  *   (4) continue the child by "kill -CONT <PID>"
  *
  * The parent will continue to report on the child states until the child is
@@ -58,7 +59,7 @@ main(void)
 	default:
 		printf("parent's PID: %d\n", (int)getpid());
 
-		/* let's loop until the child is finished */
+		/* Let's loop until the child is finished */
 		while (1) {
 			waitpid(pid, &status, WUNTRACED | WCONTINUED);
 
