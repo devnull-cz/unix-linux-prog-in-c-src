@@ -2,7 +2,7 @@
  * Check if mmap'ed memory from a fd can be accessed after the fd is closed.
  *
  * Run like this:
- *   $ cc reverse.c
+ *   $ cc close.c
  *   $ ./a.out
  *
  * (c) vlada@devnull.cz
