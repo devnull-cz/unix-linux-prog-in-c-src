@@ -4,8 +4,8 @@
  *
  * Run like this:
  *   gcc override.c
- *   ./a.out 0
- *   ./a.out 1
+ *   ./a.out 0 0
+ *   ./a.out 1 0
  *   ./a.out 1 100
  *
  * vlada@devnull.cz, 2013
