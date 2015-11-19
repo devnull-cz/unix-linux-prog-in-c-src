@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-void
+static void
 pmapme(void)
 {
 	int status;
@@ -38,11 +38,30 @@ pmapme(void)
 	}
 }
 
+static int
+create_file(void)
+{
+	int fd;
+	char c = (char) 'a';
+
+	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1) {
+		perror("open");
+		exit(1);
+	}
+
+	if (lseek(fd, 99, SEEK_SET) == -1) {
+		perror("lseek");
+		exit(1);
+	}
+	write(fd, &c, 1);
+
+	return (fd);
+}
+
 int
 main(int argc, char *argv[])
 {
 	int fd;
-	char c = (char) 'a';
 	char *addr = NULL, *newaddr = NULL;
 	int flags = MAP_SHARED;
 	off_t off = 0;
@@ -60,25 +79,14 @@ main(int argc, char *argv[])
 	printf("anon segment: %p\n", addr);
 
 	pmapme();
-
-	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1) {
-		perror("open");
-		exit(1);
-	}
-
-	if (lseek(fd, 99, SEEK_SET) == -1) {
-		perror("lseek");
-		exit(1);
-	}
-	write(fd, &c, 1);
+	create_file();
 
 	if (atoi(argv[1]) > 0)
 		flags |= MAP_FIXED;
 	if (atoi(argv[2]) > 0)
 		off = atoi(argv[2]);
 
-	newaddr = mmap(addr + off, 100, PROT_READ | PROT_WRITE, flags,
-	    fd, 0);
+	newaddr = mmap(addr + off, 100, PROT_READ | PROT_WRITE, flags, fd, 0);
 	if ((void *) newaddr == MAP_FAILED) {
 		perror("mmap");
 		exit(1);
