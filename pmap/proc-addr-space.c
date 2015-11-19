@@ -4,6 +4,8 @@
  * architecture. You can use pmap(1) on Linux or Solaris to see the segments
  * of the running process.
  *
+ * NOTE: This works only on systems which have /usr/bin/pmap
+ *
  * Read README in this directory for some example outputs.
  *
  * Run like this:
@@ -54,7 +56,7 @@ main(int argc, char **argv)
 	printf("\n=== pmap %d ===\n", getpid());
 	snprintf(buf, sizeof (buf), "%d", getpid());
 
-	/* we must fork so that don't overwrite those variables above */
+	/* We must fork so exec does not overwrite those variables above. */
 	if (fork() == 0) {
 		execl("/usr/bin/pmap", "pmap", buf, NULL);
 		fprintf(stderr, "execl() failed on pmap: %s\n",
@@ -62,7 +64,7 @@ main(int argc, char **argv)
 		return (1);
 	}
 
-	/* be sure we don't die before we are pmap'ed */
+	/* Be sure we don't die before we are pmap'ed. */
 	wait(NULL);
 	return (0);
 }
