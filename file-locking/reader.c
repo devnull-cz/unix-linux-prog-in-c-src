@@ -50,7 +50,6 @@ main(int argc, char **argv)
 			fl.l_type = F_RDLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
 				err(1, "fcntl");
-			(void) printf("Got the lock now");
 		}
 
 		(void) lseek(fd, SEEK_SET, 0);
@@ -61,7 +60,6 @@ main(int argc, char **argv)
 
 		sleep(1);
 		if (locking == 1) {
-			(void) printf("Releasing the lock\n");
 			fl.l_type = F_UNLCK;
 			if (fcntl(fd, F_SETLKW, &fl) == -1)
 				err(1, "fcntl");
