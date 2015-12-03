@@ -3,37 +3,33 @@
  *
  * Run like this:
  *
- *   cp /etc/passwd /tmp/mandatory.txt
+ *   cp /etc/passwd /var/tmp/mandatory.txt
  *
  *   # Solaris
- *   chmod 2660 /tmp/mandatory.txt
+ *   chmod 2660 /var/tmp/mandatory.txt
  *   # Linux
- *   chmod g-x,g+s /tmp/mandatory.txt
+ *   chmod g-x,g+s /var/tmp/mandatory.txt
  *
  *   gcc lockf.c
- *   ./a.out /tmp/mandatory.txt &
+ *   ./a.out /var/tmp/mandatory.txt &
  *
- *   # in new terminal run this (the command should hang or return with error
- *   # or succeed if the file-system does not support or was mounted without
- *   # mandatory locking):
- *   echo foo >> /tmp/mandatory.txt
+ *   # in new terminal run this:
+ *   echo foo >> /var/tmp/mandatory.txt
+ *   cat /var/tmp/mandatory.txt
  *
  *   # in the original terminal do this:
- *   cat /tmp/mandatory.txt
  *   kill $!
- *   cat /tmp/mandatory.txt
+ *   cat /var/tmp/mandatory.txt
+ *
+ * NOTE: if the file-system does not support or was mounted without
+ *	 mandatory locking the commands in the new terminal will be
+ *	 able to read/write to the file.
  *
  * vlada@devnull.cz
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef NOERR
-#include <err.h>
-#else
-#define	err(n, ...)	printf(__VA_ARGS__); exit(n);
-#define	errx(n, ...)	printf(__VA_ARGS__); exit(n);
-#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -45,17 +41,25 @@ main(int argc, char *argv[])
 	int fd;
 	off_t size;
 
-	if (argc != 2)
-		errx(1, "usage: %s <file>", argv[0]);
+	if (argc != 2) {
+		printf("usage: %s <file>", argv[0]);
+		exit(1);
+	}
 
-	if ((fd = open(argv[1], O_RDWR)) == -1)
-		err(1, "open");
+	if ((fd = open(argv[1], O_RDWR)) == -1) {
+		perror("open");
+		exit(1);
+	}
 
-	if ((size = lseek(fd, 0, SEEK_END)) == -1)
-		err(1, "lseek");
+	if ((size = lseek(fd, 0, SEEK_END)) == -1) {
+		perror("lseek");
+		exit(1);
+	}
 
-	if (lockf(fd, F_LOCK, size) == -1)
-		err(1, "lockf");
+	if (lockf(fd, F_LOCK, size) == -1) {
+		perror("lockf");
+		exit(1);
+	}
 
 	pause();
 
