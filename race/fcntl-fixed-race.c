@@ -61,10 +61,11 @@ int
 main(int argc, char **argv)
 {
 	char c = 0;
-	int fd, lockfd, dbg = 0;
+	int fd, dbg = 0;
 	char *addr = NULL;
 	struct sigaction act;
-	struct flock fl = { .l_whence = SEEK_SET, .l_start = 0, .l_len = 1 };
+	/* l_len is not relevant since the locking is used as bracketing. */
+	struct flock fl = { .l_whence = SEEK_SET, .l_start = 0, .l_len = 2 };
 
 	if (argc == 1)
 		printf("run with any argument to see some debug info\n");
@@ -74,11 +75,6 @@ main(int argc, char **argv)
 	bzero(&act, sizeof (act));
 	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
-
-	if ((lockfd = open("lockfile", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1)
-		err(1, "lockfile create");
-
-	write(lockfd, "", 1);
 
 	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1)
 		err(1, "test.dat create");
@@ -96,7 +92,7 @@ main(int argc, char **argv)
 		err(1, "fork");
 	case 0:
 		while (run) {
-			lock_unlock(lockfd, -1, &fl);
+			lock_unlock(fd, -1, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[child (%d/%d)] ",
@@ -104,13 +100,13 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 2;
-			lock_unlock(lockfd, 1, &fl);
+			lock_unlock(fd, 1, &fl);
 			++i;
 		}
 		break;
 	default:
 		while (run) {
-			lock_unlock(lockfd, -1, &fl);
+			lock_unlock(fd, -1, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[PARENT (%d/%d)] ",
@@ -118,7 +114,7 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 1;
-			lock_unlock(lockfd, 1, &fl);
+			lock_unlock(fd, 1, &fl);
 			++i;
 		}
 		wait(NULL);
