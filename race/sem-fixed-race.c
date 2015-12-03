@@ -29,6 +29,7 @@ struct sembuf down = { 0, -1, 0};
 struct sembuf up = { 0, 1, 0};
 char *addr = NULL;
 volatile sig_atomic_t run = 1;
+typedef enum { UP, DOWN } semdir_t;
 
 static void print_stats(void)
 {
@@ -53,16 +54,16 @@ cleanup(void)
 
 /* up_down(1) means UP, up_down(-1) is DOWN */
 int
-up_down(int n)
+up_down(semdir_t dir)
 {
-	if ((n != 1) && (n != -1))
+	if ((dir != UP) && (dir != DOWN))
 		errx(1, "incorrect use of up_down");
 
-	if (semop(sem, n == 1 ? &up : &down, 1) == -1) {
+	if (semop(sem, dir == UP ? &up : &down, 1) == -1) {
 		if (errno == EINTR)
 			print_stats();
 		cleanup();
-		err(1, "semop %s", n == 1 ? "up" : "down");
+		err(1, "semop %s", dir == UP ? "up" : "down");
 	}
 }
 
@@ -108,7 +109,7 @@ main(int argc, char **argv)
 		err(1, "fork");
 	case 0:
 		while (run) {
-			up_down(-1);
+			up_down(DOWN);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[child (%d/%d)] ",
@@ -116,14 +117,14 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 2;
-			up_down(1);
+			up_down(UP);
 			++i;
 		}
 		break;
 	default:
 		parent = 1;
 		while (run) {
-			up_down(-1);
+			up_down(DOWN);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[PARENT (%d/%d)] ",
@@ -131,7 +132,7 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 1;
-			up_down(1);
+			up_down(UP);
 			++i;
 		}
 		wait(NULL);
