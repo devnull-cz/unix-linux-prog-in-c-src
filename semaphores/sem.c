@@ -5,6 +5,12 @@
  *
  * Run with and without argument to see the difference.
  *
+ * Compile with:
+ *   Linux:
+ *     gcc -lpthread sem.c
+ *   Solaris:
+ *     cc sem.c
+ *
  * vlada@devnull.cz, 2013
  */
 
