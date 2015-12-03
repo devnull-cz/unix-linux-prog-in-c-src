@@ -27,11 +27,12 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #ifndef NOERR
 #include <err.h>
 #else
-#define	err(n, ...)	printf(__VA_ARGS__)
-#define	errx(n, ...)	printf(__VA_ARGS__)
+#define	err(n, ...)	printf(__VA_ARGS__); exit(n);
+#define	errx(n, ...)	printf(__VA_ARGS__); exit(n);
 #endif
 #include <sys/types.h>
 #include <sys/stat.h>
