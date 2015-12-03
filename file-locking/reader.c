@@ -53,7 +53,6 @@ main(int argc, char **argv)
 			(void) printf("Got the lock now");
 		}
 
-		(void) putchar('\n');
 		(void) lseek(fd, SEEK_SET, 0);
 		bzero(buf, sizeof (buf));
 		n = read(fd, buf, sizeof (buf));
