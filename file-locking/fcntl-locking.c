@@ -10,6 +10,10 @@
  *
  * The file middle is denoted via '|' character.
  *
+ * Compile as:
+ *   cc fcntl-locking.c
+ *   cc -o reader reader.c
+ *
  * You have three ways of running it.
  *
  * (1) The following will not lock at all:
