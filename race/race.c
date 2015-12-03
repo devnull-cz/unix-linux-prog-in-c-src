@@ -19,7 +19,8 @@
 #include <unistd.h>
 #include <strings.h>
 #include <signal.h>
-#include <err.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
@@ -41,7 +42,7 @@ main(int argc, char **argv)
 	struct sigaction act;
 
 	if (argc == 1)
-		warnx("run with any argument to see some debug info\n");
+		printf("run with any argument to see some debug info\n");
 	else
 		dbg = 1;
 
@@ -49,20 +50,25 @@ main(int argc, char **argv)
 	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
-	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1)
-		err(1, "open");
+	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1) {
+		perror("open");
+		exit(1);
+	}
 
 	/* extend the file to 2 bytes */
 	write(fd, &c, 1);
 	write(fd, &c, 1);
 
 	addr = mmap(0, 2, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	if ((void *)addr == MAP_FAILED)
-		err(1, "mmap");
+	if ((void *)addr == MAP_FAILED) {
+		perror("mmap");
+		exit(1);
+	}
 
 	switch (fork()) {
 	case -1:
-		err(1, "fork");
+		perror("fork");
+		exit(1);
 	case 0:
 		while (run) {
 			if (addr[0] != addr[1]) {
