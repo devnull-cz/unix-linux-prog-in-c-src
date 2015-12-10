@@ -1,5 +1,7 @@
 /*
  * Demonstrate the use of getservbyname() and getprotobyname().
+ *
+ * Note: this example is IPv4 only !
  */
 
 #include <stdio.h>
@@ -43,7 +45,7 @@ main(int argc, char **argv)
 		err(1, "socket");
 
 	sa.sin_family = AF_INET;
-	/* do NOT use htons() here, it's already in network byte order ! */
+	/* Do NOT use htons() here, it's already in network byte order ! */
 	sa.sin_port = sp->s_port;
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
