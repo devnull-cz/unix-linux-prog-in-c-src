@@ -11,6 +11,7 @@
  */
 
 #include <stdio.h>
+#include <err.h>
 #include <unistd.h>
 #include <strings.h>
 #include <stdlib.h>
