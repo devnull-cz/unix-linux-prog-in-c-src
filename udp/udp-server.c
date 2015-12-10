@@ -25,7 +25,7 @@ main(int argc, char **argv)
 	char addr[INET_ADDRSTRLEN];
 	int s, n;
 	struct sockaddr_in in, faddr;
-	int addrsize = sizeof (faddr);
+	socklen_t addrsize = sizeof (faddr);
 
 	if (argc != 2)
 		errx(1, "usage: %s <port>", argv[0]);
