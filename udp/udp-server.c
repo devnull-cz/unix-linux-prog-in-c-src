@@ -6,14 +6,15 @@
  * (c) jp@devnull.cz
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <err.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <err.h>
+#include <arpa/inet.h>
 
 #define	BUF_LEN	1024
 
