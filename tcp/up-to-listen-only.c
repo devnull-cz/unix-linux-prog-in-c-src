@@ -44,10 +44,7 @@ main(int argc, char **argv)
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		err(1, "socket");
 
-	/*
-	 * So that we can reuse the port immediately. See the lecture materials
-	 * for more info.
-	 */
+	/* So that we can use the port immediately again after restart. */
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
 	    &optval, sizeof (optval)) == -1)
 		err(1, "setsockopt");
