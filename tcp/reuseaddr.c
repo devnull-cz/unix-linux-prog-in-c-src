@@ -14,11 +14,13 @@
  * (c) vlada@devnull.cz
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <err.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-#include <stdio.h>
 #include <unistd.h>
 
 int
