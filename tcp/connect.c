@@ -9,16 +9,16 @@
  * (c) jp@devnull.cz
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <err.h>
 #include <sys/types.h>
+#include <strings.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <err.h>
-#include <strings.h>
 
 #define	BUF_LEN	100
 
