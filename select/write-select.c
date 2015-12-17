@@ -51,7 +51,7 @@ main(int argc, char **argv)
 	sa.sin_port = htons((short) atoi(argv[1]));
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	memset(buf, '.', BUF_LEN);
+	memset(buf, '.', sizeof (buf));
 
 	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval));
 
