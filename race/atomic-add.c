@@ -123,8 +123,8 @@ main(int argc, char **argv)
 	else
 		printf("everything OK, no race detected\n");
 
-	printf("result is %d\n", x);
-	printf("should be %d\n", 2 * x2);
+	printf("result is %u\n", x);
+	printf("should be %u\n", 2 * x2);
 
 	return (0);
 }
