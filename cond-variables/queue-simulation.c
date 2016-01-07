@@ -85,6 +85,8 @@ consumer(void *x)
 
 		poll(NULL, 0, 100);
 	}
+
+	/* NOTREACHED */
 }
 
 int
