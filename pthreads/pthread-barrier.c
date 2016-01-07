@@ -24,19 +24,21 @@ pthread_barrier_t barrier;
 void *
 worker(void *x)
 {
-	int i, cnt;
-	int id =  *(int *)x;
+	int i, j, cnt, ret;
+	int id = *(int *)x;
 
-	while (1) {
+	for (j = 0; j < NUM_STAGES; j++) {
 		cnt = random() % 5;
-		printf("Thread #%d will loop %d times\n", id, cnt);
+		printf("%d: Thread #%d will loop %d times\n", j, id, cnt);
 		for (i = 0; i < cnt; ++i) {
 			(void) printf("thread #%d loop #%d\n", id, i);
 			(void) sleep(1);
 		}
 
-		printf("thread #%d %p\n", id, &barrier);
-		pthread_barrier_wait(&barrier);
+		/* Last thread on the barrier will get special value. */
+		ret = pthread_barrier_wait(&barrier);
+		printf("thread #%d %p%s\n", id, &barrier,
+		    ret == PTHREAD_BARRIER_SERIAL_THREAD ? " [last]" : "");
 	}
 
 	return (NULL);
@@ -47,28 +49,17 @@ main(void)
 {
 	pthread_t threads[NUM_THREADS];
 	int ids[NUM_THREADS];
-	pthread_attr_t a;
-	int array[NUM_THREADS];
 	int i;
 
-	pthread_attr_init(&a);
-	pthread_attr_setdetachstate(&a, PTHREAD_CREATE_DETACHED);
+	pthread_barrier_init(&barrier, NULL, NUM_THREADS);
 
 	for (i = 0; i < NUM_THREADS; i++) {
 		ids[i] = i;
-		(void) pthread_create(&threads[i], &a, worker, &ids[i]);
+		(void) pthread_create(&threads[i], NULL, worker, &ids[i]);
 	}
 
-	/* Add 1 for the main thread. */
-	pthread_barrier_init(&barrier, NULL, NUM_THREADS + 1);
-
-	/* Run one stage after another. */
-	for (i = 0; i < NUM_STAGES; i++) {
-		printf("Stage %d\n", i);
-		sleep(10);
-		printf("main %p\n", &barrier);
-		pthread_barrier_wait(&barrier);
-	}
+	for (i = 0; i < NUM_THREADS; i++)
+		pthread_join(threads[i], NULL);
 
 	pthread_barrier_destroy(&barrier);
 
