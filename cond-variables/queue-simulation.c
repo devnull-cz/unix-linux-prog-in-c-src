@@ -9,7 +9,8 @@
  * time and one of the threads gets blocked on the condition variable.
  *
  * Compile with:
- *   gcc -pthread queue-simulation.c
+ *   Linux: gcc -pthread queue-simulation.c
+ *   elsewhere: cc queue-simulation.c
  *
  * (c) jp@devnull.cz
  */
