@@ -1,10 +1,12 @@
 /*
- * Example on how to use POSIX barrier in multi-stage processing when
- * the threads are kept around until the program exits. Another possibility
- * would be to let the threads exit after each stage and recreate them.
+ * Example on how to use POSIX barrier in multi-stage processing.
  *
- * Note that pthread barriers is optional part of POSIX standard and some
+ * Note that pthread barriers are optional part of POSIX standard and some
  * UNIX systems (e.g. OS X) do not implement them.
+ *
+ * Compile:
+ *   Linux: gcc -pthread pthread-barrier.c
+ *   elsewhere: cc pthread-barrier.c
  *
  * (c) vlada@devnull.cz
  */
@@ -17,13 +19,12 @@
 #define	NUM_THREADS	8
 #define	NUM_STAGES	3
 
-pthread_barrier_t barrier1, barrier2;
+pthread_barrier_t barrier;
 
 void *
 worker(void *x)
 {
 	int i, cnt;
-	int stage = 0;
 	int id =  *(int *)x;
 
 	while (1) {
@@ -34,14 +35,8 @@ worker(void *x)
 			(void) sleep(1);
 		}
 
-		if (stage % 2 == 0) {
-			printf("thread #%d %p\n", id, &barrier1);
-			pthread_barrier_wait(&barrier1);
-		} else {
-			printf("thread #%d %p\n", id, &barrier2);
-			pthread_barrier_wait(&barrier2);
-		}
-		stage++;
+		printf("thread #%d %p\n", id, &barrier);
+		pthread_barrier_wait(&barrier);
 	}
 
 	return (NULL);
@@ -65,24 +60,17 @@ main(void)
 	}
 
 	/* Add 1 for the main thread. */
-	pthread_barrier_init(&barrier1, NULL, NUM_THREADS + 1);
-	pthread_barrier_init(&barrier2, NULL, NUM_THREADS + 1);
+	pthread_barrier_init(&barrier, NULL, NUM_THREADS + 1);
 
 	/* Run one stage after another. */
 	for (i = 0; i < NUM_STAGES; i++) {
 		printf("Stage %d\n", i);
 		sleep(10);
-		if (i % 2 == 0) {
-			printf("main %p\n", &barrier1);
-			pthread_barrier_wait(&barrier1);
-		} else {
-			printf("main %p\n", &barrier2);
-			pthread_barrier_wait(&barrier2);
-		}
+		printf("main %p\n", &barrier);
+		pthread_barrier_wait(&barrier);
 	}
 
-	pthread_barrier_destroy(&barrier1);
-	pthread_barrier_destroy(&barrier2);
+	pthread_barrier_destroy(&barrier);
 
 	return (0);
 }
