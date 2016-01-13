@@ -126,5 +126,7 @@ main(void)
 	/* Terminate the "counter" thread. */
 	pthread_cancel(t2);
 
+	pthread_mutex_destroy(&mutex);
+
 	return (0);
 }
