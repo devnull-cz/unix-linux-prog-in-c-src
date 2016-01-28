@@ -42,8 +42,9 @@ main(int argc, char **argv)
 
 	while ((n = recvfrom(s, buf, BUF_LEN, 0, (struct sockaddr *)&faddr,
 	    &addrsize)) > 0) {
-	    	inet_ntop(AF_INET, &faddr.sin_addr, addr, sizeof (addr));
-		fprintf(stderr, "DBG: received %d bytes from %s\n", n, addr);
+		inet_ntop(AF_INET, &faddr.sin_addr, addr, sizeof (addr));
+		fprintf(stderr, "DBG: received %d bytes from %s:%d\n",
+		    n, addr, ntohs(faddr.sin_port));
 		buf[n] = '\0';
 		printf("%s", buf);
 	}
