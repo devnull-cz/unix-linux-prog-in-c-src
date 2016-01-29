@@ -34,7 +34,7 @@ main(int argc, char **argv)
 	int error;
 	struct protoent *proto;
 	char ip_str[INET6_ADDRSTRLEN]; /* NI_MAXHOST would work too */
-	char port_str[NI_MAXSERV];
+	char port_str[NI_MAXSERV]; /* NI_MAXSERV is not in POSIX */
 	struct addrinfo *res, *resorig, hints;
 
 	if (argc != 3)
