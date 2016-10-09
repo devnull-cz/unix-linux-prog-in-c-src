@@ -10,9 +10,8 @@
 usage="usage: `basename $0` command [-c code] [filename [filename [...]]]"
 
 [ $# -lt 1 ] && echo "$usage" && exit 1
-echo "first param (command): $1"
+echo "first param (command): $0"
 
-shift 1
 while getopts 'c:' c; do
 	case ${c} in
 	c)
