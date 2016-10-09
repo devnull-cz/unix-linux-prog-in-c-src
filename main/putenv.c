@@ -13,11 +13,11 @@ main(void)
 {
 	char foo[16] = "FOO=BAR";
 
-	putenv(foo);
-	printf("%s\n", getenv("FOO"));
+	(void) putenv(foo);
+	(void) printf("%s\n", getenv("FOO"));
 
 	(void) strncpy(foo, "FOO=RAB", sizeof (foo));
-	printf("%s\n", getenv("FOO"));
+	(void) printf("%s\n", getenv("FOO"));
 
 	return (0);
 }
