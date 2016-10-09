@@ -64,7 +64,7 @@ main(int argc, char **argv)
 	if (code != NULL)
 		printf("option -c set to '%s'\n", code);
 
-	/* optind is the 1st non-option argument.  -1 is for argv++ above */
+	/* optind is the 1st non-option argument. */
 	argv += optind;
 	argc -= optind;
 
