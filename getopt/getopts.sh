@@ -12,8 +12,8 @@ usage="usage: `basename $0` command [-c code] [filename [filename [...]]]"
 [ $# -lt 1 ] && echo "$usage" && exit 1
 echo "first param (command): $0"
 
-while getopts 'c:' c; do
-	case ${c} in
+while getopts 'c:' opt; do
+	case ${opt} in
 	c)
 		code="$OPTARG"
 		echo "option -c set to '$code'"
