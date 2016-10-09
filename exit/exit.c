@@ -25,6 +25,10 @@ main(void)
 		exit(EXIT_FAILURE);
 	}
 
+/*
+ * Remove the comment to get exit().
+#define EXIT 1
+ */
 #ifdef EXIT
 	exit(3);
 #else
