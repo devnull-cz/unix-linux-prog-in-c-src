@@ -14,6 +14,6 @@
 int
 main(void)
 {
-	assert(1 == 0);
+	assert(0);
 	return (13);
 }
