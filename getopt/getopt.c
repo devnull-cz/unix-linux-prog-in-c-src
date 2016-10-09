@@ -38,10 +38,8 @@ main(int argc, char **argv)
 	if (argc < 2)
 		usage(argv0);
 
-	printf("first param (command): %s\n", argv[1]);
+	printf("first param (command): %s\n", argv0);
 
-	argv++;
-	argc--;
 	while ((opt = getopt(argc, argv, "c:")) != -1) {
 		switch (opt) {
 		case 'c':
@@ -66,7 +64,7 @@ main(int argc, char **argv)
 	if (code != NULL)
 		printf("option -c set to '%s'\n", code);
 
-	/* optind is the 1st non-option argument */
+	/* optind is the 1st non-option argument.  -1 is for argv++ above */
 	argv += optind;
 	argc -= optind;
 
