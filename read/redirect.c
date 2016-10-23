@@ -1,17 +1,18 @@
 /*
- * Implement this command:
+ * Implement the following command:
  *
  *	cat <in >out
  *
- * Which means, that after running "./a.out" the program will copy the existing
- * file "in" to a newly created (or an existing truncated) file "out".
+ * It means that after running "./a.out" the program will copy the existing file
+ * "in" to a newly created (or an existing truncated) file "out".
  *
  * Run like this:
- *   gcc redirect.c
- *   cp /etc/passwd in
- *   rm -f out
- *   ./a.out
- *   diff in out
+ *
+ *	gcc redirect.c
+ *	cp /etc/passwd in
+ * 	rm -f out
+ *	./a.out
+ *	diff /etc/passwd out	# should not print any difference
  */
 #include <sys/stat.h>
 #include <sys/types.h>
