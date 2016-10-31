@@ -23,7 +23,7 @@ main(void)
 
 	fd = open("numbers.txt", O_RDWR);
 	size = lseek(fd, 0, SEEK_END);
-	p1 = addr = mmap(0, 10, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	p1 = addr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
 	p2 = p1 + size - 1;
 
