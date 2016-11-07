@@ -9,12 +9,8 @@
  *   2. send the 2 signals in quick succession (in the 10 seconds window)
  *      kill -INT `pgrep sig1`
  *      kill -INT `pgrep sig1`
- *   3. run the second program
- *      ./sig2 &
- *   4. send the 2 signals in quick succession (in the 10 seconds window)
- *      kill -INT `pgrep sig2`
- *      kill -INT `pgrep sig2`
- *   5. observe the behavior (check if the programs are still around)
+ *   3. repeat steps #1, #2 for program sig2
+ *   4. observe the behavior (check if the programs are still around)
  *
  *  vlada@devnull.cz, 2009
  */
