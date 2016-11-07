@@ -2,8 +2,8 @@
  * Compile with and without -DPOSIX_SIGNALS and try to run like this
  * on {FreeBSD,Linux}/Solaris to see the difference in behavior:
  *   0. compile 2 programs
- *      gcc -o sig1 signal-vs-sigaction.c
- *      gcc -DPOSIX_SIGNALS -o sig2 signal-vs-sigaction.c
+ *      cc -o sig1 signal-vs-sigaction.c
+ *      cc -DPOSIX_SIGNALS -o sig2 signal-vs-sigaction.c
  *   1. run the first program
  *      ./sig1 &
  *   2. send the 2 signals in quick succession (in the 10 seconds window)
