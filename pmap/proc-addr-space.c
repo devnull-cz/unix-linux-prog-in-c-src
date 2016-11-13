@@ -23,6 +23,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <dlfcn.h>
+#include <link.h>
+#include <dirent.h>
 
 int nonini1;
 int ini1 = 3;
@@ -52,6 +55,8 @@ main(int argc, char **argv)
 	printf("  noninitialized var:\t%p\n", &nonini1);
 	printf("  initialized var 1:\t%p\n", &ini1);
 	printf("  initialized var 2:\t%p\n", &ini2);
+	printf("  readdir:\t%p\n", readdir);
+	printf("  *readdir:\t%p\n", *readdir);
 
 	printf("\n=== pmap %d ===\n", getpid());
 	snprintf(buf, sizeof (buf), "%d", getpid());

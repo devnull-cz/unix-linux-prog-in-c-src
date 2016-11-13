@@ -2,6 +2,11 @@
  * Use time(1) to measure all three different modes of execution - no option,
  * -a option and -m option. Use multiprocessor machine if possible.
  *
+ * The program creates two threads and let them each sum up 1+2+3+..+<n>, using
+ * a shared 32 bit integer variable.  So, if increment is an atomic operation,
+ * we should get twice that sum.  If the increment operation is not atomic, we
+ * get something else.  We do not worry about overflows.
+ *
  * Tested on UltraSparc T1000 with num_of_cycles = 99999999
  *
  * On this (or similar architecture where operation 'ADD' is not atomic)
@@ -35,7 +40,7 @@
 #error "This will not work"
 #endif
 
-unsigned int x;
+uint32_t x;
 int atomic, mutex;
 pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 
@@ -77,7 +82,7 @@ count(void *arg)
 int
 main(int argc, char **argv)
 {
-	unsigned int i, n1, n2, x2 = 0;
+	unsigned int i, n1, n2, x2;
 	pthread_t t1, t2;
 	char c;
 
@@ -107,24 +112,30 @@ main(int argc, char **argv)
 
 	/*
 	 * And don't worry about overflows, we just look for races, not the
-	 * correct sum.
+	 * correct sum.  With unsigned int (32 bits), we get the overflow for n
+	 * ~ 92k.
 	 */
 	pthread_create(&t1, NULL, count, (void *)&n1);
 	pthread_create(&t2, NULL, count, (void *)&n2);
 	pthread_join(t1, NULL);
 	pthread_join(t2, NULL);
 
-	/* sure, this could be smarter */
-	for (i = 1; i < n1; ++i)
+	/*
+	 * Count the sum for one thread.  Do exactly what we would do in the
+	 * threads.
+	 */
+	(void) printf("n is %d.\n", n1);
+	for (i = 1, x2 = 0; i < n1; ++i)
 		x2 = x2 + i;
 
+	/* If we do not get twice the sum, we hit a race. */
 	if (x != 2 * x2)
 		printf("RACE DETECTED\n");
 	else
 		printf("everything OK, no race detected\n");
 
 	printf("result is %u\n", x);
-	printf("should be %u\n", 2 * x2);
+	printf("expected %u\n", 2 * x2);
 
 	return (0);
 }

@@ -24,5 +24,9 @@ main(int argc, char **argv)
 	printf("S_IFDIR is: 0x%x\n", S_IFDIR);
 	printf("S_IFLNK is: 0x%x\n", S_IFLNK);
 
+/*
+	S_ISDIR
+	*/
+
 	return (0);
 }
