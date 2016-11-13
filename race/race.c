@@ -1,9 +1,10 @@
 /*
- * Run two processes that share 2 bytes of memory. Both of them loop until
- * a signal is received, while changing both bytes to their respective value (1
- * or 2). Before setting those bytes a check is performed whether bytes are
- * equal. If not we have a race. After you kill it with Ctrl-C you will see some
- * statistics. Run with any argument to see races as they happen.
+ * The program creates two processes (= 1 fork) that share 2 bytes of memory.
+ * Both of them loop until a signal is received, while changing both bytes to
+ * their respective value (1 or 2). Before setting those bytes a check is
+ * performed whether bytes are equal. If not we have a race. After you kill it
+ * with Ctrl-C you will see some statistics. Run with any argument to see races
+ * as they happen.
  *
  * Note that with a job control, Ctrl-C makes the shell to send a SIGINT signal
  * to the whole process group so we don't have to worry about killing just
@@ -99,7 +100,7 @@ main(int argc, char **argv)
 	munmap(addr, 2);
 	close(fd);
 
-	printf("\nstats: inconsistency %u of %lu\n", j, i);
+	printf("\nstats: inconsistencies %u out of %lu\n", j, i);
 
 	return (0);
 }

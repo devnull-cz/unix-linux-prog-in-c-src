@@ -1,11 +1,20 @@
 /*
- * Simple program to provide file locking. It has 2 parameters, 1st is the lock
- * filename, 2nd one denotes whether you lock or unlock. It can NOT recover from
- * the situation when somebody leaves the file lock there (and exists, for
- * example).
+ * Simple program to provide file locking.  It has 2 parameters, 1st is the lock
+ * filename, 2nd one denotes whether you lock or unlock.  It can NOT recover
+ * from the situation when somebody leaves the file lock there (and exists, for
+ * example).  Ie. it does not know how to figure out whether the lock is
+ * "stale".
  *
- * The app that uses this simple locking mechanism must busy wait. That's
- * usually not acceptable in the real life. See run.sh in this directory.
+ * You could solve the problem of stale locks by writing the PID of the process
+ * owning the lock there to the file, and you can always check whether the
+ * process is still alive.  If not, you could overwrite the lock.  However, the
+ * operation of reading the PID, checking its existence, and writing the new
+ * lock file is again NOT atomic.
+ *
+ * See run.sh in this directory as an example script that uses this program.
+ * 
+ * The app that uses this simple locking mechanism must busy wait.  That's
+ * usually not acceptable in the real life.
  *
  * If successful, the program returns 0 if locked or unlocked, 1 if it can't
  * lock since it's already locked, and 2 if either of those operations failed
