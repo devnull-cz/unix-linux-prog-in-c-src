@@ -4,7 +4,7 @@
  * note the change in the prefix and the suffix:
  *
  *  $ ./a.out 0:0:2001:1508:1003:4::
- *  a.out: inet_pton failed for '0:0:2001:1508:1003:4::'. Will try INET6 now.
+ *  a.out: inet_pton with AF_INET failed for '0:0:2001:1508:1003:4::'. Will try INET6 now.
  *  Succesfully converted an IPv6 address string.
  *  Succesfully converted a binary IPv6 address to a string.
  *  The address is: ::2001:1508:1003:4:0:0
