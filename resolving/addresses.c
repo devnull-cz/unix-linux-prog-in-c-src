@@ -44,8 +44,10 @@ main(int argc, char **argv)
 	if (inet_pton(AF_INET, argv[1], &in) != 1) {
 		warnx("inet_pton with AF_INET failed for '%s'. Will try "
 		    "INET6 now.", argv[1]);
-		if (inet_pton(AF_INET6, argv[1], &in6) != 1)
-			errx(1, "inet_pton failed for '%s'.", argv[1]);
+		if (inet_pton(AF_INET6, argv[1], &in6) != 1) {
+			errx(1, "inet_pton with AF_INET6 failed for '%s'.",
+			    argv[1]);
+		}
 		printf("Succesfully converted an IPv6 address string to a "
 		    "binary form.\n");
 		if (inet_ntop(AF_INET6, &in6, dst, sizeof (dst)) == NULL) {
@@ -54,16 +56,16 @@ main(int argc, char **argv)
 		printf("Succesfully converted a binary IPv6 address "
 		    "to a string.\n");
 		printf("The address is: %s\n", dst);
-	} else {
-		printf("Succesfully converted an IPv4 address string to a "
-		    "binary form.\n");
-		if (inet_ntop(AF_INET, &in, dst, sizeof (dst)) == NULL) {
-			err(1, "inet_ntop");
-		}
-		printf("Succesfully converted a binary IPv4 address "
-		    "to a string.\n");
-		printf("The address is: %s\n", dst);
+		return (0);
 	}
+
+	printf("Succesfully converted an IPv4 address string to a "
+	    "binary form.\n");
+	if (inet_ntop(AF_INET, &in, dst, sizeof (dst)) == NULL) {
+		err(1, "inet_ntop");
+	}
+	printf("Succesfully converted a binary IPv4 address to a string.\n");
+	printf("The address is: %s\n", dst);
 
 	return (0);
 }
