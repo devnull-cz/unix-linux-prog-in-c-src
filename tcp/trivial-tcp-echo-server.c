@@ -10,6 +10,10 @@
  *
  * Note: this example is IPv4-only !
  *
+ * Beware of missing SO_REUSEADDR.  See tcp-sink-server.c on how to use it.  Do
+ * not kill this "server" if there are active connections otherwise you will see
+ * "bind: Address already in use" on restart.
+ *
  * (c) jp@devnull.cz
  */
 
