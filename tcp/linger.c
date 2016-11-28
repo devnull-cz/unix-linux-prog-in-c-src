@@ -86,7 +86,7 @@ main(int argc, char **argv)
 		}
 	}
 
-	if (connect(fd, res->ai_addr, sizeof (*(res->ai_addr))) < 0)
+	if (connect(fd, res->ai_addr, res->ai_addrlen) < 0)
 		err(1, "connect");
 
 	freeaddrinfo(resorig);
