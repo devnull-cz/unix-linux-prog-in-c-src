@@ -97,7 +97,8 @@ main(int argc, char **argv)
 	}
 
 	printf("closing\n");
-	close(fd);
+	if (close(fd) != 0)
+		err(1, "close");
 
 	printf("exiting\n");
 	return (0);
