@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <poll.h>
-#include <err.h>
 
 void *
 thread(void *x)
@@ -18,7 +17,7 @@ thread(void *x)
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("%d: thread %d (loop #%d)\n", getpid(),
+		(void) printf("%d: thread %d (loop #%d)\n", getpid(),
 		    *((int *) x), i);
 		sleep(1);
 	}
@@ -34,34 +33,36 @@ main(void)
 	pthread_t t1, t2;
 
 #if !defined(__SVR4) || !defined(__sun)
-	fprintf(stderr, "Sorry, this example program needs Solaris.\n");
+	(void) fprintf(stderr, "Sorry, this example program needs Solaris.\n");
 	return (2);
 #endif
 
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("%d: in main before forkall()\n", getpid());
+	(void) printf("%d: in main before forkall()\n", getpid());
 	pid = forkall();
 
 	if (pid == 0) {
-		printf("%d: I'm a child, will join my threads...\n",
+		(void) printf("%d: I'm a child, will join my threads...\n",
 		    getpid());
 		pthread_join(t1, NULL);
 		pthread_join(t2, NULL);
-		printf("%d: child joined all its threads.\n", getpid());
+		(void) printf("%d: child joined all its threads.\n", getpid());
 		return (0);
 	}
 
 	pthread_join(t1, NULL);
 	pthread_join(t2, NULL);
-	printf("%d in main: threads joined.\n", getpid());
+	(void) printf("%d in main: threads joined.\n", getpid());
 
 	/* We can even wait for the child here. */
-	if ((pid = wait(NULL)) != -1)
-		printf("%d in main: child %d exited.\n", getpid(), pid);
-	else
-		err(1, "wait");
+	if ((pid = wait(NULL)) != -1) {
+		(void) printf("%d in main: child %d exited.\n", getpid(), pid);
+	} else {
+		(void) printf("wait: %s\n", strerror(errno));
+		exit(1);
+	}
 
 	return (0);
 }
