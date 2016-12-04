@@ -4,9 +4,9 @@
  * all the other threads still keep running - this is important since they
  * need to eventually release the locks the handler is waiting for.
  *
- * Note that in order to see what threads call the the handlers we are using
- * array of pthread_t values associated with thread name.
- * The other alternative would be to use thread specific variable.
+ * Note that in order to see which threads call the handlers we are using array
+ * of pthread_t values associated with thread name.  The other alternative would
+ * be to use thread specific variable.
  *
  * Note that the "counter" thread does not call any of the atfork handlers.
  *
