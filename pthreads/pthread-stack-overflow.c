@@ -4,6 +4,9 @@
  * Compile with:
  *   cc -pthread pthread-stack-overflow.c
  *
+ * The first argument is the max recursion depth, the 2nd argument is the stack
+ * size.
+ *
  * Run with e.g.:
  *   ./a.out 1024
  *   ./a.out 1024 `expr 1024 \* 1024`
@@ -38,7 +41,7 @@ thread(void *x)
 {
 	int i;
 
-	recurse((intptr_t) x);
+	recurse((intptr_t)x);
 
 	return (NULL);
 }

@@ -1,6 +1,6 @@
 /*
- * An example on pthread_join() usage. See that we get the return value from
- * each thread in respective pthread_join() calls.
+ * An example on pthread_join() use.  See that we get the return value from each
+ * thread in respective pthread_join() calls.
  *
  * (c) jp@devnull.cz
  */
