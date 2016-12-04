@@ -24,7 +24,7 @@ thread(void *x)
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", (int) x, i);
+		printf("thread %d (loop #%d)\n", (int)x, i);
 		sleep(1);
 	}
 	return (NULL);
