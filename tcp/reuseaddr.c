@@ -58,7 +58,7 @@ main(int argc, char **argv)
 	for (;;) {
 		if ((newsock = accept(fd, NULL, 0)) == -1)
 			err(1, "accept");
-		while ((n = read(newsock, buf, 100)) != 0)
+		while ((n = read(newsock, buf, sizeof (buf))) != 0)
 			write(1, buf, n);
 		(void) close(newsock);
 		fprintf(stderr, "-- connection closed --\n");
