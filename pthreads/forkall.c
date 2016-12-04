@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <poll.h>
+#include <errno.h>
 
 void *
 thread(void *x)
@@ -61,7 +62,7 @@ main(void)
 		(void) printf("%d in main: child %d exited.\n", getpid(), pid);
 	} else {
 		(void) printf("wait: %s\n", strerror(errno));
-		exit(1);
+		return (1);
 	}
 
 	return (0);
