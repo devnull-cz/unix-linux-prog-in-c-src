@@ -29,6 +29,10 @@ enum { FORKER = 0, COUNTER = 1, MAX = 2 } thread_idx;
 pthread_mutex_t mutex;
 thread_info_t threads[MAX];
 
+/*
+ * This is a scheme to deal with thread IDs in transparent way - in general
+ * we cannot rely on thresd IDs to be of known type (e.g. integers)..
+ */
 char *
 print_id(void)
 {
@@ -76,7 +80,7 @@ counter(void *arg)
 	while (1) {
 		printf(".");
 		fflush(stdout);
-		poll(NULL, 0, 10);	/* sleep 10 ms */
+		sleep(1);
 	}
 
 	return (NULL);
@@ -103,15 +107,16 @@ after(void)
 int
 main(void)
 {
-	pthread_t t1, t2;
+	pthread_t forket_thr, counter_thr;
 
 	pthread_mutex_init(&mutex, NULL);
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
 
 	pthread_atfork(before, after, after);
-	pthread_create(&t1, NULL, forker, NULL);
-	pthread_create(&t2, NULL, counter, NULL);
+
+	pthread_create(&forket_thr, NULL, forker, NULL);
+	pthread_create(&counter_thr, NULL, counter, NULL);
 
 	sleep(3);
 
@@ -121,10 +126,10 @@ main(void)
 	printf("%d in main: waiting for the threads\n", getpid());
 
 	/* Wait for the "forker" thread to complete. */
-	pthread_join(t1, NULL);
+	pthread_join(forket_thr, NULL);
 
 	/* Terminate the "counter" thread. */
-	pthread_cancel(t2);
+	pthread_cancel(counter_thr);
 
 	pthread_mutex_destroy(&mutex);
 
