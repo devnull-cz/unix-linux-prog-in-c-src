@@ -2,9 +2,9 @@
  * An example that we should never block synchronous signals since those cannot
  * be handled via the dedicated signal manager thread. Those go directly to the
  * thread that caused the exception and if such signal is blocked in that
- * thread, it *may* be never received, based on the platform you will use. Not
- * delivering such signals can cause serious problems - you might continue to
- * run with corrupted memory, for example, without knowing that.
+ * thread, it *may* be never received, based on the platform you will use.
+ * Not delivering such signals can cause serious problems - you might continue
+ * to run with corrupted memory, for example, without knowing that.
  *
  * Compile with "-D_POSIX_PTHREAD_SEMANTICS" on Solaris, see sigwait(2) as to
  * why.

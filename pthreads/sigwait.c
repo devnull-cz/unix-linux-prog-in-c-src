@@ -1,7 +1,7 @@
 /*
- * An example on how to correctly handle signals in a threaded environment. Do
- * not use sigprocmask(3) as noted in the lecture materials (sigprocmask is
- * not defined for threaded environments by the specification).
+ * An example on how to correctly handle signals in a threaded environment.
+ * Do not use sigprocmask(3) as noted in the lecture materials (sigprocmask
+ * is not defined for threaded environments by the specification).
  *
  * Compile with "-D_POSIX_PTHREAD_SEMANTICS" on Solaris, see sigwait(2) as to
  * why.
