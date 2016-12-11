@@ -107,7 +107,7 @@ after(void)
 int
 main(void)
 {
-	pthread_t forket_thr, counter_thr;
+	pthread_t forker_thr, counter_thr;
 
 	pthread_mutex_init(&mutex, NULL);
 	if (pthread_mutex_lock(&mutex) != 0)
@@ -115,7 +115,7 @@ main(void)
 
 	pthread_atfork(before, after, after);
 
-	pthread_create(&forket_thr, NULL, forker, NULL);
+	pthread_create(&forker_thr, NULL, forker, NULL);
 	pthread_create(&counter_thr, NULL, counter, NULL);
 
 	sleep(3);
@@ -126,7 +126,7 @@ main(void)
 	printf("%d in main: waiting for the threads\n", getpid());
 
 	/* Wait for the "forker" thread to complete. */
-	pthread_join(forket_thr, NULL);
+	pthread_join(forker_thr, NULL);
 
 	/* Terminate the "counter" thread. */
 	pthread_cancel(counter_thr);
