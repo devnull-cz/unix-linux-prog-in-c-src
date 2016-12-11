@@ -109,11 +109,16 @@ main(void)
 {
 	pthread_t forker_thr, counter_thr;
 
+	/*
+	 * pthread_atfork() should be called after locks are initialized
+	 * and before they are used. Libraries which do this in .init section,
+	 * should use pthread_once().
+	 */
 	pthread_mutex_init(&mutex, NULL);
+	pthread_atfork(before, after, after);
+
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
-
-	pthread_atfork(before, after, after);
 
 	pthread_create(&forker_thr, NULL, forker, NULL);
 	pthread_create(&counter_thr, NULL, counter, NULL);
