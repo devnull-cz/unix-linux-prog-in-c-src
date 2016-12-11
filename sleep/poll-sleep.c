@@ -1,6 +1,8 @@
 /*
  * More granular sleep using poll(). See also nanosleep.c.
  *
+ * Note: this trick does not work on macOS (10.12.1)
+ *
  * (c) jp@devnull.cz
  */
 
