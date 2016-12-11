@@ -11,7 +11,6 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <poll.h>
 
 void *
 thread(void *x)
