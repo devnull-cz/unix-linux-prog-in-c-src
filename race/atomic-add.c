@@ -21,7 +21,7 @@
  * Compile with:
  *   cc atomic-add.c
  *
- * This example currently works on Solaris and OS X.
+ * This example currently works on Solaris and systems with C11 compiler.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -30,17 +30,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#ifndef __STDC_NO_ATOMICS__
+#include <stdatomic.h>
+#define	ATOMIC_ADD(ptr, incr)	atomic_fetch_add(ptr, incr)
+atomic_int x;
+#else
 #if defined(__sun) && defined(__SVR4)
 #include <atomic.h>
 #define	ATOMIC_ADD(ptr, incr)	atomic_add_32(ptr, incr)
-#elif __APPLE__
-#include <libkern/OSAtomic.h>
-#define	ATOMIC_ADD(ptr, incr)	OSAtomicAdd32(incr, (int32_t *)ptr)
+uint32_t x;
 #else
 #error "This will not work"
 #endif
+#endif
 
-uint32_t x;
 int atomic, mutex;
 pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 
@@ -50,7 +53,7 @@ usage()
 	fprintf(stderr, "atomic/mutex/race tester");
 	fprintf(stderr, "\n");
 	fprintf(stderr, "a.out [-a|-m] <num_of_cycles>\n");
-	fprintf(stderr, "	-a	use atomic_add(3c)\n");
+	fprintf(stderr, "	-a	use atomic_add(3c)/C11 stdatomic\n");
 	fprintf(stderr, "	-m	use pthread_mutex(3c)\n");
 	fprintf(stderr, "	-h	this help\n");
 }
