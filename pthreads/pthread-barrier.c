@@ -29,16 +29,19 @@ worker(void *x)
 
 	for (j = 0; j < NUM_STAGES; j++) {
 		cnt = random() % 5;
-		printf("%d: Thread #%d will loop %d times\n", j, id, cnt);
+		printf("STAGE %d: Thread #%d will loop %d times\n", j, id, cnt);
 		for (i = 0; i < cnt; ++i) {
-			(void) printf("thread #%d loop #%d\n", id, i);
+			(void) printf("STAGE %d: thread #%d loop #%d\n",
+			    j, id, i);
 			(void) sleep(1);
 		}
 
 		/* Last thread on the barrier will get special value. */
+		printf("STAGE %d: thread #%d reaching barrier.\n", j, id);
 		ret = pthread_barrier_wait(&barrier);
-		printf("thread #%d %p%s\n", id, &barrier,
-		    ret == PTHREAD_BARRIER_SERIAL_THREAD ? " [last]" : "");
+		printf("STAGE %d: thread #%d after barrier %s\n", j, id,
+		    ret == PTHREAD_BARRIER_SERIAL_THREAD ?
+		    " [PTHREAD_BARRIER_SERIAL_THREAD]" : "");
 	}
 
 	return (NULL);
