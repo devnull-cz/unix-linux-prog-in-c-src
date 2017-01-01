@@ -38,11 +38,12 @@ main(void)
 	int sig, n1 = 1, n2 = 2;
 
 	/*
-	 * We should not do this, we should never mask synchronnous signals like
-	 * SIGSEGV, SIGILL, etc. See the slide on sigwait() in the lecture
-	 * material to understand why. Also, you can see another source code
-	 * file (sigwait-with-sync-signals.c). However, this one is just a
-	 * simple example.
+	 * We should never really do this, we should never mask synchronnous
+	 * signals like SIGSEGV, SIGILL, etc.  See the slide on sigwait() in the
+	 * lecture material to understand why.  Also, see another source code
+	 * file (sigwait-with-sync-signals.c).
+	 *
+	 * However, this code is just a simple example.
 	 */
 	sigfillset(&sset);
 	pthread_sigmask(SIG_SETMASK, &sset, NULL);
