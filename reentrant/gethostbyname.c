@@ -1,6 +1,7 @@
 /*
- * Demonstrate that gethostbyname() is not safe to use even in
- * single threaded program.
+ * Demonstrate that gethostbyname() is not safe to use even in single threaded
+ * program.  Call it twice on different hostnames and see what happens if we use
+ * both pointers to print the output.
  *
  * Compile:
  *   gcc gethostbyname.c
@@ -8,6 +9,12 @@
  * Run like this:
  *   ./a.out www.devnull.cz www.mff.cuni.cz
  *   ./a.out www.mff.cuni.cz www.devnull.cz
+ *
+ * Expected output for the first case:
+ *	# host1 [0x7febced31600/0x18f5020]:
+ *	195.113.27.222 [wwwmff.karlov.mff.cuni.cz]
+ *	# host2 [0x7febced31600/0x18f5020]:
+ *	195.113.27.222 [wwwmff.karlov.mff.cuni.cz]
  *
  * (c) vlada@devnull.cz
  */
