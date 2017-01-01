@@ -41,7 +41,7 @@ worker(void *x)
 		ret = pthread_barrier_wait(&barrier);
 		printf("STAGE %d: thread #%d after barrier %s\n", j, id,
 		    ret == PTHREAD_BARRIER_SERIAL_THREAD ?
-		    " [PTHREAD_BARRIER_SERIAL_THREAD]" : "");
+		    "[PTHREAD_BARRIER_SERIAL_THREAD]" : "");
 	}
 
 	return (NULL);
