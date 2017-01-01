@@ -4,9 +4,9 @@
  * condition variable and one mutex is used. Note that if we used semaphores,
  * we would need 2 of them to represent both "sleeping" states.
  *
- * There is a randomness factor used to make the queue can get some items in
- * it and also to hit both boundary cases (empty and full queue) from time to
- * time and one of the threads gets blocked on the condition variable.
+ * There is a randomness factor used to have the queue get some items in it and
+ * also to hit both boundary cases (empty and full queue) from time to time and
+ * so that threads actualy get blocked on the condition variable.
  *
  * Compile with:
  *   Linux: gcc -pthread queue-simulation.c
@@ -36,20 +36,21 @@ producer(void *x)
 		pthread_mutex_lock(&mutex);
 		/* we can't insert a "message" when the queue is full */
 		while (queue == max) {
+			(void) printf("Queue full, producer sleeping.\n");
 			pthread_cond_wait(&cond, &mutex);
 		}
 
 		rnd = random() % 2;
-		queue = queue + rnd;
 
 		/*
 		 * The queue was empty and we produced a "message". We must
 		 * notify the consumer so it can start working on the queue
 		 * again.
 		 */
-		if (queue == 1 && rnd == 1)
+		if (queue == 0 && rnd == 1)
 			pthread_cond_signal(&cond);
 
+		queue = queue + rnd;
 		pthread_mutex_unlock(&mutex);
 
 		poll(NULL, 0, 95);
@@ -72,16 +73,19 @@ consumer(void *x)
 		}
 
 		rnd = random() % 2;
-		queue = queue - rnd;
 
 		/*
-		 * If the queue was full and we got a "message" from it we
+		 * If the queue was full and we pulled a "message" from it we
 		 * will signal the producer so that it can start producing
 		 * messages again.
 		 */
-		if (queue == (max - 1) && rnd == 1)
+		if (queue == max && rnd == 1) {
+			(void) printf("Queue no longer full, signalling "
+			    "producer.\n");
 			pthread_cond_signal(&cond);
+		}
 
+		queue = queue - rnd;
 		pthread_mutex_unlock(&mutex);
 
 		poll(NULL, 0, 100);
@@ -108,7 +112,7 @@ main(int argc, char **argv)
 	pthread_create(&t_cons, NULL, consumer, NULL);
 
 	/*
-	 * Main thread. Periodically print the "contents" of the queue.
+	 * Main thread.  Periodically print the "contents" of the queue.
 	 */
 	while (1) {
 		pthread_mutex_lock(&mutex);
