@@ -30,7 +30,7 @@ main(int argc, char **argv)
 		errx(1, "usage: %s <hostname>", basename(argv[0]));
 
 	if ((h = gethostbyname(argv[1])) == NULL)
-		hstrerror(h_errno);
+		errx(1, "error: %s", hstrerror(h_errno));
 	else {
 		printf("official name:\n\t%s\n", h->h_name);
 
