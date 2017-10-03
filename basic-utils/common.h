@@ -1,1 +1,1 @@
-void function_x(void);
+extern void function_x(void);
