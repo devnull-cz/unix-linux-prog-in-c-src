@@ -1,6 +1,7 @@
 /*
- * compile:
- *   gcc  -fPIC -c preload.c
+ * Build like this:
+ *
+ *   gcc -fPIC -c preload.c
  *   gcc -shared -o libpreload.so preload.o
  *
  * run e.g. like this:
