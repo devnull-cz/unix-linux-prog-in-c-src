@@ -22,7 +22,7 @@ main(void)
 	if (fork() == 0) {
 		printf("\n[/usr/bin/env | grep X=]\n");
 		/* Child inherited X. */
-		system("/bin/env | /bin/grep X=");
+		system("/usr/bin/env | /bin/grep ^X=");
 	}
 
 	/* wait for my child */
