@@ -8,7 +8,7 @@
  *
  * Run like this:
  *
- *	gcc redirect.c
+ *	cc redirect.c
  *	cp /etc/passwd in
  * 	rm -f out
  *	./a.out
