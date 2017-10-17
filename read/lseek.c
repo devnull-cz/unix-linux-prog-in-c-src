@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <err.h>
 #include <stdlib.h>
+#include <err.h>
 
 int
 main(int argc, char **argv)
