@@ -13,13 +13,14 @@ int
 main(int argc, char *argv[])
 {
 	int i;
-	DIR *d;
-	struct dirent *de;
 
 	if (argc == 1)
 		errx(1, "usage: %s dir1 [dir2 [dir3 ...]]", argv[0]);
 
 	for (i = 1; i < argc; i++) {
+		DIR *d;
+		struct dirent *de;
+
 		printf("== [%s] ==\n", argv[i]);
 		if ((d = opendir(argv[i])) == NULL) {
 			warn("%s", argv[i]);
