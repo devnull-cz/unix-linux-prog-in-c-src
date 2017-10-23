@@ -19,14 +19,12 @@ main(int argc, char **argv)
 		errx(1, "Filename/dir missing.");
 
 	(void) lstat(argv[1], &buf);
-	printf("Filetype for '%s': 0x%x\n", argv[1], buf.st_mode & S_IFMT);
+	printf("File type part of st_mode for '%s': 0x%x\n", argv[1],
+	    buf.st_mode & S_IFMT);
 	printf("S_IFREG is: 0x%x\n", S_IFREG);
 	printf("S_IFDIR is: 0x%x\n", S_IFDIR);
 	printf("S_IFLNK is: 0x%x\n", S_IFLNK);
-
-/*
-	S_ISDIR
-	*/
+	printf("S_IFIFO is: 0x%x\n", S_IFIFO);
 
 	return (0);
 }
