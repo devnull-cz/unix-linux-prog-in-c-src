@@ -22,7 +22,8 @@ int
 main(int argc, char **argv)
 {
 	char c;
-	int fd, n;
+	int fd;
+	ssize_t n;
 
 	if (argc != 4) {
 		errx(1, "usage: %s <file> <position> <offset-from-position>",
