@@ -41,8 +41,7 @@ main(int argc, char **argv)
 	if ((n = read(fd, &c, 1)) != 1) {
 		if (n == 0)
 			errx(1, "File empty.");
-		else
-			err(1, "read");
+		err(1, "read");
 	}
 
 	printf("Character read: '%c'\n", c);
