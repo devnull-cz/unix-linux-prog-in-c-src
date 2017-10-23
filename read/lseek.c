@@ -16,12 +16,14 @@
 #include <stdio.h>
 #include <err.h>
 #include <stdlib.h>
+#include <err.h>
 
 int
 main(int argc, char **argv)
 {
 	char c;
-	int fd, n;
+	int fd;
+	ssize_t n;
 
 	if (argc != 4) {
 		errx(1, "usage: %s <file> <position> <offset-from-position>",
@@ -40,8 +42,7 @@ main(int argc, char **argv)
 	if ((n = read(fd, &c, 1)) != 1) {
 		if (n == 0)
 			errx(1, "File empty.");
-		else
-			err(1, "read");
+		err(1, "read");
 	}
 
 	printf("Character read: '%c'\n", c);

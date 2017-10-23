@@ -56,9 +56,10 @@ main(int argc, char **argv)
 {
 	int i, opt, bufsize = 4096;
 
-	if (argc == 1)
+	if (argc == 1) {
 		errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
 		    basename(argv[0]));
+	}
 
 	while ((opt = getopt(argc, argv, "b:")) != -1) {
 		switch (opt) {

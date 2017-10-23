@@ -1,5 +1,6 @@
 /*
- * Be careful with zeroes. Try this:
+ * Be careful with zeroes. Try this on a *local* filesystem (typically not your
+ * home directory in the lab):
  *
  * cc big-file.c
  * ./a.out
