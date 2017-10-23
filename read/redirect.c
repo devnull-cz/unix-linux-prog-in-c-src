@@ -33,12 +33,18 @@ main(void)
 	/* Do the "<in" part. */
 	close(0);
 	dup(fd);
+	/* Always close what you no longer need. */
+	close(fd);
 
 	/* Do the ">out" part. */
 	close(1);
 	if (creat("out", 0666) == -1)
 		err(1, "creat");
 
+	/*
+	 * No need to use "if" for error checking.  If we get past this call we
+	 * know execl() failed.
+	 */
 	execl("/bin/cat", "cat", NULL);
 	err(1, "execl");
 
