@@ -1,14 +1,15 @@
-
 The files in this directory and all sub-directories are used for demonstrations
-in the course of teaching UNIX programming at Faculty of Mathematics and Physics
-of Charles University in Prague (http://www.mff.cuni.cz/).
+in the course of teaching "Unix programming in C" (NSWI015) at Faculty of
+Mathematics and Physics of Charles University in Prague
+(http://www.mff.cuni.cz/).
 
-The page of the course: http://mff.devnull.cz/
+The course page can be accessed from http://mff.devnull.cz/
 
 All the files with examples are in Public Domain, unless marked otherwise.
 
-The source cdde files are kept like this on purpose:
+The source code files are kept like this on purpose:
   - not all return values are checked and reacted upon
+  - some programs may present issues on purpose
   - each file is self contained (i.e. not libraries of common functions)
 
 This is to help understand the concepts easily.
