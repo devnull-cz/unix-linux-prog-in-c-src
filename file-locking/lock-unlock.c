@@ -64,6 +64,5 @@ main(int argc, char **argv)
 
 	if (strcmp(argv[2], "lock") == 0)
 		return (lock(argv[1]));
-	else
-		return (unlock(argv[1]));
+	return (unlock(argv[1]));
 }
