@@ -4,7 +4,7 @@
  *   - the write end of the pipe is closed in the consumer
  *     - that is so that all references to that end are closed once the producer
  *       is done so the consumer can get a proper EOF and not hang indefinitely.
-
+ *
  *   - the read end of the pipe is closed in the producer
  *     - that is so if the consumer ends up prematurely the producer will get a
  *       SIGPIPE to indicate a lack of readers (otherwise it would fill the pipe
