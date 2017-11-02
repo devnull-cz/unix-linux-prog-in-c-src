@@ -21,7 +21,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-#define IS_ALIGNED(p) ((((intptr_t)(p)) & 3) == 0)
+#define	IS_ALIGNED(p) ((((intptr_t)(p)) & 3) == 0)
 
 int
 main(int argc, char *argv[])

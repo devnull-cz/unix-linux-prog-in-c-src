@@ -25,7 +25,7 @@
 
 /*
  * NOTE: this is not a safe signal handler since it is using unsafe functions
- * 	 like printf/fflush.
+ *	 like printf/fflush.
  */
 void
 sig_handler(int sig, siginfo_t *info, void *ignored)

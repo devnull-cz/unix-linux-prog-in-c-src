@@ -4,7 +4,8 @@
  * note the change in the prefix and the suffix:
  *
  *  $ ./a.out 0:0:2001:1508:1003:4::
- *  a.out: inet_pton with AF_INET failed for '0:0:2001:1508:1003:4::'. Will try INET6 now.
+ *  a.out: inet_pton with AF_INET failed for '0:0:2001:1508:1003:4::'.
+ *  Will try INET6 now.
  *  Succesfully converted an IPv6 address string.
  *  Succesfully converted a binary IPv6 address to a string.
  *  The address is: ::2001:1508:1003:4:0:0
@@ -42,7 +43,7 @@ main(int argc, char **argv)
 		    "    ./a.out 01.01.01.01			# OK", argv[0]);
 
 	if (inet_pton(AF_INET, argv[1], &in) != 1) {
-		warnx("inet_pton with AF_INET failed for '%s'. Will try "
+		warnx("inet_pton with AF_INET failed for '%s'.\nWill try "
 		    "INET6 now.", argv[1]);
 		if (inet_pton(AF_INET6, argv[1], &in6) != 1) {
 			errx(1, "inet_pton with AF_INET6 failed for '%s'.",

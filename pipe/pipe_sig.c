@@ -5,7 +5,7 @@
  *    ./a.out | ./a.out | ./a.out | ./a.out
  *
  * Side note: We could have used `jot 10` for generating the sequence however
- * 	      it is not available on all systems except FreeBSD/Mac OS X.
+ *	      it is not available on all systems except FreeBSD/Mac OS X.
  */
 
 #include <stdio.h>

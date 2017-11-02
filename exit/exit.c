@@ -26,8 +26,7 @@ main(void)
 	}
 
 /*
- * Remove the comment to get exit().
-#define EXIT 1
+ * Define EXIT to 1 to get exit().
  */
 #ifdef EXIT
 	exit(3);

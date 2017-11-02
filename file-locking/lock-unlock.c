@@ -12,7 +12,7 @@
  * lock file is again NOT atomic.
  *
  * See run.sh in this directory as an example script that uses this program.
- * 
+ *
  * The app that uses this simple locking mechanism must busy wait.  That's
  * usually not acceptable in the real life.
  *

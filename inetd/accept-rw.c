@@ -9,7 +9,7 @@
  *
  * Assuming the program was compiled into /usr/local/bin/foo and
  * /etc/services file has entry called 'myserv' for a TCP port.
- * 
+ *
  * (c) vlada@devnull.cz
  */
 
