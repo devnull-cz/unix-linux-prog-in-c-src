@@ -39,7 +39,7 @@ main(void)
 		/* not before dup() ! */
 		(void) close(pd[0]);
 		(void) close(pd[1]);
-		execl("/bin/ls", "/bin/ls", "/", (char *)NULL);
+		execl("/bin/ls", "ls", "/", (char *)NULL);
 		break;
 	default: /* consumer */
 		(void) close(0);
