@@ -10,8 +10,15 @@
 int
 main(void)
 {
+#if 0
+	/*
+	 * The "if" control statement is not needed.  If execl() succeeds no
+	 * code below it will be executed.
+	 */
 	if (execl("/bin/date", "date", (char *)NULL) == -1)
-		err(1, "execl");
+#endif
+	execl("/bin/date", "date", (char *)NULL);
+	err(1, "execl");
 
 	return (0);
 }
