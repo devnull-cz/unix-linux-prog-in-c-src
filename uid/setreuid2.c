@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <grp.h>
 #include <pwd.h>
+#include <err.h>
 
 int
 main(void)
@@ -15,7 +16,7 @@ main(void)
 	printf("effective GID:\t%s\n\n", getgrgid(getegid())->gr_name);
 
 	if (open("test", O_RDONLY) == -1) {
-		perror("test");
+		warn("test");
 	} else {
 		printf("ok, open() succeeded\n");
 	}
@@ -36,16 +37,14 @@ main(void)
 	if (setreuid(162948, 162948) == -1) {
 #endif
 	if (setuid(162948) == -1) {
-		perror("setuid");
-		exit(1);
+		err(1, "setuid");
 	}
 
 #if 0
 	if (setreuid(162948, 162948) == -1) {
 #endif
 	if (setuid(113369) == -1) {
-		perror("setuid2");
-		exit(1);
+		err(1, "setuid2");
 	}
 
 	printf("real ID:\t%s\n", getpwuid(getuid())->pw_name);
@@ -54,7 +53,7 @@ main(void)
 	printf("effective GID:\t%s\n\n", getgrgid(getegid())->gr_name);
 
 	if (open("test", O_RDONLY) == -1) {
-		perror("test");
+		warn("test");
 	} else {
 		printf("ok, open() succeeded\n");
 	}
