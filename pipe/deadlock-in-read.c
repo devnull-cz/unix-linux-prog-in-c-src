@@ -1,6 +1,6 @@
 /*
  * The program reads from a pipe whose write file descriptor is still open by
- * the same process.  The read operation is put to sleep for ever, dead locking
+ * the same process.  The read operation is put to sleep for ever, deadlocking
  * the process as it is waiting for an event that is never going to happen.
  *
  * (c) jp@devnull.cz
