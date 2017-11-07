@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <grp.h>
 #include <pwd.h>
+#include <err.h>
 
 int
 main(void)
@@ -14,12 +15,9 @@ main(void)
 	printf("real GID:\t%s\n", getgrgid(getgid())->gr_name);
 	printf("effective GID:\t%s\n\n", getgrgid(getegid())->gr_name);
 
-	if (open("test", O_RDONLY) == -1) {
-		perror("test");
-		exit(1);
-	} else {
-		printf("ok, open() succeeded\n");
-	}
+	if (open("test", O_RDONLY) == -1)
+		err(1, "open");
+	printf("OK, open() succeeded\n");
 
 	return (0);
 }
