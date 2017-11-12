@@ -28,7 +28,7 @@ int a, b;
 pthread_mutex_t mutex, mutex2, mutex3;
 
 void
-usage()
+usage(void)
 {
 	(void) printf("Program messes up with mutexes.\n");
 	(void) printf("Usage: not-my-lock [-h|-e|-n|-r]\n");
