@@ -11,7 +11,8 @@ SUBDIRS=assert		\
 	basic-utils	\
 	exec		\
 	exit		\
-	file-locking
+	file-locking	\
+	fork
 
 all: $(SUBDIRS) cstyle
 
