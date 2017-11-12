@@ -8,6 +8,8 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE 700	// needed for F_LOCK
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
