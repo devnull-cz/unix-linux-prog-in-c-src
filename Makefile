@@ -1,7 +1,8 @@
 MAKE=make
 
 SUBDIRS=assert	\
-	debug
+	debug	\
+	pipe
 
 all: $(SUBDIRS) cstyle
 
