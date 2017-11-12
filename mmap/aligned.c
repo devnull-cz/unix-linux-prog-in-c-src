@@ -67,7 +67,7 @@ main(int argc, char *argv[])
 	/* Read 1st record. */
 	tag = (uint32_t *)addr;
 	printf("tag ptr = 0x%p [%s]\n",
-		tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
+		(void *)tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
 	printf("tag = %d\n", *tag);
 
 	/* skip past tag and data */
@@ -77,7 +77,7 @@ main(int argc, char *argv[])
 	/* Read 2nd record. */
 	tag = (uint32_t *)addr;
 	printf("tag ptr = 0x%p [%s]\n",
-		tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
+		(void *)tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
 	printf("tag = %d\n", *tag);
 
 	/* skip past tag and data */
