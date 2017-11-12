@@ -17,7 +17,8 @@ SUBDIRS=assert		\
 	inetd		\
 	lib-abi		\
 	main		\
-	malloc
+	malloc		\
+	mmap
 
 all: $(SUBDIRS) cstyle
 
