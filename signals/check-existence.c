@@ -1,7 +1,7 @@
 /*
- * Check is process with given pid exists.
+ * Check if process with a given PID exists.
  *
- * Vladimir Kotal, 2016
+ * (c) Vladimir Kotal, 2016
  */
 
 #include <stdio.h>
@@ -13,7 +13,12 @@
 int
 main(int argc, char *argv[])
 {
-	pid_t pid = atoi(argv[1]);
+	pid_t pid;
+	
+	if (argc != 2)
+		errx(1, "Need a PID as argument.");
+		
+	pid = atoi(argv[1]);
 	if ((kill(pid, 0) == 0) || (errno == EPERM))
 		printf("process with pid %d exists\n", pid);
 	else
