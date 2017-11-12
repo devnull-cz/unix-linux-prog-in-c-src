@@ -15,7 +15,8 @@ SUBDIRS=assert		\
 	fork		\
 	getopt		\
 	inetd		\
-	lib-abi
+	lib-abi		\
+	main
 
 all: $(SUBDIRS) cstyle
 
