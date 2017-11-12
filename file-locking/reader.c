@@ -21,7 +21,7 @@
 int
 main(int argc, char **argv)
 {
-	int i, j, fd, locking = 0;
+	int fd, locking = 0;
 	struct flock fl;
 	char buf[FILE_LEN];
 	int n;
