@@ -13,6 +13,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE 700	// needed for vfork()
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
