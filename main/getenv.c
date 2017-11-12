@@ -4,6 +4,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE 700	// needed for putenv()
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
