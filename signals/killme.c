@@ -1,5 +1,5 @@
 /*
- * Sends itself a SIGTERM signal that is caught.
+ * Sends itself a SIGTERM signal, repeatedly.  The signal is caught.
  *
  * (c) jp@devnull.cz
  */
@@ -15,6 +15,7 @@
 void
 term_handler(int sig)
 {
+	/* write(2) is safe to use from signal handlers. */
 	write(1, MESSAGE, strlen(MESSAGE));
 }
 
@@ -23,13 +24,13 @@ main(void)
 {
 	struct sigaction act;
 
-	/* we leave flags and mask empty */
+	/* We leave flags and mask empty. */
 	bzero(&act, sizeof (act));
 	act.sa_handler = term_handler;
 	sigaction(SIGTERM, &act, NULL);
 
 	while (1) {
-		printf("sending myself a SIGTERM signal...\n");
+		printf("Sending myself a SIGTERM signal...\n");
 		kill(getpid(), SIGTERM);
 		sleep(1);
 	}
