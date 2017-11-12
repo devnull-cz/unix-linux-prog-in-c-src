@@ -17,8 +17,6 @@ bye(void)
 int
 main(void)
 {
-	int i;
-
 	printf("setting exit handler\n");
 	if (atexit(bye) != 0) {
 		fprintf(stderr, "cannot set exit function\n");
