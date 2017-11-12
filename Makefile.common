@@ -1,6 +1,6 @@
 CC=cc
 CFLAGS=-Wall -pedantic -std=c99 -Wshadow -Wpointer-arith -Wcast-qual \
-	-Wstrict-prototypes
+	-Wstrict-prototypes -Werror=implicit-function-declaration
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
