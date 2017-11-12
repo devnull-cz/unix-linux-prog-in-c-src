@@ -6,7 +6,7 @@
  *  $ cc -o libmy.so -KPIC -G libmy.c
  *  $ cc dlopen.c
  *
- * Mac OS X:
+ * macOS:
  *  $ gcc -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup -o libmy.so libmy.c
  *  $ gcc dlopen.c
  *
