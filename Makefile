@@ -13,7 +13,8 @@ SUBDIRS=assert		\
 	exit		\
 	file-locking	\
 	fork		\
-	getopt
+	getopt		\
+	inetd
 
 all: $(SUBDIRS) cstyle
 
