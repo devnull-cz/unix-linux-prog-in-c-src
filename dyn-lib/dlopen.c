@@ -33,10 +33,10 @@
 int
 main(int argc, char *argv[])
 {
-	fn f;
 	int flag;
 	void *handle;
 	typedef void (*fn)(void);
+	fn f;
 
 	if (argc != 2)
 		errx(1, "usage: %s <now|lazy>", argv[0]);
