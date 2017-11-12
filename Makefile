@@ -8,7 +8,10 @@ SUBDIRS=assert		\
 	debug		\
 	dead-lock	\
 	cond-variables	\
-	basic-utils
+	basic-utils	\
+	exec		\
+	exit		\
+	file-locking
 
 all: $(SUBDIRS) cstyle
 
