@@ -1,8 +1,14 @@
 MAKE=make
 
-SUBDIRS=assert	\
-	debug	\
-	pipe
+SUBDIRS=assert		\
+	debug		\
+	pipe		\
+	err		\
+	dyn-lib		\
+	debug		\
+	dead-lock	\
+	cond-variables	\
+	basic-utils
 
 all: $(SUBDIRS) cstyle
 
