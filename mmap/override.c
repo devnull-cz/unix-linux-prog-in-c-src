@@ -11,6 +11,8 @@
  * vlada@devnull.cz, 2013
  */
 
+#define	_DEFAULT_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
