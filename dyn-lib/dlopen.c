@@ -16,9 +16,16 @@
  *
  * If run with the "now" option, the program fails without printing anything as
  * the dynamic linker tries to resolve all the symbols upon execution and bails
- * out on foo() right away.  With the "lazy" option, the libmy's myprint()
- * function is executed, printing "hello", and not until then the program exits
- * on calling foo().
+ * out on foo() right away.  With the "lazy" option though, the libmy's
+ * myprint() function is executed, printing "hello", and not until then the
+ * program exits on failing to resolve foo().
+ *
+ * If run on Linux:
+ *  $ ./a.out now
+ *  a.out: dlopen: ./libmy.so: undefined symbol: foo
+ *  $ ./a.out lazy
+ *  hello
+ *  ./a.out: symbol lookup error: ./libmy.so: undefined symbol: foo
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
