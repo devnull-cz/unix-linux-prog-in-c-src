@@ -16,6 +16,8 @@
  * which exec's less(1) on the input from its pipe end.
  */
 
+#define _XOPEN_SOURCE 700	// needed for pid_t definition
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
