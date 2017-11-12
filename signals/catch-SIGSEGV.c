@@ -1,10 +1,11 @@
 /*
- * The specification does not define what happens if synchronnous signals
- * (SIGSEGV, SIGILL, SIGBUS, and SIGFPE) are blocked or ignored. Most of the
- * systems just kill the process no matter how the signal mask is set. However,
- * you should always be able to catch such signal in order to print a user
- * friendly message, for example. Note that after that, you should always exit,
- * never move on, since what would happen then is also undefined by the spec.
+ * The UNIX spec does not define what happens if synchronnous signals (SIGSEGV,
+ * SIGILL, SIGBUS, and SIGFPE) are masked or ignored.  Most of the systems just
+ * kill the process no matter how the signal mask is set.  However, you should
+ * always be able to catch such a signal in order to print a user friendly
+ * message, for example.  Note that after that, you better exit, never move on,
+ * since what happens after returning from the handler is also undefined by the
+ * standard.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -30,14 +31,14 @@ main(void)
 	sigaction(SIGSEGV, &act, NULL);
 
 	/*
-	 * Intentionally in the loop. Let's see what happens if we catch the
-	 * signal but will not exit;
+	 * Intentionally in the loop.  Let's see what happens if we catch the
+	 * signal but will not exit.
 	 */
 	while (1) {
 		int *p = NULL;
 
 		sleep(1);
-		/* The following line definitely generates the SIGSEGV signal */
+		/* The following line definitely generates a signal. */
 		*p = 1;
 	}
 
