@@ -1,5 +1,6 @@
 CC=cc
-CFLAGS=-Wall -pedantic -std=c99
+CFLAGS=-Wall -pedantic -std=c99 -Wshadow -Wpointer-arith -Wcast-qual \
+	-Wstrict-prototypes
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
