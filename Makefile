@@ -18,7 +18,8 @@ SUBDIRS=assert		\
 	lib-abi		\
 	main		\
 	malloc		\
-	mmap
+	mmap		\
+	mutexes
 
 all: $(SUBDIRS) cstyle
 
