@@ -12,15 +12,14 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <err.h>
 #include <string.h>
 #include <assert.h>
-
-/* Needed for Linux to include the necessary mutex types */
-#define	__USE_UNIX98
 
 #include <pthread.h>
 
