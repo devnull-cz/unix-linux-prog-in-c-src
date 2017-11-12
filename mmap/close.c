@@ -19,7 +19,6 @@
 int
 main(int argc, char *argv[])
 {
-	char c;
 	int fd, size;
 	char *addr;
 	int i;
@@ -34,7 +33,7 @@ main(int argc, char *argv[])
 	unlink(argv[1]);
 	close(fd);
 
-	printf("%p\n---\n", addr);
+	printf("%p\n---\n", (void *)addr);
 	for (i = 0; i < size; i++)
 		printf("%c", *(addr + i));
 	printf("\n---\n");
