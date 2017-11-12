@@ -51,7 +51,7 @@
 #error This code may only run on Solaris and Linux.
 #endif
 
-#define _XOPEN_SOURCE 700	// needed for pid_t
+#define	_XOPEN_SOURCE 700	// needed for pid_t
 
 #include <sys/wait.h>
 #include <err.h>

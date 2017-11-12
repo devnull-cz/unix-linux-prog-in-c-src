@@ -63,7 +63,7 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#define _XOPEN_SOURCE 700	// needed for kill()/sigaction
+#define	_XOPEN_SOURCE 700	// needed for kill()/sigaction
 
 #include <stdio.h>
 #include <err.h>

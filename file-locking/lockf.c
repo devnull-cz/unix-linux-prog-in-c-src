@@ -28,7 +28,7 @@
  * vlada@devnull.cz
  */
 
-#define _XOPEN_SOURCE 700	// needed for F_LOCK
+#define	_XOPEN_SOURCE 700	// needed for F_LOCK
 
 #include <stdio.h>
 #include <stdlib.h>

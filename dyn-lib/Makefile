@@ -1,6 +1,8 @@
 include ../Makefile.common
 
-all: libmy.so ld-lazy dlopen
+PROGS=libmy.so ld-lazy dlopen
+
+all: $(PROGS)
 
 ld-lazy: ld-lazy.o
 	$(CC) -o $@ $^ -lm
@@ -14,4 +16,4 @@ libmy.so: libmy.o
 	$(CC) -shared -o $@ $^
 
 clean:
-	rm -f *.o a.out libmy.so dlopen ld-lazy
+	rm -f *.o a.out $(PROGS)

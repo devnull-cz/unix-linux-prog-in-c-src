@@ -9,7 +9,7 @@
  *       seq(1) though which tends to be present across most systems.
  */
 
-#define _XOPEN_SOURCE 700	// needed for sigaction
+#define	_XOPEN_SOURCE 700	// needed for sigaction
 
 #include <stdio.h>
 #include <unistd.h>
