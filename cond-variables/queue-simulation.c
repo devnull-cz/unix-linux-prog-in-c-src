@@ -15,6 +15,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE 700	// needed for F_LOCK
+
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
