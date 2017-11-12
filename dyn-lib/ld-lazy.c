@@ -42,26 +42,35 @@
  *    0x00000001 (NEEDED)                     Shared library: [libm.so.6]
  *    0x00000001 (NEEDED)                     Shared library: [libc.so.6]
  *
+ * WARNING: as of Nov 2017, pldd(1) on Linux is broken.  See the man page.
+ *
  * (c) jp@devnull.cz
  */
 
+#if !defined(__sun) && !defined(__SVR4) && !defined(__linux__)
+#error This code may only run on Solaris and Linux.
+#endif
+
+#include <sys/wait.h>
+#include <err.h>
+#include <errno.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <errno.h>
 #include <unistd.h>
-#include <sys/wait.h>
-#include <math.h>
 
 int
 main(int argc, char **argv)
 {
+	pid_t pid;
 	char buf[16];
 
 	/*
-	 * We don't want to actually call it so that we can see the difference
-	 * in lazy binding.
+	 * We do not want to actually call it so that we can see the difference
+	 * in lazy binding.  However, we must reference something from libm.so
+	 * in the code.
 	 */
 	if (0) {
 		/* libm */
@@ -69,15 +78,14 @@ main(int argc, char **argv)
 	}
 
 	snprintf(buf, sizeof (buf), "%d", getpid());
-
-	/* we must fork now to pldd our process */
-	if (fork() == 0) {
+	/* We must fork now to pldd our process. */
+	if ((pid = fork() == 0)) {
 		execl("/usr/bin/pldd", "pldd", buf, NULL);
-		fprintf(stderr, "execl() failed on pldd: %s\n",
-		    strerror(errno));
-		exit(1);
+		err(1, "execl() failed on pldd");
 	} else {
-		/* be sure we don't die before we are pldd'ed */
+		if (pid == -1)
+			err(1, "fork");
+		/* Be sure we do not die before we are pldd'ed. */
 		wait(NULL);
 	}
 

@@ -1,6 +1,6 @@
 /*
- * A simple program to show dlopen/dlsym functions. You need libmy.c which
- * should be in the same directory as this file. Build it like this:
+ * A simple program to show how dlopen/dlsym functions work. You need libmy.c
+ * which should be in the same directory as this file.  Build it like this:
  *
  * Solaris:
  *  $ cc -o libmy.so -KPIC -G libmy.c
@@ -13,6 +13,12 @@
  * Linux:
  *  $ gcc -shared -fPIC -o libmy.so libmy.c
  *  $ gcc -ldl dlopen.c
+ *
+ * If run with the "now" option, the program fails without printing anything as
+ * the dynamic linker tries to resolve all the symbols upon execution and bails
+ * out on foo() right away.  With the "lazy" option, the libmy's myprint()
+ * function is executed, printing "hello", and not until then the program exits
+ * on calling foo().
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -27,10 +33,10 @@
 int
 main(int argc, char *argv[])
 {
-	typedef void (*fn)(void);
-	void *handle;
 	fn f;
 	int flag;
+	void *handle;
+	typedef void (*fn)(void);
 
 	if (argc != 2)
 		errx(1, "usage: %s <now|lazy>", argv[0]);
@@ -48,7 +54,7 @@ main(int argc, char *argv[])
 	if ((f = (fn) dlsym(handle, "myprint")) == NULL)
 		errx(1, "dlsym: %s", dlerror());
 
-	/* now let's call the function */
+	/* Now let's call the function. */
 	f();
 
 	return (0);
