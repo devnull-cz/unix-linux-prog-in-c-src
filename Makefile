@@ -12,7 +12,8 @@ SUBDIRS=assert		\
 	exec		\
 	exit		\
 	file-locking	\
-	fork
+	fork		\
+	getopt
 
 all: $(SUBDIRS) cstyle
 
