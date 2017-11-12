@@ -16,7 +16,8 @@ SUBDIRS=assert		\
 	getopt		\
 	inetd		\
 	lib-abi		\
-	main
+	main		\
+	malloc
 
 all: $(SUBDIRS) cstyle
 
