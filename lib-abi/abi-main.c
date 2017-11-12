@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <err.h>
 
-int32_t abiadd(int32_t a, int32_t b);
+extern int32_t abiadd(int32_t a, int32_t b);
 
 int
 main(int argc, char **argv)

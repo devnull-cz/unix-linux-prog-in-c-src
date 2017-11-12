@@ -14,7 +14,8 @@ SUBDIRS=assert		\
 	file-locking	\
 	fork		\
 	getopt		\
-	inetd
+	inetd		\
+	lib-abi
 
 all: $(SUBDIRS) cstyle
 
