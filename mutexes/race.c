@@ -8,6 +8,7 @@
  * (c) jp@devnull.cz
  */
 
+#include <stdint.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>

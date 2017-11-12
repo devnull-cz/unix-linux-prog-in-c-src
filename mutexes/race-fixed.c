@@ -18,6 +18,7 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
