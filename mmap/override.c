@@ -61,7 +61,7 @@ create_file(void)
 int
 main(int argc, char *argv[])
 {
-	int fd;
+	int fd = 0;
 	char *addr = NULL, *newaddr = NULL;
 	int flags = MAP_SHARED;
 	off_t off = 0;
@@ -76,7 +76,7 @@ main(int argc, char *argv[])
 
 	addr = mmap(NULL, 1000, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON,
 	    -1, 0);
-	printf("anon segment: %p\n", addr);
+	printf("anon segment: %p\n", (void *)addr);
 
 	pmapme();
 	create_file();
@@ -91,7 +91,8 @@ main(int argc, char *argv[])
 		perror("mmap");
 		exit(1);
 	}
-	printf("file segment: wanted: %p got: %p\n", addr, newaddr);
+	printf("file segment: wanted: %p got: %p\n",
+	    (void *)addr, (void *)newaddr);
 
 	pmapme();
 
