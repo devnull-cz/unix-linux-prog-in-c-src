@@ -1,5 +1,7 @@
 /*
- * An example on how to deal with signals in the presence of event loop.
+ * An example on how to deal with signals in the presence of an event loop.  Run
+ * the program, then send it SIGINTs via ^C.  To terminate it, you can use
+ * SIGQUIT (^\) or ^Z and "kill %<job-number>".
  *
  * (c) vlada@devnull.cz
  */
@@ -12,30 +14,34 @@
 #include <stdlib.h>
 #include <poll.h>
 
-volatile sig_atomic_t run = 1;
+volatile sig_atomic_t delivered = 0;
 
 void
 sig_handler(int sig)
 {
-	run = 0;
+	delivered = 1;
 }
 
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
-	bzero(&act, sizeof (act));
+	printf("My PID is %d.\n", getpid());
+
 	act.sa_handler = sig_handler;
 	sigaction(SIGINT, &act, NULL);
 
-	while (run) {
-		printf("sleeping\n");
+	while (1) {
+		printf("Sleeping for 10 seconds.\n");
 		if (poll(NULL, 0, 10000) == -1)
 			warn("poll");
+		if (delivered == 1) {
+			printf("Signal delivered, continuing.\n");
+			delivered = 0;
+		}
 	}
 
-	printf("cleanup\n");
-
+	printf("Cleaning up.\n");
 	return (0);
 }
