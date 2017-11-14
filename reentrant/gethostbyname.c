@@ -46,7 +46,6 @@ int
 main(int argc, char *argv[]) {
 	struct hostent *hp1, *hp2;
 	int seq = 0;
-	int optint = 1;
 
 	if (argc != 3 && argc != 4) {
 		printf("usage: %s [-s] <host1> <host2>\n", argv[0]);
