@@ -56,8 +56,7 @@ int asynch = 0;
 void *
 mythread(void *x)
 {
-	int i = 1;
-	time_t t2, t = time(NULL);
+	time_t t = time(NULL);
 
 	if (asynch == 1)
 		pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
