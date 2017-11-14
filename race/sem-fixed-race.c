@@ -53,7 +53,7 @@ cleanup(void)
 }
 
 /* up_down(1) means UP, up_down(-1) is DOWN */
-int
+static void
 up_down(semdir_t dir)
 {
 	if ((dir != UP) && (dir != DOWN))
