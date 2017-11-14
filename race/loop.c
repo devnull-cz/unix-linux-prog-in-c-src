@@ -3,8 +3,8 @@
 void
 foo(void)
 {
-	int a, b, i, j;
-	char *addr;
+	int a, b, i = 0, j = 0;
+	char *addr = "ab";
 
 	while (1) {
 		a = addr[0];
