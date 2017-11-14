@@ -16,7 +16,10 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_GNU_SOURCE	// for pthread_yield()
+
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <pthread.h>
 
@@ -63,7 +66,7 @@ main(int argc, char *argv[])
 	for (j = 0; j < NUM_THREADS; ++j) {
 		printf("Joining thread (%d)\n", j);
 		if ((e = pthread_join(t, &p)) != 0)
-			printf("err\n", strerror(e));
+			printf("err %s\n", strerror(e));
 	}
 
 	return (0);
