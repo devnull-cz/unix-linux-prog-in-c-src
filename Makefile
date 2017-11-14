@@ -24,7 +24,8 @@ SUBDIRS=assert		\
 	pthreads	\
 	race		\
 	read		\
-	readdir
+	readdir		\
+	reentrant
 
 all: $(SUBDIRS) cstyle
 
