@@ -1,12 +1,12 @@
 include ../Makefile.common
 
-PROGS=atomic-add fcntl-fixed-race loop.o race sem-fixed-race
+# TODO: enable atomic-add once Travis has gcc 4.9 (issue #9)
+PROGS=fcntl-fixed-race loop.o race sem-fixed-race
 
 all: $(PROGS)
 
-# enable once Travis has gcc 4.9 (issue #9)
-#atomic-add: atomic-add.o
-#	$(CC) -o $@ $^ -lpthread
+atomic-add: atomic-add.o
+	$(CC) -o $@ $^ -lpthread
 
 fcntl-fixed-race: fcntl-fixed-race.o
 	$(CC) -o $@ $^
