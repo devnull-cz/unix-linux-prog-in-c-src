@@ -5,6 +5,7 @@
  * (c) jp@devnull.cz
  */
 
+#include <string.h>
 #include <sys/wait.h>
 #include <pthread.h>
 #include <stdio.h>
