@@ -33,7 +33,7 @@ print_hp(const char *comment, struct hostent *hp)
 {
 	char **p;
 
-	printf("# %s [%p/%p]:\n", comment, hp, hp->h_addr_list);
+	printf("# %s [%p/%p]:\n", comment, (void *)hp, (void *)hp->h_addr_list);
 	for (p = hp->h_addr_list; *p != 0; p++) {
 		struct in_addr in;
 
@@ -45,6 +45,7 @@ print_hp(const char *comment, struct hostent *hp)
 int
 main(int argc, char *argv[]) {
 	struct hostent *hp1, *hp2;
+	int optidx = 0;
 	int seq = 0;
 
 	if (argc != 3 && argc != 4) {
@@ -55,24 +56,24 @@ main(int argc, char *argv[]) {
 
 	if (strcmp(argv[1], "-s") == 0) {
 		seq = 1;
-		optind++;
+		optidx++;
 	}
 
-	if (strcmp(argv[optind], argv[optind + 1]) == 0) {
+	if (strcmp(argv[optidx], argv[optidx + 1]) == 0) {
 		printf("hosts should be different to make the point\n");
 		exit(1);
 	}
 
-	if (!(hp1 = gethostbyname(argv[optind]))) {
-		printf("cannot resolve %s\n", argv[optind]);
+	if (!(hp1 = gethostbyname(argv[optidx]))) {
+		printf("cannot resolve %s\n", argv[optidx]);
 		exit(1);
 	}
 
 	if (seq)
 		print_hp("host1", hp1);
 
-	if (!(hp2 = gethostbyname(argv[optind + 1]))) {
-		printf("cannot resolve %s\n", argv[optind + 1]);
+	if (!(hp2 = gethostbyname(argv[optidx + 1]))) {
+		printf("cannot resolve %s\n", argv[optidx + 1]);
 		exit(1);
 	}
 
