@@ -14,11 +14,15 @@
  * (c) vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700	// for sigfillset()
+
+#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <err.h>
 #include <pthread.h>
+#include <signal.h>
 
 void
 recurse(int n)
@@ -39,8 +43,6 @@ recurse(int n)
 void *
 thread(void *x)
 {
-	int i;
-
 	recurse((intptr_t)x);
 
 	return (NULL);
