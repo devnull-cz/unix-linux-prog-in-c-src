@@ -19,6 +19,8 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
