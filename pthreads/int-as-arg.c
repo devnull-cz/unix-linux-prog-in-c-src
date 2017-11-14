@@ -10,6 +10,7 @@
  * (c) jp@devnull.cz
  */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
