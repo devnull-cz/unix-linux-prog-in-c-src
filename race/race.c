@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <strings.h>
+#include <string.h>
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -49,7 +49,7 @@ main(int argc, char **argv)
 	else
 		dbg = 1;
 
-	bzero(&act, sizeof (act));
+	memset(&act, '\0', sizeof (act));
 	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
