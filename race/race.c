@@ -13,6 +13,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <sys/mman.h>
 #include <stdio.h>
 #include <stdlib.h>
