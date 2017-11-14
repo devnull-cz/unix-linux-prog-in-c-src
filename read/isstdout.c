@@ -17,7 +17,9 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef linux
 #include <sys/sysmacros.h>
+#endif
 #include <fcntl.h>
 #include <unistd.h>
 #include <err.h>
@@ -30,7 +32,9 @@ statfd(int fd)
 	if (fstat(fd, &st) == -1)
 		err(1, "fstat");
 	printf("fd %d (tty: %s)\n", fd, isatty(fd) ? ttyname(fd) : "no");
+#ifdef linux
 	printf("  dev = %d/%d\n", major(st.st_dev), minor(st.st_dev));
+#endif
 	printf("  inode = %lu\n", (long) st.st_ino);
 }
 
