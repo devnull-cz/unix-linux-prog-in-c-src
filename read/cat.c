@@ -5,6 +5,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700	// for getopt()
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
