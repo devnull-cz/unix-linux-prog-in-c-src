@@ -48,7 +48,7 @@ int atomic, mutex;
 pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 
 void
-usage()
+usage(void)
 {
 	fprintf(stderr, "atomic/mutex/race tester");
 	fprintf(stderr, "\n");
