@@ -16,7 +16,6 @@ void *
 thread(void *x)
 {
 	int i, e;
-	void *p;
 
 	/*
 	 * This "guarantees" that when entering pthread_join() the thread is
