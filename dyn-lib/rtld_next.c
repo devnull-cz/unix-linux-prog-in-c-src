@@ -46,8 +46,7 @@
 
 #define	NOT_FOUND	"read not found\n"
 
-typedef ssize_t (*fn)(int, void *, size_t);
-fn f;
+ssize_t (*f)(int, void *, size_t);
 
 ssize_t
 read(int fildes, void *buf, size_t nbyte)
@@ -57,7 +56,7 @@ read(int fildes, void *buf, size_t nbyte)
 
 	/* look up read() the first time we are here */
 	if (f == NULL) {
-		if ((f = (fn) dlsym(RTLD_NEXT, "read")) == NULL) {
+		if ((f = dlsym(RTLD_NEXT, "read")) == NULL) {
 			/* better use simple function for printing out */
 			(void) write(2, NOT_FOUND, strlen(NOT_FOUND));
 			exit(1);
