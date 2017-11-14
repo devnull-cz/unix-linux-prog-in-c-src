@@ -7,6 +7,15 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_POSIX_C_SOURCE	2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <errno.h>
+#include <err.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/stat.h>
@@ -14,14 +23,7 @@
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <strings.h>
 #include <signal.h>
-#include <errno.h>
-#include <err.h>
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
@@ -74,7 +76,7 @@ main(int argc, char **argv)
 	else
 		dbg = 1;
 
-	bzero(&act, sizeof (act));
+	memset(&act, '\0', sizeof (act));
 	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
