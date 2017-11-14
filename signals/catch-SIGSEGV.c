@@ -24,9 +24,8 @@ handle_segfault(int sig)
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
-	memset(&act, 0, sizeof (act));
 	act.sa_handler = handle_segfault;
 	sigaction(SIGSEGV, &act, NULL);
 
