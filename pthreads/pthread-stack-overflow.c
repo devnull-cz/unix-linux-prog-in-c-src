@@ -27,7 +27,7 @@
 void
 recurse(int n)
 {
-	char foo[1024];
+	char foo[1024];	/* intentional */
 
 	printf("%d ", n);
 	fflush(stdout);
