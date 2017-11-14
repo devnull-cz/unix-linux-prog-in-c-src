@@ -50,11 +50,11 @@ main(int argc, char **argv)
 
 	printf("addresses:\n");
 	if (to_alloc > 0)
-		printf("  variable on the heap:\t%p\n", p);
-	printf("  local variable:\t%p\n", buf);
-	printf("  noninitialized var:\t%p\n", &nonini1);
-	printf("  initialized var 1:\t%p\n", &ini1);
-	printf("  initialized var 2:\t%p\n", &ini2);
+		printf("  variable on the heap:\t%p\n", (void *)p);
+	printf("  local variable:\t%p\n", (void *)buf);
+	printf("  noninitialized var:\t%p\n", (void *)&nonini1);
+	printf("  initialized var 1:\t%p\n", (void *)&ini1);
+	printf("  initialized var 2:\t%p\n", (void *)&ini2);
 	printf("  readdir:\t%p\n", readdir);
 	printf("  *readdir:\t%p\n", *readdir);
 
