@@ -12,6 +12,8 @@
  * (c) vlada@devnull.cz
  */
 
+#define	_POSIX_C_SOURCE	2
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
