@@ -10,6 +10,7 @@ aligned: aligned.o
 close: close.o
 	$(CC) -o $@ $^
 
+lseek: CFLAGS += -g
 lseek: lseek.o
 	$(CC) -o $@ $^
 
