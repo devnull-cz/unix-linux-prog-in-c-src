@@ -8,6 +8,8 @@
  * This program is included solely as a demonstration of historic APIs.
  */
 
+#define	_BSD_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <err.h>
