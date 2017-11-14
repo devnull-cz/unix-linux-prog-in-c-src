@@ -19,7 +19,9 @@ SUBDIRS=assert		\
 	main		\
 	malloc		\
 	mmap		\
-	mutexes
+	mutexes		\
+	pmap		\
+	pthreads
 
 all: $(SUBDIRS) cstyle
 
