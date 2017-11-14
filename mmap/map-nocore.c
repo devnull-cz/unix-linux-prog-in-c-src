@@ -21,7 +21,7 @@ int
 main(int argc, char *argv[])
 {
 	char *addr = NULL;
-	int flags = MAP_SHARED | MAP_ANON;
+	int flags = MAP_SHARED | MAP_ANONYMOUS;
 
 	if (argc != 2)
 		errx(1, "usage: %s <0|1>", argv[0]);

@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <sys/wait.h>
+#include <assert.h>
 
 static void
 pmapme(void)
@@ -64,7 +65,7 @@ create_file(void)
 int
 main(int argc, char *argv[])
 {
-	int fd = 0;
+	int fd = -1;
 	char *addr = NULL, *newaddr = NULL;
 	int flags = MAP_SHARED;
 	off_t off = 0;
@@ -82,7 +83,8 @@ main(int argc, char *argv[])
 	printf("anon segment: %p\n", (void *)addr);
 
 	pmapme();
-	create_file();
+	fd = create_file();
+	assert(fd != -1);
 
 	if (atoi(argv[1]) > 0)
 		flags |= MAP_FIXED;
