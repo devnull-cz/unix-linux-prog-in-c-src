@@ -1,5 +1,6 @@
 /*
- * Divide by zero example.
+ * Divide by zero example.  Use something that will not be optimized out or
+ * warned about by the compiler.
  */
 
 #include <stdio.h>
@@ -7,9 +8,9 @@
 int
 main(void)
 {
-	int i, j = 0;
+	int i = 0;
 
-	printf("%d\n", i / j);
+	printf("%d\n", 999 / i);
 
 	return (0);
 }
