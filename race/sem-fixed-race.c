@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <strings.h>
+#include <string.h>
 #include <signal.h>
 #include <errno.h>
 #include <err.h>
@@ -91,7 +91,7 @@ main(int argc, char **argv)
 	if (semctl(sem, 0, SETVAL, 1) == -1)
 		err(1, "semctl");
 
-	bzero(&act, sizeof (act));
+	memset(&act, '\0', sizeof (act));
 	act.sa_handler = finish;
 	sigaction(SIGINT, &act, NULL);
 
