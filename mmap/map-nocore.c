@@ -10,6 +10,8 @@
  * core dump caused by the kernel (on SIGSEGV etc.).
  */
 
+#define	_DEFAULT_SOURCE	// to get MAP_ANONYMOUS on Linux
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

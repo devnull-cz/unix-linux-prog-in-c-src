@@ -11,7 +11,7 @@
  * vlada@devnull.cz, 2013
  */
 
-#define	_DEFAULT_SOURCE
+#define	_DEFAULT_SOURCE	// to get MAP_ANONYMOUS on Linux
 
 #include <stdio.h>
 #include <stdlib.h>
