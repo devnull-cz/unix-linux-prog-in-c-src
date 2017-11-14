@@ -7,7 +7,7 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#define	_POSIX_C_SOURCE	2
+#define	_XOPEN_SOURCE	700
 
 #include <stdio.h>
 #include <stdlib.h>
