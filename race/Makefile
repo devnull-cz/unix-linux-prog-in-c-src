@@ -5,7 +5,7 @@ PROGS=atomic-add fcntl-fixed-race loop.o race sem-fixed-race
 all: $(PROGS)
 
 atomic-add: atomic-add.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ -lpthread
 
 fcntl-fixed-race: fcntl-fixed-race.o
 	$(CC) -o $@ $^
