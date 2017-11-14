@@ -12,6 +12,8 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_BSD_SOURCE
+
 #include <stdio.h>
 #include <err.h>
 #include <sys/socket.h>
