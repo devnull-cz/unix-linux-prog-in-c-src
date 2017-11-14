@@ -22,7 +22,8 @@ SUBDIRS=assert		\
 	mutexes		\
 	pmap		\
 	pthreads	\
-	race
+	race		\
+	read
 
 all: $(SUBDIRS) cstyle
 
