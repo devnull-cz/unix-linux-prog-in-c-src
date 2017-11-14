@@ -28,6 +28,10 @@
  *
  * (c) vlada@devnull.cz, jp@devnull.cz
  */
+
+#define	_XOPEN_SOURCE	700
+#define	_GNU_SOURCE
+
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
