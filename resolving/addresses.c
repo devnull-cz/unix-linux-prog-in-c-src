@@ -27,8 +27,6 @@
 int
 main(int argc, char **argv)
 {
-	int fd, n;
-	char addr[4];
 	struct in_addr in;
 	struct in6_addr in6;
 	char dst[INET6_ADDRSTRLEN];
