@@ -25,7 +25,8 @@ SUBDIRS=assert		\
 	race		\
 	read		\
 	readdir		\
-	reentrant
+	reentrant	\
+	resolving
 
 all: $(SUBDIRS) cstyle
 
