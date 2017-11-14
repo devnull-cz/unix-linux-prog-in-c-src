@@ -34,8 +34,6 @@ statfd(int fd)
 int
 main(void)
 {
-	int flags;
-
 	printf("fileno(stdout) = %d\n", fileno(stdout));
 	printf("fileno(stderr) = %d\n", fileno(stderr));
 	printf("=== before dup\n");
