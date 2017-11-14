@@ -9,6 +9,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
