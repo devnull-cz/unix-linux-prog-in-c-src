@@ -1,6 +1,7 @@
 /*
  * Compile with and without -DPOSIX_SIGNALS and try to run like this
- * on {FreeBSD,Linux}/Solaris to see the difference in behavior:
+ * on {FreeBSD,Linux} vs Solaris to see the difference in behavior:
+ *
  *   0. compile 2 programs
  *      cc -o sig1 signal-vs-sigaction.c
  *      cc -DPOSIX_SIGNALS -o sig2 signal-vs-sigaction.c
@@ -20,6 +21,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+/*
+ * Using unsafe printf() for simplicity.
+ */
 void
 sig_handler(int s)
 {
@@ -37,7 +41,7 @@ main(void)
 
 	/*
 	 * You may experiment with other signals but note that some shell might
-	 * automatically block some signals; bash(1) sometimes block SIGHUP in
+	 * automatically block some of them; bash(1) sometimes block SIGHUP in
 	 * the new process, for example.
 	 */
 	printf("Setting signal handler: ");
