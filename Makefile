@@ -23,7 +23,8 @@ SUBDIRS=assert		\
 	pmap		\
 	pthreads	\
 	race		\
-	read
+	read		\
+	readdir
 
 all: $(SUBDIRS) cstyle
 
