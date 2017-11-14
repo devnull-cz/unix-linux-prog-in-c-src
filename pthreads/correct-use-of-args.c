@@ -5,6 +5,8 @@
  * (c) jp@devnull.cz
  */
 
+#define _GNU_SOURCE	// for pthread_yield()
+
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
