@@ -12,6 +12,8 @@
 #include <sys/stat.h>
 #include <sys/sem.h>
 #include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -39,7 +41,7 @@ finish(int sig)
 }
 
 /* lock_unlock(1) means unlock, lock_unlock(-1) is lock */
-int
+static void
 lock_unlock(int fd, int n, struct flock *fl)
 {
 	if (n == 1) {
