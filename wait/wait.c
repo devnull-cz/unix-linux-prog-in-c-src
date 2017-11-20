@@ -66,7 +66,6 @@ main(void)
 
 		pid2 = waitpid(pid, &status, WUNTRACED | WCONTINUED);
 		assert(pid == pid2);
-		printf("Status integer in parent is: %d\n", status);
 
 		if (WIFEXITED(status)) {
 			printf("Child called exit with: %d\n",
