@@ -17,7 +17,7 @@ char *msg;
 void
 handler(int sig)
 {
-	write(1, msg, strlen(msg) + 1);
+	write(1, msg, strlen(msg));
 	sleep(1);
 	kill(pid, SIGTERM);
 }

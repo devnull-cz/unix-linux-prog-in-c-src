@@ -1,8 +1,9 @@
 /*
- * Time limited user input. If a user doesn't input anything in 5 seconds the
- * program complains and exits. Note that read() will return -1 and we print an
- * error message since it was interrupted. Of course, if we used this in
- * production we would hush EINTR.
+ * Time limited user input.  If a user does not enter anything within 5 seconds
+ * the program complains and bails out.  Note that read() will return -1 and
+ * an error message is printed since the call was interrupted.  Of course, if we
+ * used this in production we would not announce an interrupted call but
+ * continued.
  *
  * (c) jp@devnull.cz
  */
@@ -17,7 +18,7 @@
 #define	BUFSIZE	4096
 #define	SECS	5
 
-#define	MESSAGE	"TIMEOUT! Exiting...\n"
+#define	MESSAGE	"TIMEOUT!  Exiting...\n"
 
 void
 handler(int sig)
@@ -37,25 +38,20 @@ main(void)
 	act.sa_flags = 0;
 
 	sigaction(SIGALRM, &act, NULL);
-	printf("type anything and hit the enter, you have %d seconds...\n",
-	    SECS);
+	printf("Type anything and hit enter, you have %d seconds...\n", SECS);
 	alarm(SECS);
 
 	if ((size = read(0, buf, BUFSIZE)) == -1) {
-		/*
-		 * That's what we would normally do but let's see that we really
-		 * get it.
-		 */
 		if (errno != EINTR)
 			err(1, "read");
-		else
-			printf("interrupted...\n");
+		printf("Interrupted read()...\n");
 	}
 
-	alarm(0); /* disable the timer */
+	/* Disable the repeating timer. */
+	alarm(0);
 	if (size > 0) {
-		printf("read %d bytes: ", size);
-		/* without \n it wouldn't print it before write() */
+		printf("Read %d bytes: ", size);
+		/* Without \n it would not print it before write() */
 		fflush(stdout);
 		write(1, buf, size);
 	}
