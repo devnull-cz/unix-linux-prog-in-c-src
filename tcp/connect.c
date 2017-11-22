@@ -26,7 +26,6 @@ int
 main(int argc, char **argv)
 {
 	int fd, n;
-	char addr[4];
 	char buf[BUF_LEN];
 	struct sockaddr_in in;
 
