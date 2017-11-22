@@ -53,7 +53,6 @@ int
 main(int argc, char **argv)
 {
 	socklen_t optlen;
-	struct hostent *he;
 	struct timeval tout;
 	fd_set wrfds, wrfds_orig;
 	int flags, i, optval, n, timeouts, error, num_sockets = 0;
