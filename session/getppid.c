@@ -19,7 +19,6 @@
 int
 main(void)
 {
-	int status;
 	pid_t child_pid, parent_pid;
 
 	if ((child_pid = fork()) == -1)
