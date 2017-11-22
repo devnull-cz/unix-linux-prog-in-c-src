@@ -2,9 +2,12 @@
  * Show the file type as a number. Print out the most used file types - regular
  * file and directory.
  */
+
+#define	_XOPEN_SOURCE	700
+
 #include <sys/stat.h>
 #include <sys/types.h>
-
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
