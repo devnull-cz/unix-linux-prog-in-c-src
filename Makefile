@@ -31,7 +31,8 @@ SUBDIRS=assert		\
 	semaphores	\
 	session		\
 	setuid		\
-	signals
+	signals		\
+	sigsegv
 
 all: $(SUBDIRS) cstyle
 
