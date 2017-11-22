@@ -7,6 +7,8 @@
  * (c) vlada@devnull.cz, 2012
  */
 
+#define	_XOPEN_SOURCE	700	// for kill()
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

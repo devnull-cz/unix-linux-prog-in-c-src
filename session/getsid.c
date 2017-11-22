@@ -1,3 +1,5 @@
+#define	_XOPEN_SOURCE	700	// for getsid()
+
 #include <stdio.h>
 #include <unistd.h>
 
