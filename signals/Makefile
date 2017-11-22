@@ -23,7 +23,7 @@ alarm: alarm.o
 	$(CC) -o $@ $^
 
 catch-SIGKILL: catch-SIGKILL.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ -lpthread
 
 catch-SIGSEGV: catch-SIGSEGV.o
 	$(CC) -o $@ $^

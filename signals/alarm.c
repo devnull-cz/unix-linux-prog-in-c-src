@@ -8,6 +8,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700	// for sigaction()
+
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>

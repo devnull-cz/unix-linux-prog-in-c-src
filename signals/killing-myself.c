@@ -4,6 +4,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>

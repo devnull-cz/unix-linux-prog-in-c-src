@@ -4,10 +4,11 @@
  * (c) jp@devnull.cz
  */
 
+#define _XOPEN_SOURCE	700
+
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
-#include <strings.h>
 #include <stdio.h>
 
 #define	MESSAGE "TERM signal caught !\n"
@@ -22,10 +23,9 @@ term_handler(int sig)
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
 	/* We leave flags and mask empty. */
-	bzero(&act, sizeof (act));
 	act.sa_handler = term_handler;
 	sigaction(SIGTERM, &act, NULL);
 

@@ -22,6 +22,8 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
@@ -82,11 +84,10 @@ sig_handler(int sig, siginfo_t *info, void *ignored)
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
 	printf("PID %d started...\n", getpid());
 
-	bzero(&act, sizeof (act));
 	act.sa_sigaction = sig_handler;
 	/*
 	 * Must use this in order to use sa_sigaction field newly defined by the

@@ -2,6 +2,8 @@
  * Throw SIGTERMs at each other.  Do not loop in the handler.
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <signal.h>
 #include <unistd.h>
 #include <err.h>

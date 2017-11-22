@@ -9,6 +9,8 @@
  * (c) vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
@@ -33,7 +35,7 @@ handler(int sig, siginfo_t *info, void *foo)
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 	union sigval val;
 	pid_t pid;
 	int status;
@@ -47,7 +49,6 @@ main(void)
 			 * We have to use SIGINFO extension to be able to
 			 * pass a value to signal handler.
 			 */
-			bzero(&act, sizeof (act));
 			act.sa_sigaction = handler;
 			act.sa_flags = SA_SIGINFO;
 			sigaction(SIGINT, &act, NULL);

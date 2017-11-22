@@ -9,6 +9,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700	// for sigset_t
+
 #define	_POSIX_PTHREAD_SEMANTICS 1
 
 #include <pthread.h>

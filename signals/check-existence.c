@@ -4,8 +4,11 @@
  * (c) Vladimir Kotal, 2016
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
 #include <err.h>

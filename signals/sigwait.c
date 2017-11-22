@@ -11,6 +11,8 @@
  * default sigwait() uses only the 1st parameter there.
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <sys/mman.h>
 #include <signal.h>
 #include <fcntl.h>

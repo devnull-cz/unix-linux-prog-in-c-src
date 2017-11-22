@@ -1,3 +1,5 @@
+#define	_XOPEN_SOURCE	700
+
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
@@ -13,9 +15,8 @@ ctrl_c(int sig)
 int
 main(void)
 {
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
-	bzero(&act, sizeof (act));
 	act.sa_handler = ctrl_c;
 	sigaction(SIGINT, &act, NULL);
 

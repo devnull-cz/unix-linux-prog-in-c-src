@@ -9,6 +9,9 @@
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
+
+#define	_XOPEN_SOURCE	700
+
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
