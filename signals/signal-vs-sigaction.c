@@ -37,7 +37,9 @@ sig_handler(int s)
 int
 main(void)
 {
+#ifdef POSIX_SIGNALS
 	struct sigaction s_action;
+#endif
 
 	/*
 	 * You may experiment with other signals but note that some shell might
