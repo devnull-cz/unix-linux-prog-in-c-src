@@ -28,7 +28,8 @@ SUBDIRS=assert		\
 	reentrant	\
 	resolving	\
 	select		\
-	semaphores
+	semaphores	\
+	session
 
 all: $(SUBDIRS) cstyle
 
