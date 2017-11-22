@@ -32,7 +32,6 @@ main(int argc, char **argv)
 	size_t n;
 	int linger = -1;
 	int opt;
-	struct protoent *proto;
 	struct addrinfo *res, *resorig, hints;
 	char *argv0 = basename(argv[0]);
 	struct linger lstr;
