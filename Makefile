@@ -34,7 +34,8 @@ SUBDIRS=assert		\
 	signals		\
 	sigsegv		\
 	sleep		\
-	stat
+	stat		\
+	tcp
 
 all: $(SUBDIRS) cstyle
 
