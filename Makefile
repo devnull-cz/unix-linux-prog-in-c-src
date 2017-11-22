@@ -33,7 +33,8 @@ SUBDIRS=assert		\
 	setuid		\
 	signals		\
 	sigsegv		\
-	sleep
+	sleep		\
+	stat
 
 all: $(SUBDIRS) cstyle
 
