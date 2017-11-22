@@ -37,7 +37,8 @@ SUBDIRS=assert		\
 	stat		\
 	tcp		\
 	udp		\
-	uid
+	uid		\
+	unix-socket
 
 all: $(SUBDIRS) cstyle
 
