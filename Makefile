@@ -32,7 +32,8 @@ SUBDIRS=assert		\
 	session		\
 	setuid		\
 	signals		\
-	sigsegv
+	sigsegv		\
+	sleep
 
 all: $(SUBDIRS) cstyle
 
