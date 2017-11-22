@@ -19,7 +19,7 @@ main(void)
 
 	unlink(SOCKETNAME);
 	/* note: actual size of sun_path array differs accross systems */
-	strncpy(sa.sun_path, SOCKETNAMEi, sizeof (sa.sun_path));
+	strncpy(sa.sun_path, SOCKETNAME, sizeof (sa.sun_path));
 	sa.sun_family = AF_UNIX;
 
 	if (fork() == 0) {
