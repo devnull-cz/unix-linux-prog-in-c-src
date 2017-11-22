@@ -14,19 +14,24 @@
  * vlada@devnull.cz, 2013
  */
 
+#define	_XOPEN_SOURCE	700	// for sigaction()
+
 #include <stdio.h>
 #include <signal.h>
 #include <pthread.h>
 #include <errno.h>
 #include <semaphore.h>
+#include <unistd.h>
+#include <poll.h>
+#include <err.h>
 
 sem_t sem;
 
 #define	PUTCHARF(x)	putc(x, stdout); fflush(stdout);
 
 int
-sem_wait_nointr(sem_t *sem) {
-	while (sem_wait(sem) != 0) {
+sem_wait_nointr(sem_t *s) {
+	while (sem_wait(s) != 0) {
 		if (errno != EINTR) {
 			return (-1);
 		} else {
