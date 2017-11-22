@@ -24,7 +24,7 @@ int
 main(int argc, char **argv)
 {
 	struct sockaddr_in in;
-	int fd, newsock, n, backlog, optval = 1;
+	int fd, backlog, optval = 1;
 
 	if (argc < 2)
 		errx(1, "usage: %s <port> [backlog]", basename(argv[0]));
