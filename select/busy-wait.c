@@ -33,7 +33,6 @@
 int
 main(int argc, char **argv)
 {
-	fd_set rdfds;
 	char buf[BUF_LEN];
 	struct sockaddr_in sa;
 	int fd, newsock, n, optval = 1;

@@ -19,8 +19,11 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/select.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <fcntl.h>

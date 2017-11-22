@@ -14,12 +14,15 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <strings.h>
 #include <err.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/select.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <fcntl.h>
