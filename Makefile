@@ -35,7 +35,8 @@ SUBDIRS=assert		\
 	sigsegv		\
 	sleep		\
 	stat		\
-	tcp
+	tcp		\
+	udp
 
 all: $(SUBDIRS) cstyle
 
