@@ -23,7 +23,6 @@ main(int argc, char **argv)
 {
 	int s, n;
 	char buf[BUF_LEN];
-	int have_address = 0;
 	struct sockaddr_in taddr;
 
 	if (argc != 3)
