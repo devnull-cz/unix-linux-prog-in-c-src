@@ -29,7 +29,8 @@ SUBDIRS=assert		\
 	resolving	\
 	select		\
 	semaphores	\
-	session
+	session		\
+	setuid
 
 all: $(SUBDIRS) cstyle
 
