@@ -30,7 +30,8 @@ SUBDIRS=assert		\
 	select		\
 	semaphores	\
 	session		\
-	setuid
+	setuid		\
+	signals
 
 all: $(SUBDIRS) cstyle
 
