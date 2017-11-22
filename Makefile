@@ -26,7 +26,8 @@ SUBDIRS=assert		\
 	read		\
 	readdir		\
 	reentrant	\
-	resolving
+	resolving	\
+	select
 
 all: $(SUBDIRS) cstyle
 
