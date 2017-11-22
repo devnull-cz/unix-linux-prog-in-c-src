@@ -39,7 +39,8 @@ SUBDIRS=assert		\
 	udp		\
 	uid		\
 	unix-socket	\
-	unix-standards
+	unix-standards	\
+	wait
 
 all: $(SUBDIRS) cstyle
 
