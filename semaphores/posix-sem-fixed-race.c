@@ -48,10 +48,12 @@ finish(int sig)
 static void
 cleanup(void)
 {
+	/* You should check the return values here for all the calls. */
+	(void) sem_close(sem);
 	if (parent)
-		sem_destroy(sem);
+		(void) sem_destroy(sem);
 
-	munmap(addr, 2);
+	(void) munmap(addr, 2);
 	close(fd);
 }
 
