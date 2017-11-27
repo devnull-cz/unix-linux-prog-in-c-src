@@ -3,7 +3,7 @@
  *
  * This version uses POSIX semaphores for synchronization.  After you run this
  * and kill it with Ctrl-C you see some statistics as to how many loops were
- * run.  Compare with implementations mentioned above.  You will POSIX
+ * run.  Compare with implementations mentioned above.  You will see POSIX
  * semaphores are an order of magnitude more efficient than Sys V semaphores.
  *
  * You must link with -pthread on Linux.
