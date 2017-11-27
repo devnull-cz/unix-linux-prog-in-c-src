@@ -25,6 +25,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define	SEM_NAME	"/mysem"
+
 sem_t *sem;
 int fd, parent;
 char *addr = NULL;
@@ -51,7 +53,7 @@ cleanup(void)
 	/* You should check the return values here for all the calls. */
 	(void) sem_close(sem);
 	if (parent)
-		(void) sem_destroy(sem);
+		(void) sem_unlink(SEM_NAME);
 
 	(void) munmap(addr, 2);
 	close(fd);
@@ -71,7 +73,7 @@ main(int argc, char **argv)
 		dbg = 1;
 
 	/* Get a semaphore. */
-	sem = sem_open("/mysem", O_CREAT, S_IRWXU, 1);
+	sem = sem_open(SEM_NAME, O_CREAT, S_IRWXU, 1);
 	if (sem == SEM_FAILED)
 		err(1, "sem_open");
 
@@ -132,8 +134,6 @@ main(int argc, char **argv)
 	assert(ret_pid == pid);
 
 	print_stats();
-	if (sem_destroy(sem) == -1)
-		warn("sem_destroy");
 	cleanup();
 
 	return (0);
