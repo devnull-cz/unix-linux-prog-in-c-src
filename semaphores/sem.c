@@ -1,7 +1,9 @@
 /*
- * POSIX semaphores demonstration. Note especially how sem_wait() should be
- * treated with regards to interruptions (like signals in this case or I/O
- * delivery).
+ * POSIX semaphores demonstration using fake producer/consumer scenario.
+ * (the code in usher() does not really generate anything, it merely wakes
+ * the main thread up)
+ * Note especially how sem_wait() should be treated with regards to
+ * interruptions (like signals in this case or I/O delivery).
  *
  * Run with and without argument to see the difference.
  *
@@ -10,6 +12,10 @@
  *     gcc -lpthread sem.c
  *   Solaris:
  *     cc sem.c
+ *
+ * Note that this does not work on macOS due to sem_init/sem_destroy
+ * are unimplemented there (which is fine since Appendix 9 of the Single UNIX
+ * Specification states they are not mandatory interfaces)
  *
  * vlada@devnull.cz, 2013
  */
