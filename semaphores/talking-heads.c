@@ -1,10 +1,11 @@
 /*
  * <n> processes share one semaphore initialized with <init>.  Every moment,
  * <init> processes can talk at the same time.  When talking, each process say
- * its number every second for a random times seconds.  They keep doing this
- * until killed.  Every round, the last number is in () so that we know another
- * process is gonna get to talk.  As a special case, with <init> to be 1, only
- * one process at a time can talk:
+ * its number every second for a random number of seconds up to a certain
+ * maximum (say, 5).  Each round, every process talks at least once.  They keep
+ * doing this until SIGINT is sent.  Every round, the last number is in () so
+ * that we know that process is gonna shut up.  As a special case, with <init>
+ * to be 1, only one process at a time can talk.
  *
  *	$ ./a.out 9 1
  *	000(0)11(1)2(2)(3)444(4)5(5)(6)...
@@ -15,17 +16,18 @@
  * Catch SIGINT to close the semaphore (all processes) and unlink it (the parent
  * only).
  *
- * After each round, you might need a short sleep to give other processes a
+ * After sem_post(), you might need a short sleep to give other processes a
  * chance to wake up otherwise only a small group of processes could actually
- * take turns (ie. if after sem_post() the process immediatelly do sem_wait(),
- * it itself may be the one that actually decrements the semaphore again).
+ * take turns -- ie. if after sem_post() the process could immediatelly do
+ * sem_wait() and be itself the one that actually decrements the semaphore
+ * again.
  *
  * You must link with -pthread on Linux.
  *
  * (c) jp@devnull.cz
  */
 
-/* For S_IRWXU */
+/* For S_IRWXU if built with -std=c99. */
 #define	_XOPEN_SOURCE	700
 
 #include <assert.h>
