@@ -21,6 +21,8 @@
  * take turns -- ie. if after sem_post() the process could immediatelly do
  * sem_wait() and be itself the one that actually decrements the semaphore
  * again.
+ * 
+ * Wait for all children before returning from the parent.
  *
  * You must link with -pthread on Linux.
  *
