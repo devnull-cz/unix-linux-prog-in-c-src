@@ -63,14 +63,14 @@ int
 main(int argc, char **argv)
 {
 	char c = 0;
-	int dbg = 0;
+	int dbg = 1;
 	pid_t pid, ret_pid;
 	struct sigaction act = { 0 };
 
-	if (argc == 1)
+	if (argc == 1) {
 		printf("Run with any argument to see some debugging info.\n");
-	else
-		dbg = 1;
+		dbg = 0;
+	}
 
 	/* Get a semaphore. */
 	sem = sem_open(SEM_NAME, O_CREAT, S_IRWXU, 1);
