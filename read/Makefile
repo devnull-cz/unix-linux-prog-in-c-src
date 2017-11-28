@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=big-file cat isstdout lseek redirect redirect2
 
 all: $(PROGS)
@@ -24,3 +22,5 @@ redirect2: redirect2.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common
