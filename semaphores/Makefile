@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=sem \
       posix-sem-fixed-race
 
@@ -13,3 +11,5 @@ posix-sem-fixed-race: posix-sem-fixed-race.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

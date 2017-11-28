@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=getopt
 
 all: $(PROGS)
@@ -9,3 +7,5 @@ getopt: getopt.o
 
 clean:
 	rm -f *.o a.out $(PROG)
+
+include ../Makefile.common

@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=main main2 main3
 
 all: $(PROGS)
@@ -15,3 +13,5 @@ main3: main3.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

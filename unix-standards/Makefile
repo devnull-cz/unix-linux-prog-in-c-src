@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=suvreq
 
 all: $(PROGS)
@@ -9,3 +7,5 @@ suvreq: suvreq.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

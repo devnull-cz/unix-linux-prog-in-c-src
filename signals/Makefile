@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=alarm \
 	catch-SIGKILL \
 	catch-SIGSEGV \
@@ -69,3 +67,5 @@ sigwait: sigwait.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

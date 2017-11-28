@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=not-my-lock race-fixed race
 
 all: $(PROGS)
@@ -15,3 +13,5 @@ race: race.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=abi-main.o libabi-32.so libabi-64.so
 
 all: $(PROGS) abi-main.o
@@ -15,3 +13,5 @@ libabi-64.so: libabi-64.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

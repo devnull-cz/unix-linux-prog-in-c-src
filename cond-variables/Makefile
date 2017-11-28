@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: queue-simulation
 
 queue-simulation: queue-simulation.o
@@ -7,3 +5,5 @@ queue-simulation: queue-simulation.o
 
 clean:
 	rm -f *.o a.out queue-simulation
+
+include ../Makefile.common

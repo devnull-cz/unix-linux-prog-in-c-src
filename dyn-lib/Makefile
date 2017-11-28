@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=libmy.so ld-lazy dlopen
 
 all: $(PROGS)
@@ -17,3 +15,5 @@ libmy.so: libmy.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

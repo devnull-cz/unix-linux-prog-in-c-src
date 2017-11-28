@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=wait
 
 all: $(PROGS)
@@ -9,3 +7,5 @@ wait: wait.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

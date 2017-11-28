@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=getenv print-argv	print-env putenv return-256 return-negative-1
 
 all: $(PROGS)
@@ -21,3 +19,5 @@ return-negative-1: return-negative-1.o
 
 clean:
 	rm -f *.o a.out $(PROG)
+
+include ../Makefile.common

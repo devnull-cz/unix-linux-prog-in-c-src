@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=getpgrp getppid getsid
 
 all: $(PROGS)
@@ -15,3 +13,5 @@ getsid: getsid.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

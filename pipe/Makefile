@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 ALL=broken-pipe \
     deadlock-in-read \
     pipe-and-fork \
@@ -21,3 +19,5 @@ pipe-sig: pipe-sig.o
 
 clean:
 	rm -f *.o a.out $(ALL)
+
+include ../Makefile.common

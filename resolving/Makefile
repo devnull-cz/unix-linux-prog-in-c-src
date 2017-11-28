@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=	addresses \
 	getaddrinfo \
 	getbyname \
@@ -33,3 +31,5 @@ hname-resolver: hname-resolver.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

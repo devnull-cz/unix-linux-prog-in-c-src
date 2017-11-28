@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=exec-date spawn
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ spawn: spawn.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

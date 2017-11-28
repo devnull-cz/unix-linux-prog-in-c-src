@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: exit
 
 exit: exit.o
@@ -7,3 +5,5 @@ exit: exit.o
 
 clean:
 	rm -f *.o a.out exit
+
+include ../Makefile.common

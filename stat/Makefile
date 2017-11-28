@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=filetype stat
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ stat: stat.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

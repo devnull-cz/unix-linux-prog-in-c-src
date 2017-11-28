@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=connect \
 	linger \
 	non-blocking-connect \
@@ -33,3 +31,5 @@ up-to-listen-only: up-to-listen-only.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

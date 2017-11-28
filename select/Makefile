@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=busy-wait connect-only select write-select
 
 all: $(PROGS)
@@ -18,3 +16,5 @@ write-select: write-select.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

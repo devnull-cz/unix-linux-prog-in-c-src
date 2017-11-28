@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=fork vfork
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ vfork: vfork.o
 
 clean:
 	rm -f *.o a.out $(PROG)
+
+include ../Makefile.common

@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=udp-client udp-server
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ udp-server: udp-server.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

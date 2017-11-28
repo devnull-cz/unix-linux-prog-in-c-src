@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=screate-file
 
 all: $(PROGS)
@@ -9,3 +7,5 @@ screate-file: screate-file.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

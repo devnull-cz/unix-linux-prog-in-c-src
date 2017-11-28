@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=nanosleep poll-sleep
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ poll-sleep: poll-sleep.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

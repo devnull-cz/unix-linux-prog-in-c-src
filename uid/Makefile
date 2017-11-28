@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=getuids setreuid setreuid2 setuid
 
 all: $(PROGS)
@@ -18,3 +16,5 @@ setuid: setuid.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

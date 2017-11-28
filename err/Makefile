@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: err
 
 err: err.o
@@ -7,3 +5,5 @@ err: err.o
 
 clean:
 	rm -f *.o a.out err
+
+include ../Makefile.common

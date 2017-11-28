@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: standards suvreq lineinfo main libpreload.so
 
 standards: standards.o
@@ -22,3 +20,5 @@ libpreload.so: preload.o
 
 clean:
 	rm -f *.o a.out assert suvreq lineinfo main libpreload.so
+
+include ../Makefile.common

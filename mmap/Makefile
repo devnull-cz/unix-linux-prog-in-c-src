@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=aligned close lseek override reverse sigbus map-nocore
 
 all: $(PROGS)
@@ -28,3 +26,5 @@ map-nocore: map-nocore.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

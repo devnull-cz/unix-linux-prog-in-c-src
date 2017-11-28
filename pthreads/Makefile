@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=	atfork \
 	correct-use-of-args \
 	fork \
@@ -19,9 +17,6 @@ PROGS=	atfork \
 all: $(PROGS)
 
 LDFLAGS += -lpthread
-
-clean:
-	rm -f *.o a.out $(PROGS)
 
 atfork: atfork.o
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -75,3 +70,7 @@ sigwait-with-sync-signals: sigwait-with-sync-signals.o
 wrong-use-of-arg: wrong-use-of-arg.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
+clean:
+	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

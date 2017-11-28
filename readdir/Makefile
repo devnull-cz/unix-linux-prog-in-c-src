@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=readdir
 
 all: $(PROGS)
@@ -9,3 +7,5 @@ readdir: readdir.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

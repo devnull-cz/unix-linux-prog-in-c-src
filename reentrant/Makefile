@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=gethostbyname inet_ntoa
 
 all: $(PROGS)
@@ -12,3 +10,5 @@ inet_ntoa: inet_ntoa.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

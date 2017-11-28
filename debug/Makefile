@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: coredump dbx crash-static-string
 
 assert: coredump.o
@@ -13,3 +11,5 @@ crash-static-string: crash-static-string.o
 
 clean:
 	rm -f *.o a.out coredump dbx crash-static-string
+
+include ../Makefile.common

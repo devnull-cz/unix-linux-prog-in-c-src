@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: self-dead-lock
 
 self-dead-lock: self-dead-lock.o
@@ -7,3 +5,5 @@ self-dead-lock: self-dead-lock.o
 
 clean:
 	rm -f *.o a.out self-dead-lock
+
+include ../Makefile.common

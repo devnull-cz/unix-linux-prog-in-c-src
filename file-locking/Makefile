@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 PROGS=fcntl-locking lock-unlock	lockf reader
 
 all: $(PROGS)
@@ -18,3 +16,5 @@ reader: reader.o
 
 clean:
 	rm -f *.o a.out $(PROGS)
+
+include ../Makefile.common

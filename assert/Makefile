@@ -1,5 +1,3 @@
-include ../Makefile.common
-
 all: assert
 
 assert: assert.o
@@ -7,3 +5,5 @@ assert: assert.o
 
 clean:
 	rm -f *.o a.out assert
+
+include ../Makefile.common
