@@ -15,6 +15,11 @@
  * Catch SIGINT to close the semaphore (all processes) and unlink it (the parent
  * only).
  *
+ * After each round, you might need a short sleep to give other processes a
+ * chance to wake up otherwise only a small group of processes could actually
+ * take turns (ie. if after sem_post() the process immediatelly do sem_wait(),
+ * it itself may be the one that actually decrements the semaphore again).
+ *
  * You must link with -pthread on Linux.
  *
  * (c) jp@devnull.cz
@@ -116,16 +121,18 @@ main(int argc, char **argv)
 		if ((pid = fork()) == -1)
 			err(1, "fork");
 
-		printf("Child %d born.\n", i);
-		/* Child */
-		srand(getpid());
-		/* Desynchronize the output. */
-		poll(NULL, 0, 100 * i);
 		if (pid == 0) {
+			printf("Child %d born (%d).\n", i, getpid());
+			/* Child */
+			srand(getpid());
+			/* Desynchronize the output. */
+			poll(NULL, 0, 100 * i);
 			while (run) {
 				sem_wait(sem);
 				talk(i);
 				sem_post(sem);
+				/* Give other processes a chance to wake up. */
+				sleep(1);
 			}
 			cleanup(i);
 			return (0);
