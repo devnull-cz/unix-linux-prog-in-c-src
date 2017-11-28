@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Use lock-unlock.c (build it and name it "lock-unlock") for file locking.
@@ -18,7 +18,7 @@
 lock=./lock-unlock
 
 [ $# -ne 1 ] && echo "usage: $0 <lock-file>" && exit 1
-trap "rm -f $1; exit" SIGINT SIGTERM
+trap "rm -f $1; exit" INT TERM
 
 [ -x $lock ] || { echo "program '$lock' does not exist"; exit 1; }
 
