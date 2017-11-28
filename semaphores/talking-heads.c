@@ -35,7 +35,7 @@
 #include <unistd.h>
 
 #define	SEM_NAME	"/mysem"
-#define	MAXSECS		5
+#define	MAXSECS		7
 
 sem_t *sem;
 int parent;
@@ -116,6 +116,7 @@ main(int argc, char **argv)
 		if ((pid = fork()) == -1)
 			err(1, "fork");
 
+		printf("Child %d born.\n", i);
 		/* Child */
 		srand(getpid());
 		/* Desynchronize the output. */
