@@ -31,7 +31,6 @@ SUBDIRS=assert		\
 	session		\
 	setuid		\
 	signals		\
-	sigsegv		\
 	sleep		\
 	stat		\
 	tcp		\
