@@ -25,6 +25,9 @@
  * (c) jp@devnull.cz
  */
 
+/* For S_IRWXU */
+#define	_XOPEN_SOURCE	700
+
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
@@ -80,7 +83,7 @@ talk(int id)
 		else
 			printf("%d", id);
 		fflush(stdout);
-		sleep (1);
+		sleep(1);
 	}
 }
 
