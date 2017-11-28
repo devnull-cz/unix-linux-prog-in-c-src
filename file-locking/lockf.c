@@ -36,6 +36,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <err.h>
 
 int
 main(int argc, char *argv[])
@@ -43,25 +44,17 @@ main(int argc, char *argv[])
 	int fd;
 	off_t size;
 
-	if (argc != 2) {
-		printf("usage: %s <file>", argv[0]);
-		exit(1);
-	}
+	if (argc != 2)
+		errx(1, "usage: %s <file>", argv[0]);
 
-	if ((fd = open(argv[1], O_RDWR)) == -1) {
-		perror("open");
-		exit(1);
-	}
+	if ((fd = open(argv[1], O_RDWR)) == -1)
+		err(1, "open");
 
-	if ((size = lseek(fd, 0, SEEK_END)) == -1) {
-		perror("lseek");
-		exit(1);
-	}
+	if ((size = lseek(fd, 0, SEEK_END)) == -1)
+		err(1, "lseek");
 
-	if (lockf(fd, F_LOCK, size) == -1) {
-		perror("lockf");
-		exit(1);
-	}
+	if (lockf(fd, F_LOCK, size) == -1)
+		err(1, "lockf");
 
 	pause();
 
