@@ -2,10 +2,10 @@
  * <n> processes share one semaphore initialized with <init>.  Every moment,
  * <init> processes can talk at the same time.  When talking, each process say
  * its number every second for a random number of seconds up to a certain
- * maximum (say, 5).  Each round, every process talks at least once.  They keep
- * doing this until SIGINT is sent.  Every round, the last number is in () so
- * that we know that process is gonna shut up.  As a special case, with <init>
- * to be 1, only one process at a time can talk.
+ * maximum (say, 5).  When a process gets to talk, it talks at least once.  They
+ * keep doing this until SIGINT is sent.  Every turn, the last number is in ()
+ * so that we know that process is gonna shut up.  As a special case, with
+ * <init> to be 1, only one process at a time can talk.
  *
  *	$ ./a.out 9 1
  *	000(0)11(1)2(2)(3)444(4)5(5)(6)...
@@ -18,11 +18,11 @@
  *
  * After sem_post(), you might need a short sleep to give other processes a
  * chance to wake up otherwise only a small group of processes could actually
- * take turns -- ie. if after sem_post() the process could immediatelly do
+ * take turns -- ie. after sem_post() the process could immediatelly do
  * sem_wait() and be itself the one that actually decrements the semaphore
- * again.
+ * again, thus starving out other processes.
  * 
- * Wait for all children before returning from the parent.
+ * Wait for all children before exiting from the parent.
  *
  * You must link with -pthread on Linux.
  *
