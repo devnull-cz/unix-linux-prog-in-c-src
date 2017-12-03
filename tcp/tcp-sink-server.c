@@ -38,8 +38,9 @@ main(int argc, char **argv)
 
 	/* So that we can use the port immediately again after restart. */
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
-	    &optval, sizeof (optval)) == -1)
+	    &optval, sizeof (optval)) == -1) {
 		err(1, "setsockopt");
+	}
 
 	if (bind(fd, (struct sockaddr *)&in, sizeof (in)) == -1)
 		err(1, "bind");
