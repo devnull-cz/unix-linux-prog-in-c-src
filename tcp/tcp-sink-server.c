@@ -1,8 +1,8 @@
 /*
- * Simple TCP sink server running on specified port - what is sent to it is
- * just printed onto stdout. No data is sent back.
+ * A simple TCP sink server running on a specified port - what is sent to it is
+ * just printed onto stdout.  No data is sent back.
  *
- * Note: this example is IPv4-only !
+ * Note: this example is IPv4 only!
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -22,13 +22,12 @@ int
 main(int argc, char **argv)
 {
 	char buf[BUF_LEN];
-	struct sockaddr_in in;
+	struct sockaddr_in in = { 0 };
 	int fd, newsock, n, optval = 1;
 
 	if (argc != 2)
 		errx(1, "usage: %s <port_number>", argv[0]);
 
-	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
 	printf("Will use port: %s\n", argv[1]);
 	in.sin_port = htons(atoi(argv[1]));
@@ -55,7 +54,7 @@ main(int argc, char **argv)
 
 		fprintf(stderr, "-- connection accepted --\n");
 		while ((n = read(newsock, buf, BUF_LEN)) != 0)
-			write(1, buf, n);
+			(void) write(1, buf, n);
 
 		/*
 		 * The close() is important cause otherwise you will waste
