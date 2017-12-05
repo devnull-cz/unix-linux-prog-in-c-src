@@ -5,7 +5,7 @@ in the course of teaching "Unix programming in C" (NSWI015) at Faculty of
 Mathematics and Physics of Charles University in Prague
 (http://www.mff.cuni.cz/).
 
-The course page can be accessed from http://mff.devnull.cz/
+The course page can be accessed from https://devnull-cz.github.io/unix-prog-in-c/
 
 All the files with examples are in Public Domain, unless marked otherwise.
 
