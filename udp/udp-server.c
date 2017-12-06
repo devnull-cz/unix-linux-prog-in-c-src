@@ -48,10 +48,10 @@ main(int argc, char **argv)
 		buf[n] = '\0';
 		printf("%s", buf);
 	}
+	close(s);
 
 	if (n == -1)
 		err(1, "recvfrom");
 
-	close(s);
 	return (0);
 }
