@@ -47,10 +47,10 @@ main(int argc, char **argv)
 			err(1, "sendto");
 		}
 	}
+	close(s);
 
 	if (n == -1)
 		err(1, "read");
 
-	close(s);
 	return (0);
 }
