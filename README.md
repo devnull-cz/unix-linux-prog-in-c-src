@@ -1,11 +1,11 @@
-Build status: [![Build Status](https://travis-ci.org/devnull-cz/unix-prog-in-c-src.svg?branch=master)](https://travis-ci.org/devnull-cz/unix-prog-in-c-src)
+Build status: [![Build Status](https://travis-ci.org/devnull-cz/unix-linux-prog-in-c-src.svg?branch=master)](https://travis-ci.org/devnull-cz/unix-linux-prog-in-c-src)
 
 The files in this directory and all sub-directories are used for demonstrations
 in the course of teaching "Unix programming in C" (NSWI015) at Faculty of
 Mathematics and Physics of Charles University in Prague
 (http://www.mff.cuni.cz/).
 
-The course page can be accessed from https://devnull-cz.github.io/unix-prog-in-c/
+The course page can be accessed from https://devnull-cz.github.io/unix-linux-prog-in-c/
 
 All the files with examples are in Public Domain, unless marked otherwise.
 
