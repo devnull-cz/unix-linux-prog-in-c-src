@@ -1,6 +1,5 @@
 PROGS=connect \
 	linger \
-	non-blocking-connect \
 	reuseaddr \
 	tcp-sink-server \
 	trivial-tcp-echo-server \
@@ -12,9 +11,6 @@ connect: connect.o
 	$(CC) -o $@ $^
 
 linger: linger.o
-	$(CC) -o $@ $^
-
-non-blocking-connect: non-blocking-connect.o
 	$(CC) -o $@ $^
 
 reuseaddr: reuseaddr.o

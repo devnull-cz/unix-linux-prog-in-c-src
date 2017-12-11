@@ -1,4 +1,4 @@
-PROGS=busy-wait connect-only select write-select
+PROGS=busy-wait connect-only select write-select non-blocking-connect
 
 all: $(PROGS)
 
@@ -12,6 +12,9 @@ select: select.o
 	$(CC) -o $@ $^
 
 write-select: write-select.o
+	$(CC) -o $@ $^
+
+non-blocking-connect: non-blocking-connect.o
 	$(CC) -o $@ $^
 
 clean:
