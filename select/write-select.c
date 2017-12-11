@@ -12,9 +12,9 @@
  * You might need to run the client from a different machine; it might not
  * behave as expected on a localhost. System can treat that as a special case.
  *
- * To see more, use "-i 1", and truss the server from another terminal. You will
- * see that from time to time, the select() returns and the kernel buffer is
- * filled up while the netcat slowly reads the data.
+ * To see more, use "-i 1", and trace system calls by the server from another
+ * terminal. You will see that from time to time, the select() returns and the
+ * kernel buffer is filled up while the netcat slowly reads the data.
  *
  * (c) jp@devnull.cz
  */
