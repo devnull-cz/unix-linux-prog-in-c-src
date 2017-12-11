@@ -10,10 +10,10 @@
  *
  * www.kame.net maps to both IPv4 and IPv6 address:
  *
- *   $ ./a.out www.kame.net www
+ *   $ ./getaddrinfo www.kame.net www
  *   address '203.178.141.194' port '80' protocol 'tcp'
  *   address '2001:200:dff:fff1:216:3eff:feb1:44d7' port '80' protocol 'tcp'
- *   $ ./a.out 213.151.78.6 www
+ *   $ ./getaddrinfo 213.151.78.6 www
  *   address '213.151.78.6' port '80' protocol 'tcp'
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
