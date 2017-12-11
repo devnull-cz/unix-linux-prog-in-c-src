@@ -8,7 +8,7 @@
  * (1) Hostname www.ipv6.cz is an alias for staff.cesnet.cz which has A and AAAA
  * DNS record:
  *
- *	$ ./a.out www.ipv6.cz
+ *	$ ./getnameinfo www.ipv6.cz
  *	host 195.113.144.241 resolves to staff.cesnet.cz
  *	host 2001:718:1:101::6 resolves to staff.cesnet.cz
  *
@@ -21,7 +21,7 @@
  *
  * We get the following output:
  *
- *	$ ./a.out localhost
+ *	$ ./getnameinfo localhost
  *	host 127.0.0.1 resolves to localhost
  *	host ::1 resolves to localhost
  *	host fe80::1%lo0 resolves to localhost
@@ -66,13 +66,16 @@ main(int argc, char **argv)
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    numhost, sizeof (numhost), NULL, 0, NI_NUMERICHOST)) != 0)
 			errx(1, "%s", gai_strerror(error));
+
 		/* Now try to resolve the address back to hostname. */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    host, sizeof (host), NULL, 0, 0)) != 0)
 			errx(1, "%s", gai_strerror(error));
+
 		printf("host %s resolves to %s\n", numhost, host);
 	}
 
 	freeaddrinfo(resorig);
+
 	return (0);
 }
