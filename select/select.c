@@ -77,15 +77,15 @@ main(int argc, char **argv)
 			newsock = accept(s, NULL, 0);
 			fprintf(stderr, "-- connection accepted --\n");
 			/*
-			 * As with busy-wait.c, the accepted socket could be put
-			 * into the RD set and we could accept data from fd 0
-			 * while connected. It's left as an excercise to the
-			 * reader.
+			 * The accepted socket could be put into the RD set and
+			 * we could accept data from fd 0 while connected.
+			 * It's left as an excercise to the reader.
 			 */
 			while ((n = read(newsock, buf, 100)) > 0)
 				write(1, buf, n);
 			if (n == -1)
 				err(1, "read");
+
 			close(newsock);
 			fprintf(stderr, "-- connection closed --\n");
 		}

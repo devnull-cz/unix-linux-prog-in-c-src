@@ -93,16 +93,11 @@ main(int argc, char **argv)
 			fcntl(newsock, F_SETFL, flags & ~O_NONBLOCK);
 
 			fprintf(stderr, "-- connection accepted --\n");
-			/*
-			 * Note that newsock could be added to the select RD set
-			 * and data could be then read from fd 0 even during the
-			 * socket connection. It is left as an excercise for
-			 * you.
-			 */
 			while ((n = read(newsock, buf, BUF_LEN)) > 0)
 				write(1, buf, n);
 			if (n == -1)
 				err(1, "read");
+
 			close(newsock);
 			fprintf(stderr, "-- connection closed --\n");
 		}
