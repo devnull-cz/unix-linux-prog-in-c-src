@@ -72,7 +72,10 @@ main(int argc, char **argv)
 		}
 
 		/* use getprotobynumber_r() in a threaded environment */
-		proto = getprotobynumber(res->ai_protocol);
+		if ((proto = getprotobynumber(res->ai_protocol)) == NULL) {
+			err(1, "cannot get protocol entry for %d",
+			    res->ai_protocol);
+		}
 
 		printf("address '%s' port '%s' protocol '%s'\n",
 		    ip_str, port_str, proto->p_name);
