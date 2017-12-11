@@ -31,7 +31,7 @@
 
 #define	_XOPEN_SOURCE	700
 #define	_GNU_SOURCE
-#define	_DARWIN_C_SOURCE 1	// needed for NI_MAXHOST
+#define	_DARWIN_C_SOURCE 1	// needed for NI_MAXHOST on macOS
 
 #include <stdio.h>
 #include <string.h>
