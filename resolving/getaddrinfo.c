@@ -58,8 +58,6 @@ main(int argc, char **argv)
 		if (res->ai_family != AF_INET && res->ai_family != AF_INET6)
 			continue;
 
-		/* use getprotobynumber_r() in a threaded environment */
-		proto = getprotobynumber(res->ai_protocol);
 		/*
 		 * NI_NUMERICSERV makes sure we get numeric IP address strings
 		 * so that we can print those out. Similarly for NI_NUMERICHOST.
@@ -72,6 +70,10 @@ main(int argc, char **argv)
 		    NI_NUMERICHOST|NI_NUMERICSERV) != 0)) {
 			errx(1, "%s", gai_strerror(error));
 		}
+
+		/* use getprotobynumber_r() in a threaded environment */
+		proto = getprotobynumber(res->ai_protocol);
+
 		printf("address '%s' port '%s' protocol '%s'\n",
 		    ip_str, port_str, proto->p_name);
 	}
