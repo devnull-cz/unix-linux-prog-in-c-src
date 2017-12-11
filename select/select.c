@@ -78,7 +78,8 @@ main(int argc, char **argv)
 			fprintf(stderr, "-- connection accepted --\n");
 			/*
 			 * The accepted socket could be put into the RD set and
-			 * we could accept data from fd 0 while connected.
+			 * we could read data from fd 0 while receiving data
+			 * from the network.
 			 * It's left as an excercise to the reader.
 			 */
 			while ((n = read(newsock, buf, 100)) > 0)
