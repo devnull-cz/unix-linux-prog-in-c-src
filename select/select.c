@@ -48,7 +48,10 @@ main(int argc, char **argv)
 	sa.sin_port = htons((short) atoi(argv[1]));
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval));
+	if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &optval,
+	    sizeof (optval)) == -1) {
+		err(1, "setsockopt");
+	}
 
 	if (bind(s, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
