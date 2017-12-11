@@ -5,8 +5,8 @@
  * be passed directly to functions such as bind() or connect().  Note that we
  * use NI_NUMERICSERV with getnameinfo() to get numeric address strings.
  *
- * Note that we don't use AI_PASSIVE since we plan to connect to the server
- * and that one must use freeaddrinfo() on exit.
+ * If this was code for a server one would use the AI_PASSIVE flag.
+ * Notice that freeaddrinfo() is used to free the memory.
  *
  * www.kame.net maps to both IPv4 and IPv6 address:
  *
