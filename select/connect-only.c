@@ -15,16 +15,17 @@
  * (c) jp@devnull.cz
  */
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <netdb.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <err.h>
+#include <libgen.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 int
 main(int argc, char **argv)
@@ -32,8 +33,10 @@ main(int argc, char **argv)
 	int fd, interval = -1;
 	struct sockaddr_in in = { 0 };
 
-	if (argc != 3 && argc != 4)
-		errx(1, "usage: %s <ip-address> <port> [interval]", argv[0]);
+	if (argc != 3 && argc != 4) {
+		errx(1, "usage: %s <ip-address> <port> [interval]",
+		    basename(argv[0]));
+	}
 
 	in.sin_family = AF_INET;
 	in.sin_port = htons(atoi(argv[2]));
