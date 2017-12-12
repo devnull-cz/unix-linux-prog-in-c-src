@@ -49,8 +49,11 @@ main(int argc, char **argv)
 	sa.sin_port = sp->s_port;
 	sa.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	bind(fd, (struct sockaddr *)&sa, sizeof (sa));
-	listen(fd, SOMAXCONN);
+	if (bind(fd, (struct sockaddr *)&sa, sizeof (sa)) == -1)
+		err(1, "bind");
+
+	if (listen(fd, SOMAXCONN) == -1)
+		err(1, "listen");
 
 	for (;;) {
 		printf("waiting for a connection\n");
