@@ -149,10 +149,7 @@ main(int argc, char **argv)
 	printf("continuing with select now, checking the connect status...\n");
 	timeouts = 0;
 	while (n != num_sockets) {
-		/*
-		 * Note that non-blocking connect uses the WR set, not the RD
-		 * one.
-		 */
+		/* Note that non-blocking connect uses the WR set */
 		error = select(FD_SETSIZE, NULL, &wrfds, NULL, &tout);
 
 		if (error == 0) {
