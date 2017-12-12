@@ -1,20 +1,22 @@
 /*
- * Example on writing with select(). Use select/connect-only.c which connects
- * but does not read anything. Alternatively, you can use netcat with -i option:
+ * Example on writing data with select().  Use select/connect-only.c which
+ * connects but does not read anything. Alternatively, you can use netcat with
+ * -i option:
  *
  *	nc -i 9999 localhost 2222
  *
  * The program should stop in select() after some data has been written to the
  * kernel buffer. That's because only some data has been sent over the TCP
- * connection (because the other side does not read, we get TCP win 0 after a
- * short while) and the kernel buffer should be limited in size.
+ * connection - as the other side does not read, we get TCP win 0 after a short
+ * while and the kernel buffer is limited in size.
  *
  * You might need to run the client from a different machine; it might not
- * behave as expected on a localhost. System can treat that as a special case.
+ * behave as expected on a localhost.  System can treat that as a special case.
  *
- * To see more, use "-i 1", and trace system calls by the server from another
- * terminal. You will see that from time to time, the select() returns and the
- * kernel buffer is filled up while the netcat slowly reads the data.
+ * To see more, use "-i 1", and trace system calls (eg. use strace on Linux) by
+ * the server from another terminal. You will see that from time to time, the
+ * select() returns and the kernel buffer is filled up while the netcat slowly
+ * reads the data.
  *
  * (c) jp@devnull.cz
  */
