@@ -1,8 +1,17 @@
 /*
- * A simple TCP sink server running on a specified port - what is sent to it is
- * just printed onto stdout.  No data is sent back.
+ * A simple TCP sink server running on a specified port - what is sent to this
+ * server is just printed onto stdout.  No data is sent back.
  *
  * Note: this example is IPv4 only!
+ *
+ * Try on a machine connected to the Internet and then point your browser to it,
+ * eg. start it like this:
+ *
+ * 	$ ./tcp-sink-server 8080
+ *
+ * Then in your browser, put:
+ *
+ * 	<host-where-sink-server-is-running>:8080
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
