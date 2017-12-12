@@ -26,6 +26,7 @@
 
 #define	_XOPEN_SOURCE	700
 
+#include <assert.h>
 #include <err.h>
 #include <fcntl.h>
 #include <libgen.h>
@@ -78,6 +79,10 @@ main(int argc, char **argv)
 	/*
 	 * Just write data to the remote side.  If the remote side does not read
 	 * the data we should be finally put to sleep in select().
+	 *
+	 * Note that in this case, as we only have one descriptor we are
+	 * interested in, the select(2) is an overkill, a simple write() without
+	 * it would suffice.  However, this is for a demonstration.
 	 */
 	for (;;) {
 		/* Must do this each time before calling select(). */
@@ -86,13 +91,17 @@ main(int argc, char **argv)
 		if (select(newsock + 1, NULL, &wrfds, NULL, NULL) == -1)
 			err(1, "select");
 
-		if (FD_ISSET(newsock, &wrfds)) {
-			if ((n = write(newsock, buf, sizeof (buf))) == -1)
-				err(1, "write");
-			total = total + n;
-			fprintf(stderr, "[ %d bytes written (total %d) ]\n",
-			    n, total);
-		}
+		/*
+		 * See above.  We only have one descriptor and we do not expect
+		 * an interrupted select().
+		 */
+		assert(FD_ISSET(newsock, &wrfds));
+
+		if ((n = write(newsock, buf, sizeof (buf))) == -1)
+			err(1, "write");
+		total = total + n;
+		fprintf(stderr, "[ %d bytes written (total %d) ]\n",
+		    n, total);
 	}
 
 	/* Not reached. */
