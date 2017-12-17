@@ -9,7 +9,7 @@
  *
  * Run with e.g.:
  *   ./a.out 1024
- *   ./a.out 1024 `expr 1024 \* 1024`
+ *   ./a.out 1024 $(( 1024 * 1024 ))
  *
  * (c) vlada@devnull.cz
  */
