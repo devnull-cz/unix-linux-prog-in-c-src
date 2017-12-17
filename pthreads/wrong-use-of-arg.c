@@ -16,8 +16,6 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#define	_GNU_SOURCE	// for pthread_yield()
-
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -45,19 +43,15 @@ main(int argc, char *argv[])
 	void *p;
 
 	if (argc > 1) {
-		printf("running with pthread_yield()\n");
+		printf("running with sched_yield()\n");
 		yield = 1;
 	}
 
 	for (i = 0; i < NUM_THREADS; ++i) {
 		pthread_create(&t, NULL, thread, &i);
 
-		/*
-		 * pthread_yield() is not from POSIX thread API however it is
-		 * present on many *nix systems.
-		 */
 		if (yield)
-			pthread_yield();
+			sched_yield();
 	}
 
 	/* Let the threads run for some time before waiting on them. */
