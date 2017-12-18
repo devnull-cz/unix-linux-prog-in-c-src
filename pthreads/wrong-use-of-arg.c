@@ -6,7 +6,7 @@
  * thread will become unjoinable.
  *
  * Note that the thread function uses the memory where the counter is located,
- * not the counter value as was defined on the main()'s stack. What you are
+ * not the counter value as was defined on the main()'s stack.  What you are
  * going to see is implementation dependent, you can use "thread 5" messages
  * only, or some initial messages with other thread ID's before "i" gets to 5.
  * Also, try to run with any argument to see what happens.
@@ -22,14 +22,15 @@
 #include <pthread.h>
 
 #define	NUM_THREADS	5
+#define	NUM_LOOPS	3
 
 void *
 thread(void *x)
 {
 	int i;
 
-	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", *((int *) x), i);
+	for (i = 0; i < NUM_LOOPS; ++i) {
+		printf("Thread %d (loop #%d).\n", *((int *) x), i);
 		sleep(1);
 	}
 	return (NULL);
@@ -48,19 +49,22 @@ main(int argc, char *argv[])
 	}
 
 	for (i = 0; i < NUM_THREADS; ++i) {
+		/* Note we are forgetting the created threads. */
 		pthread_create(&t, NULL, thread, &i);
-
 		if (yield)
 			sched_yield();
 	}
 
 	/* Let the threads run for some time before waiting on them. */
-	sleep(3);
+	sleep(NUM_LOOPS);
 
 	for (j = 0; j < NUM_THREADS; ++j) {
-		printf("Joining thread (%d)\n", j);
+		printf("Joining thread (%d)", j);
+		/* We are joining the last thread multiple times. */
 		if ((e = pthread_join(t, &p)) != 0)
-			printf("err %s\n", strerror(e));
+			printf(": error: %s\n", strerror(e));
+		else
+			printf(".\n");
 	}
 
 	return (0);
