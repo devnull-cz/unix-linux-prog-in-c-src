@@ -57,20 +57,20 @@ main(int argc, char *argv[])
 	size_t stacksize;
 
 	if (argc < 2)
-		errx(1, "usage: %s <int> [stack_size]", argv[0]);
+		errx(1, "Usage: %s <int> [stack_size]", argv[0]);
 
 	max = atoi(argv[1]);
 
 	(void) pthread_attr_init(&attr);
 	(void) pthread_attr_getstacksize(&attr, &stacksize);
-	printf("default stack size = %zd bytes\n", stacksize);
+	printf("Default stack size = %zd bytes\n", stacksize);
 
 	if (argc == 3) {
 		stacksize = atoi(argv[2]);
-		printf("setting stack size to %zd bytes\n", stacksize);
+		printf("Setting stack size to %zd bytes\n", stacksize);
 		(void) pthread_attr_setstacksize(&attr, stacksize);
 		(void) pthread_attr_getstacksize(&attr, &stacksize);
-		printf("current stack size = %zd bytes\n", stacksize);
+		printf("Current stack size = %zd bytes\n", stacksize);
 	}
 
 	(void) pthread_create(&t, &attr, thread, (void *)(intptr_t)max);
