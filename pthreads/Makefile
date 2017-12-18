@@ -12,6 +12,7 @@ PROGS=	atfork \
 	setjmp \
 	sigwait \
 	sigwait-with-sync-signals \
+	wrong-err-use \
 	wrong-use-of-arg
 
 all: $(PROGS)
@@ -65,6 +66,9 @@ sigwait: sigwait.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 sigwait-with-sync-signals: sigwait-with-sync-signals.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+wrong-err-use: wrong-err-use.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 wrong-use-of-arg: wrong-use-of-arg.o
