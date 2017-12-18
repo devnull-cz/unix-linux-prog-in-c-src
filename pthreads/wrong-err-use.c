@@ -10,7 +10,7 @@ int
 main(void)
 {
 	/* This should fail but it is not guaranteed. */
-	if (pthread_join(NULL, NULL) != 0)
+	if (pthread_join((pthread_t)NULL, NULL) != 0)
 		err(1, "pthread_join");
 	return (0);
 }
