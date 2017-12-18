@@ -11,14 +11,15 @@
 #include <unistd.h>
 
 #define	NUM_THREADS	5
+#define	NUM_LOOPS	3
 
 void *
 thread(void *x)
 {
 	int i;
 
-	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", *((int *) x), i);
+	for (i = 0; i < NUM_LOOPS; ++i) {
+		printf("Thread %d (loop #%d).\n", *((int *) x), i);
 		sleep(1);
 	}
 	return (NULL);
@@ -27,11 +28,12 @@ thread(void *x)
 int
 main(int argc, char *argv[])
 {
+	int i, yield = 0;
+	int id[NUM_THREADS];
 	pthread_t t[NUM_THREADS];
-	int i, yield = 0, id[NUM_THREADS];
 
 	if (argc > 1) {
-		printf("running with sched_yield()\n");
+		printf("Running with sched_yield().\n");
 		yield = 1;
 	}
 
@@ -44,7 +46,7 @@ main(int argc, char *argv[])
 	}
 
 	/* Avoiding pthread_join() for now. */
-	sleep(6);
+	sleep(NUM_LOOPS + 1);
 
 	return (0);
 }

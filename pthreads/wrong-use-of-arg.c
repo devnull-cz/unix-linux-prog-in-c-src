@@ -44,7 +44,7 @@ main(int argc, char *argv[])
 	void *p;
 
 	if (argc > 1) {
-		printf("running with sched_yield()\n");
+		printf("Running with sched_yield().\n");
 		yield = 1;
 	}
 
