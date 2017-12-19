@@ -25,7 +25,7 @@ atfork: atfork.o
 correct-use-of-args: correct-use-of-args.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-# works on Solaris only
+# Works on Solaris only, you must build it manually.
 forkall: forkall.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 

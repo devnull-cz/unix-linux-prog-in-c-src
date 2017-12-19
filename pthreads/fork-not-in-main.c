@@ -7,9 +7,10 @@
  * (by) jp@devnull.cz
  */
 
-#include <sys/types.h>
+#include <err.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 void *
@@ -20,6 +21,9 @@ thread(void *x)
 
 	printf("%d: before fork()\n", getpid());
 	pid = fork();
+
+	if (pid == -1)
+		err(1, "fork");
 
 	if (pid == 0)
 		printf("%d: I'm child\n", getpid());
@@ -38,9 +42,10 @@ main(void)
 {
 	pthread_t t;
 
-	pthread_create(&t, NULL, thread, NULL);
-	sleep(1);
-	printf("%d in main: exiting.\n", getpid());
+	(void) printf("%d: in main: starting.\n", getpid());
+	(void) pthread_create(&t, NULL, thread, NULL);
+	(void) pthread_join(t, NULL);
+	(void) printf("%d: in main: exiting.\n", getpid());
 
 	return (0);
 }

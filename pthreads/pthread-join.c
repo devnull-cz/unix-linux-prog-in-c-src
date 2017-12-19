@@ -15,7 +15,7 @@ thread(void *x)
 	int i;
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", *((int *)x), i);
+		printf("Thread %d (loop #%d).\n", *((int *)x), i);
 		sleep(1);
 	}
 
@@ -32,14 +32,14 @@ main(void)
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("threads created\n");
-	printf("main thread starts waiting for the threads completion...\n");
+	printf("Threads created.\n");
+	printf("The main thread starts waiting for the threads completion.\n");
 
 	pthread_join(t1, &p1);
 	pthread_join(t2, &p2);
 
-	printf("thread %d returned %d\n", n1, *((int *)p1));
-	printf("thread %d returned %d\n", n2, *((int *)p2));
+	printf("Thread %d returned %d.\n", n1, *((int *)p1));
+	printf("Thread %d returned %d.\n", n2, *((int *)p2));
 
 	return (0);
 }

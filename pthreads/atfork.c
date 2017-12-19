@@ -1,24 +1,24 @@
 /*
- * Demonstrate how pthread_atfork() works. The before() handler called from
- * the thread which called fork(). While the before() handler is running,
- * all the other threads still keep running - this is important since they
- * need to eventually release the locks the handler is waiting for.
+ * Demonstrate how pthread_atfork() works.  The before() handler is called from
+ * the thread which called fork().  While the before() handler is running, all
+ * the other threads are still running as well - that is important since they
+ * need to eventually release the locks the before() handler is waiting for.
  *
  * Note that in order to see which threads call the handlers we are using array
- * of pthread_t values associated with thread name.  The other alternative would
- * be to use thread specific variable.
+ * of pthread_t values associated with the thread name.  The other alternative
+ * would be to use thread specific variable.
  *
  * Note that the "counter" thread does not call any of the atfork handlers.
  *
  * vlada@devnull.cz
  */
 
+#include <poll.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
-#include <pthread.h>
-#include <poll.h>
+#include <unistd.h>
 
 typedef struct {
 	char name[16];
@@ -30,8 +30,8 @@ pthread_mutex_t mutex;
 thread_info_t threads[MAX];
 
 /*
- * This is a scheme to deal with thread IDs in transparent way - in general
- * we cannot rely on thresd IDs to be of known type (e.g. integers)..
+ * This is a scheme to deal with thread IDs in a transparent way - in general we
+ * cannot rely on thread IDs to be of a known type (e.g. integers).
  */
 char *
 print_id(void)
@@ -89,19 +89,23 @@ counter(void *arg)
 void
 before(void)
 {
-	printf("%d/%s: before handler in\n", getpid(), print_id());
+	printf("%d/%s: the \"before\" handler in, grabbing the mutex...\n",
+	    getpid(), print_id());
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
-	printf("%d/%s: before handler out\n", getpid(), print_id());
+	printf("%d/%s: the \"before\" handler out, got the mutex\n",
+	    getpid(), print_id());
 }
 
 void
 after(void)
 {
-	printf("%d/%s: after handler in\n", getpid(), print_id());
+	printf("%d/%s: the \"after\" handler in, releasing the mutex\n",
+	    getpid(), print_id());
 	if (pthread_mutex_unlock(&mutex) != 0)
 		printf("mutex unlock failed\n");
-	printf("%d/%s: after handler out\n", getpid(), print_id());
+	printf("%d/%s: the \"after\" handler out, mutex released\n",
+	    getpid(), print_id());
 }
 
 int
@@ -111,17 +115,17 @@ main(void)
 
 	/*
 	 * pthread_atfork() should be called after locks are initialized
-	 * and before they are used. Libraries which do this in .init section,
+	 * and before they are used.  Libraries which do this in .init section
 	 * should use pthread_once().
 	 */
-	pthread_mutex_init(&mutex, NULL);
-	pthread_atfork(before, after, after);
+	(void) pthread_mutex_init(&mutex, NULL);
+	(void) pthread_atfork(before, after, after);
 
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
 
-	pthread_create(&forker_thr, NULL, forker, NULL);
-	pthread_create(&counter_thr, NULL, counter, NULL);
+	(void) pthread_create(&forker_thr, NULL, forker, NULL);
+	(void) pthread_create(&counter_thr, NULL, counter, NULL);
 
 	sleep(3);
 
@@ -131,12 +135,11 @@ main(void)
 	printf("%d in main: waiting for the threads\n", getpid());
 
 	/* Wait for the "forker" thread to complete. */
-	pthread_join(forker_thr, NULL);
+	(void) pthread_join(forker_thr, NULL);
 
 	/* Terminate the "counter" thread. */
-	pthread_cancel(counter_thr);
-
-	pthread_mutex_destroy(&mutex);
+	(void) pthread_cancel(counter_thr);
+	(void) pthread_mutex_destroy(&mutex);
 
 	return (0);
 }

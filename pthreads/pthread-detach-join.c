@@ -22,13 +22,13 @@ thread(void *x)
 	 * still joinable. However, pthread_join() should return an error as
 	 * soon as the thread is made detachable.
 	 */
-	printf("thread started\n");
+	printf("Thread started.\n");
 	if ((e = pthread_detach(pthread_self())) != 0)
 		errx(1, "pthread_detach: %s", strerror(e));
-	printf("thread detached\n");
+	printf("Thread detached.\n");
 
 	for (i = 0; i < 5; ++i) {
-		printf("thread %d (loop #%d)\n", *((int *) x), i);
+		printf("Thread %d (loop #%d).\n", *((int *) x), i);
 		sleep(1);
 	}
 
@@ -38,22 +38,21 @@ thread(void *x)
 int
 main(void)
 {
-	int e;
 	void *p1;
 	pthread_t t1;
-	int n1 = 1;
+	int e, n1 = 1;
 
 	pthread_create(&t1, NULL, thread, &n1);
-	printf("thread created\n");
+	printf("Thread created.\n");
 
 	/* Give the thread some cycles to detach and run. */
 	sleep(3);
 
-	printf("main thread starts waiting for thread completion...\n");
+	printf("Main thread starts waiting for thread completion...\n");
 	if ((e = pthread_join(t1, &p1)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
 
-	printf("thread %d returned %d\n", n1, *((int *)p1));
+	printf("Thread %d returned %d.\n", n1, *((int *)p1));
 
 	return (0);
 }
