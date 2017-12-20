@@ -45,7 +45,7 @@ main(void)
 	pthread_create(&t2, &a, thread, &n2);
 	printf("Threads created, will try to join them now.\n");
 
-	/* Wait a second for the threads to enter the loop. */
+	/* Let the threads enter the loop. */
 	(void) poll(NULL, 0, 950);
 
 	/* These should fail. */
