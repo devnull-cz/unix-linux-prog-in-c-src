@@ -2,10 +2,11 @@
 # Some make programs have directives for conditional processing of input file.
 # Run like this:
 #
-#	make -f Makefile09
-#	D=xxx -f Makefile09
+#	make -f Makefile08.bsd
+#	D=xxx make -f Makefile08.bsd
 #
-# NOTE: This works only with BSD make and the like.
+# NOTE: This works only with BSD make and the like (not macOS as it's shipped
+# with GNU make).
 #
 
 all:
