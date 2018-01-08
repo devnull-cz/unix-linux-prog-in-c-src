@@ -2,7 +2,7 @@
  * Example on how to use POSIX barrier in multi-stage processing.
  *
  * Note that pthread barriers are optional part of POSIX standard and some
- * UNIX systems (e.g. OS X) do not implement them.
+ * UNIX systems (e.g. macOS) do not implement them.
  *
  * Compile:
  *   Linux: gcc -pthread pthread-barrier.c
