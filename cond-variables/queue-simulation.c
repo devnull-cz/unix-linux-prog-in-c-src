@@ -25,7 +25,7 @@
 
 #define	DEFAULT_MAX	10
 
-int queue, max;
+int queue /* number of items in the queue */, max /* queue capacity */;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
