@@ -13,7 +13,8 @@ PROGS=	atfork \
 	sigwait \
 	sigwait-with-sync-signals \
 	wrong-err-use \
-	wrong-use-of-arg
+	wrong-use-of-arg \
+	pthread-barrier
 
 all: $(PROGS)
 

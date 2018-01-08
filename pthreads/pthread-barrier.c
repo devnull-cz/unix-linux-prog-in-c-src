@@ -11,6 +11,8 @@
  * (c) vlada@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -41,7 +43,7 @@ worker(void *x)
 		ret = pthread_barrier_wait(&barrier);
 		printf("STAGE %d: thread #%d after barrier %s\n", j, id,
 		    ret == PTHREAD_BARRIER_SERIAL_THREAD ?
-		    "[PTHREAD_BARRIER_SERIAL_THREAD]" : "");
+		    "[last]" : "");
 	}
 
 	return (NULL);
