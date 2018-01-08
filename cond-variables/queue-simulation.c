@@ -36,7 +36,7 @@ producer(void *x)
 
 	while (1) {
 		pthread_mutex_lock(&mutex);
-		/* we can't insert a "message" when the queue is full */
+		/* We can't insert a "message" when the queue is full. */
 		while (queue == max) {
 			(void) printf("Queue full, producer sleeping.\n");
 			pthread_cond_wait(&cond, &mutex);
@@ -69,7 +69,7 @@ consumer(void *x)
 	while (1) {
 		pthread_mutex_lock(&mutex);
 
-		/* we can't get a "message" when there is none */
+		/* We can't get a "message" when there is none. */
 		while (queue == 0) {
 			pthread_cond_wait(&cond, &mutex);
 		}
