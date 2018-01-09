@@ -3,6 +3,7 @@ PROGS=fcntl-fixed-race loop.o race sem-fixed-race
 
 all: $(PROGS)
 
+atomic-add: CSTD = c11
 atomic-add: atomic-add.o
 	$(CC) -o $@ $^ -lpthread
 
@@ -16,6 +17,6 @@ sem-fixed-race: sem-fixed-race.o
 	$(CC) -o $@ $^
 
 clean:
-	rm -f *.o a.out $(PROGS)
+	rm -f *.o a.out $(PROGS) atomic-add
 
 include ../Makefile.common
