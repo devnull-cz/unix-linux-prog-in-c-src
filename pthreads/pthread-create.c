@@ -28,6 +28,6 @@ main(void)
 	 * the thread has finished. Note that there is a better way (= correct
 	 * way) of doing this.
 	 */
-	(void) sleep(5);
+//	(void) sleep(5);
 	return (0);
 }

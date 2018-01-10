@@ -17,6 +17,8 @@
  * This is a fixed version of implement-barrier.c.
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <assert.h>

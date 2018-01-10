@@ -2,6 +2,8 @@ PROGS=	atfork \
 	correct-use-of-args \
 	fork \
 	fork-not-in-main \
+	implement-barrier \
+	implement-barrier-fixed \
 	int-as-arg \
 	pthread-cancel \
 	pthread-create \
@@ -34,6 +36,15 @@ fork: fork.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 fork-not-in-main: fork-not-in-main.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+int-as-arg: int-as-arg.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+implement-barrier-fixed: implement-barrier-fixed.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+implement-barrier: implement-barrier.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 int-as-arg: int-as-arg.o

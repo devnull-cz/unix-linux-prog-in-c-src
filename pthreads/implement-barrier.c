@@ -19,6 +19,9 @@
  * Can you find the problem?  The solution is in implement-barrier-fixed.c but
  * go find the fix on your own.
  */
+
+#define	_XOPEN_SOURCE	700
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <assert.h>
