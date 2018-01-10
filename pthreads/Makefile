@@ -38,13 +38,10 @@ fork: fork.o
 fork-not-in-main: fork-not-in-main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-int-as-arg: int-as-arg.o
+implement-barrier: implement-barrier.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 implement-barrier-fixed: implement-barrier-fixed.o
-	$(CC) -o $@ $^ $(LDFLAGS)
-
-implement-barrier: implement-barrier.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 int-as-arg: int-as-arg.o

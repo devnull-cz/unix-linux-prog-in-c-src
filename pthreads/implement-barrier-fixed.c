@@ -15,8 +15,12 @@
  *	...
  *
  * This is a fixed version of implement-barrier.c.
+ *
+ * To propertly test the solution, use it something like this: "./a.out 30 0".
+ * If the printed column is not perfectly aligned, there is a problem.
  */
 
+/* For srandom() and random(). */
 #define	_XOPEN_SOURCE	700
 
 #include <pthread.h>
@@ -26,21 +30,20 @@
 #include <unistd.h>
 #include <err.h>
 
-#define	MAX_WAIT	10
-
-pthread_cond_t r = PTHREAD_COND_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 int wokenup;
-int max = 10;
+int max = 20;
 int on_barrier;
+int maxsecs = 10;
 
 void *
 th(void *arg)
 {
 	while (1) {
-		sleep(random() % MAX_WAIT);
+		if (maxsecs > 0)
+			sleep(random() % maxsecs + 1);
 
 		printf("%d ", *(int *)arg);
 		fflush(stdout);
@@ -55,26 +58,27 @@ th(void *arg)
 			/*
 			 * You need the second barrier so that we do not start
 			 * incrementing on_barrier before all the threads got
-			 * out of the waiting loop after the barrier was
-			 * reached.  As the loop uses the modulo result as the
-			 * condition, if you incremented on_barrier before that,
-			 * any thread still in pthread_cond_wait(&cond, &m)
-			 * would never get out of the loop.
+			 * out of the waiting loop after the first barrier was
+			 * reached.  As the first barrier loop uses the modulo
+			 * result as its condition, if you incremented
+			 * on_barrier before that, any thread still in
+			 * pthread_cond_wait(&cond, &m) would never get out of
+			 * the loop.
 			 */
 			while (wokenup < max)
-				pthread_cond_wait(&r, &mutex);
+				pthread_cond_wait(&cond, &mutex);
 		} else {
 			while ((on_barrier % max) != 0)
 				pthread_cond_wait(&cond, &mutex);
 			++wokenup;
 			if (wokenup == max) {
-				pthread_cond_broadcast(&r);
+				pthread_cond_broadcast(&cond);
 			} else {
 				/*
 				 * See above on why we need the 2nd barrier.
 				 */
 				while (wokenup < max)
-					pthread_cond_wait(&r, &mutex);
+					pthread_cond_wait(&cond, &mutex);
 			}
 		}
 		pthread_mutex_unlock(&mutex);
@@ -87,8 +91,10 @@ main(int argc, char **argv)
 	int i, *id;
 	pthread_t *tid;
 
-	if (argc == 2)
+	if (argc > 1)
 		max = atoi(argv[1]);
+	if (argc > 2)
+		maxsecs = atoi(argv[2]);
 
 	if (max < 2)
 		errx(1, "The argument must be larger than 1.");
@@ -105,9 +111,9 @@ main(int argc, char **argv)
 	for (i = 0; i < max; ++i)
 		(void) pthread_create(tid + i, NULL, th, id + i);
 
+	/* Never reached.  We should destroy the cv and the mutex here. */
 	for (i = 0; i < max; ++i)
 		(void) pthread_join(*(tid + i), NULL);
 
-	/* Never reached. */
 	return (0);
 }

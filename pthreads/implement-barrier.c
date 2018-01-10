@@ -18,8 +18,11 @@
  *
  * Can you find the problem?  The solution is in implement-barrier-fixed.c but
  * go find the fix on your own.
+ *
+ * To quickly deadlock, comment out the sleep call.
  */
 
+/* For srandom() and random(). */
 #define	_XOPEN_SOURCE	700
 
 #include <pthread.h>
@@ -81,9 +84,9 @@ main(int argc, char **argv)
 	for (i = 0; i < max; ++i)
 		(void) pthread_create(tid + i, NULL, th, id + i);
 
+	/* Never reached.  We should destroy the cv and the mutex here. */
 	for (i = 0; i < max; ++i)
 		(void) pthread_join(*(tid + i), NULL);
 
-	/* Never reached. */
 	return (0);
 }
