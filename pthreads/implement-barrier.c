@@ -19,7 +19,7 @@
  * Can you find the problem?  The solution is in implement-barrier-fixed.c but
  * go find the fix on your own.
  *
- * To quickly deadlock, comment out the sleep call.
+ * To quickly deadlock, run like this: "./a.out 10 0"
  */
 
 /* For srandom() and random(). */
@@ -39,12 +39,14 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 int max = 10;
 int on_barrier;
+int maxsecs = 10;
 
 void *
 th(void *arg)
 {
 	while (1) {
-		sleep(random() % MAX_WAIT);
+		if (maxsecs > 0)
+			sleep(random() % maxsecs + 1);
 
 		printf("%d ", *(int *)arg);
 		fflush(stdout);
@@ -61,6 +63,9 @@ th(void *arg)
 		}
 		pthread_mutex_unlock(&mutex);
 	}
+
+	/* Not reached. */
+	return (NULL);
 }
 
 int
@@ -69,8 +74,14 @@ main(int argc, char **argv)
 	int i, *id;
 	pthread_t *tid;
 
-	if (argc == 2)
+	if (argc > 1)
 		max = atoi(argv[1]);
+	if (argc > 2)
+		maxsecs = atoi(argv[2]);
+
+	if (max < 2)
+		errx(1, "The argument must be larger than 1.");
+
 
 	tid = malloc(sizeof (tid) * max);
 	assert(tid != NULL);

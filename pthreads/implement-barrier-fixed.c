@@ -83,6 +83,9 @@ th(void *arg)
 		}
 		pthread_mutex_unlock(&mutex);
 	}
+
+	/* Not reached. */
+	return (NULL);
 }
 
 int
