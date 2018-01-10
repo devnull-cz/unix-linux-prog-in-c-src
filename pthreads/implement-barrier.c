@@ -30,6 +30,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <err.h>
 
 #define	MAX_WAIT	10
 
