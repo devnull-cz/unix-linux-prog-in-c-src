@@ -1,6 +1,7 @@
 #
-# Show that each command is executed from separate shell. For the "if" clause,
-# both "echo" commands will emit the same PID - .i.e. PID for the single shell.
+# Show that each command is executed from a separate shell.  For the "if"
+# clause, both "echo" commands will emit the same PID - .i.e. the PID for the
+# common shell invocation.
 #
 
 all:
