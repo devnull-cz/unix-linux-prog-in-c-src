@@ -6,11 +6,11 @@
  * doesn't know about it and prints an incorrect value. Run like this:
  *
  *   $ gcc -m32 -shared -o libabi.so libabi-32.c
- *   $ gcc -m32 -L. -Xlinker -R . -labi abi-main.c
+ *   $ gcc -m32 -L. -Xlinker -R . -labi-32 abi-main.c
  *   $ ./a.out 7 4
  *   10002000
  *   result: 11
- *   $ gcc -m32 -shared -o libabi.so libabi-64.c
+ *   $ gcc -m32 -shared -o libabi-32.so libabi-64.c
  *   $ ./a.out 7 4
  *   10002000
  *   result: 2007
