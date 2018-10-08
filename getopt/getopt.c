@@ -76,10 +76,10 @@ main(int argc, char **argv)
 			printf(" '%s'", argv[0]);
 			++argv;
 		}
-		printf("\n");
 	} else {
-		printf("no filenames entered\n");
+		printf("no filenames entered");
 	}
+	printf("\n");
 
 	return (0);
 }
