@@ -1,8 +1,9 @@
-# simple makefile example demonstrating binary assembly from 2 object files
+# Simple makefile example demonstrating binary assembly from two object files.
 
 a.out:		main.o common.o
 		$(CC) main.o common.o
-# It is possible to use special variable which expands into dependencies
+
+# It is possible to use a special variable which expands into dependencies
 # "main.o common.o":
 #		$(CC) $(>)
 
