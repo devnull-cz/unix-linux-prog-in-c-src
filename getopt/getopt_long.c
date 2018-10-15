@@ -10,6 +10,7 @@ usage()
 	    "[...]");
 }
 
+/* Slightly modified example from getopt_long() FreeBSD man page. */
 int
 main(int argc, char *argv[])
 {
