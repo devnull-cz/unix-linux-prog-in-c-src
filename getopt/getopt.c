@@ -40,7 +40,9 @@ main(int argc, char **argv)
 	if (argc < 2)
 		usage(argv0);
 
-	printf("first param (command): %s\n", argv0);
+	printf("first param (command): %s\n", argv[1]);
+	argv++;
+	argc--;
 
 	while ((opt = getopt(argc, argv, "c:")) != -1) {
 		switch (opt) {
