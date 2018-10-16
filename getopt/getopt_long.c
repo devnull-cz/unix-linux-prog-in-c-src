@@ -4,7 +4,7 @@
 #include <err.h>
 
 static void
-usage()
+usage(void)
 {
 	errx(1, "getopt_long: [-bf] [--buffy] [--fluoride] [--daggerset] "
 	    "[...]");
