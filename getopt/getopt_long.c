@@ -46,6 +46,9 @@ main(int argc, char *argv[])
 		}
 	}
 
+	if (bflag)
+		printf("buffy is set\n");
+
 	argc -= optind;
 	argv += optind;
 
