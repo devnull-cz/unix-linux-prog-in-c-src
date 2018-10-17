@@ -10,20 +10,18 @@
 
 #define	_XOPEN_SOURCE 700	// needed for F_LOCK
 
+#include <err.h>
+#include <libgen.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <libgen.h>
 
 void
 usage(char *argv0)
 {
-	fprintf(stderr,
-	    "usage: %s command [-c code] <filename> [filename [...]]\n",
+	errx(1, "usage: %s <command> [-c code] <filename> [<filename> [...]]",
 	    argv0);
-
-	exit(1);
 }
 
 int
@@ -51,13 +49,11 @@ main(int argc, char **argv)
 			 * optarg should be copied since it might be
 			 * overwritten by another option or freed by getopt()
 			 */
-			if ((code = strdup(optarg)) == NULL) {
-				printf("cannot alloc memory for -c optarg\n");
-				exit(1);
-			}
+			if ((code = strdup(optarg)) == NULL)
+				err(1, "cannot alloc memory for -c optarg");
 			break;
 		case '?':
-			printf("unknown option: '%c'\n", optopt);
+			fprintf(stderr, "unknown option: '%c'\n", optopt);
 			usage(argv0);
 			break;
 		}
