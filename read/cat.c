@@ -7,10 +7,11 @@
 
 #define	_XOPEN_SOURCE	700	// for getopt()
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
+#include <assert.h>
 #include <err.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /* Needed for basename(3C) on Solaris. */
 #include <libgen.h>
@@ -36,6 +37,7 @@ do_cat(char *file, int bufsize)
 	}
 
 	while ((n = read(fd, buf, bufsize)) > 0) {
+		/* Yes, we assume writing to tty will not fail. */
 		write(1, buf, n);
 	}
 
@@ -47,21 +49,25 @@ do_cat(char *file, int bufsize)
 
 	/*
 	 * Never forget, this could lead to a situation similar to having memory
-	 * leaks. Could be a problem for long running applications or daemons.
+	 * leaks.  Could be a problem for long running applications or daemons.
 	 */
 	close(fd);
 	free(buf);
 }
 
+void
+usage(char *argv0)
+{
+	errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]", basename(argv0));
+}
+
 int
 main(int argc, char **argv)
 {
-	int i, opt, bufsize = 4096;
+	int opt, bufsize = 4096;
 
-	if (argc == 1) {
-		errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
-		    basename(argv[0]));
-	}
+	if (argc == 1)
+		usage(argv[0]);
 
 	while ((opt = getopt(argc, argv, "b:")) != -1) {
 		switch (opt) {
@@ -69,16 +75,16 @@ main(int argc, char **argv)
 			bufsize = atoi(optarg);
 			break;
 		case '?':
-			errx(1, "usage: %s [-b bufsize] <file> [<file2> ...]",
-			    basename(argv[0]));
+			usage(argv[0]);
 			break;
+		default:
+			assert(0);
 		}
 	}
 
-	i = optind;
-	while (argv[i] != NULL) {
-		do_cat(argv[i], bufsize);
-		++i;
+	while (argv[optind] != NULL) {
+		do_cat(argv[optind], bufsize);
+		++optind;
 	}
 
 	/* 0 if all went OK, 1 if we hit an error. */
