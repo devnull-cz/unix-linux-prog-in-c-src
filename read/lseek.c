@@ -10,13 +10,13 @@
  *	  - "./a.out file 0 -1" prints an error since we cannot move before the
  *	    beginning of the file
  */
-#include <libgen.h>
+#include <err.h>
+#include <err.h>
 #include <fcntl.h>
-#include <unistd.h>
+#include <libgen.h>
 #include <stdio.h>
-#include <err.h>
 #include <stdlib.h>
-#include <err.h>
+#include <unistd.h>
 
 int
 main(int argc, char **argv)
@@ -41,7 +41,7 @@ main(int argc, char **argv)
 
 	if ((n = read(fd, &c, 1)) != 1) {
 		if (n == 0)
-			errx(1, "File empty.");
+			errx(1, "Tried to read beyond the end of the file.");
 		err(1, "read");
 	}
 
