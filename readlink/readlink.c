@@ -17,11 +17,11 @@ main(int argc, char *argv[])
 	struct stat stbuf;
 	char buf[PATH_MAX];
 
-	(void) memset(buf, 'A', sizeof (buf));
+	(void) memset(buf, 'A', sizeof (buf) - 1);
 	buf[sizeof (buf) - 1] = '\0';
 
 	/* Remove the symlink if it exists. */
-	if (stat(SYMLINK, &stbuf) != -1 && unlink(SYMLINK) != 0)
+	if (lstat(SYMLINK, &stbuf) != -1 && unlink(SYMLINK) != 0)
 		err(1, "unlink");
 
 	if (symlink("/etc/blah", SYMLINK) == -1)
