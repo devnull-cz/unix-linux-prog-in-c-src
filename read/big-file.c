@@ -1,5 +1,5 @@
 /*
- * Be careful with zeroes. Try this on a *local* filesystem (typically not your
+ * Be careful with zeroes.  Try this on a *local* filesystem (typically not your
  * home directory in the lab):
  *
  * cc big-file.c
@@ -11,14 +11,10 @@
  * du -h BIG
  */
 
-#include <sys/stat.h>
-#include <sys/types.h>
-
+#include <err.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <err.h>
 
 int
 main(void)
@@ -28,6 +24,7 @@ main(void)
 	if ((fd = open("BIG", O_CREAT | O_TRUNC | O_RDWR, 0666)) == -1)
 		err(1, "open");
 
+	/* 1MB */
 	lseek(fd, 1000000, SEEK_SET);
 	write(fd, "", 1);
 	close(fd);
