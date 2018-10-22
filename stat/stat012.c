@@ -7,6 +7,7 @@
  */
 #include <sys/stat.h>
 #include <stdio.h>
+#include <inttypes.h>
 #include <err.h>
 
 int
@@ -21,7 +22,8 @@ main(int argc, char **argv)
 	 * This should be 0 as there is no data associated with the terminal
 	 * device.
 	 */
-	printf("Allocated number of 512 byte blocks: %lld\n", buf.st_blocks);
+	printf("Allocated number of 512 byte blocks: %jd\n",
+	    (intmax_t)buf.st_blocks);
 	printf("Inode number: %lu\n", (long) buf.st_ino);
 
 	return (0);
