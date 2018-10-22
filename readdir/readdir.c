@@ -28,12 +28,16 @@ main(int argc, char *argv[])
 		}
 
 		/*
-		 * We must distinguish between the end of directory and an
+		 * We must distinguish between the end of a directory and an
 		 * error.
 		 */
 		errno = 0;
-		while ((de = readdir(d)) != NULL)
+		while ((de = readdir(d)) != NULL) {
+			/* printf may set errno. */
+			if (errno != 0)
+				break;
 			printf("%s\n", de->d_name);
+		}
 
 		if (errno != 0)
 			warn("%s", argv[i]);
