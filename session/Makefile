@@ -1,14 +1,8 @@
-PROGS=getpgrp getppid getsid
+PROGS=getppid
 
 all: $(PROGS)
 
-getpgrp: getpgrp.o
-	$(CC) -o $@ $^
-
 getppid: getppid.o
-	$(CC) -o $@ $^
-
-getsid: getsid.o
 	$(CC) -o $@ $^
 
 clean:
