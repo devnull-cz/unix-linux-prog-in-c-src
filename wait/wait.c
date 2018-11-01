@@ -13,7 +13,7 @@
  *   (4) continue the child by "kill -CONT <PID>"
  *
  * The parent will continue to report on the child states until the child is
- * finished.  Note that if the sleep is stopped it won't realize the 30 seconds
+ * finished.  Note that if the sleep is stopped it will not get the 30 seconds
  * timeout unless it gets continued again.
  *
  * Note that when the child is killed by a signal, the status word itself
