@@ -1,3 +1,8 @@
 *.o
-*.so
 a.out
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
