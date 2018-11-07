@@ -53,8 +53,8 @@ main(int argc, char **argv)
 	printf("  noninitialized var:\t%p\n", (void *)&nonini1);
 	printf("  initialized var 1:\t%p\n", (void *)&ini1);
 	printf("  initialized var 2:\t%p\n", (void *)&ini2);
-	printf("  readdir:\t%p\n", readdir);
-	printf("  *readdir:\t%p\n", *readdir);
+	printf("  readdir:\t%p\n", (void *)readdir);
+	printf("  *readdir:\t%p\n", (void *)*readdir);
 
 	printf("\n=== pmap %d ===\n", getpid());
 	snprintf(buf, sizeof (buf), "%d", getpid());
