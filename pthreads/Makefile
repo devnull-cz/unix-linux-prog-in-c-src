@@ -15,8 +15,7 @@ PROGS=	atfork \
 	sigwait \
 	sigwait-with-sync-signals \
 	wrong-err-use \
-	wrong-use-of-arg \
-	pthread-barrier
+	wrong-use-of-arg
 
 all: $(PROGS)
 
@@ -87,3 +86,8 @@ clean:
 	rm -f *.o a.out $(PROGS)
 
 include ../Makefile.common
+
+# macOS does not implement barriers API.
+ifneq ($(UNAME_S),Darwin)
+  PROGS+=pthread-barrier
+endif
