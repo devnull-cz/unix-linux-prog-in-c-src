@@ -13,6 +13,7 @@ jobs:
     script: make
   - stage: deploy
     name: Github release
+    script: echo deploying..
     deploy:
     - provider: releases
       name: $TRAVIS_TAG
