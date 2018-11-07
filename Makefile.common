@@ -4,9 +4,19 @@ CC=cc
 CSTD=c99
 CFLAGS=-Wall -pedantic -std=$(CSTD) -Wshadow -Wpointer-arith -Wcast-qual \
 	-Wstrict-prototypes -Werror=implicit-function-declaration
+UNAME_S := $(shell uname -s)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
+
+# This conditional assumes GNU make.
+ifeq ($(UNAME_S),Darwin)
+  CFLAGS_DYNLIB=-dynamiclib
+  LIB_EXT=dylib
+else
+  CFLAGS_DYNLIB=-shared
+  LIB_EXT=so
+endif
 
 cstyle:
 	@echo "checking C style"

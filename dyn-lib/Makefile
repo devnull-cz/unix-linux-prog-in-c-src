@@ -1,4 +1,8 @@
-PROGS=libmy.so ld-lazy dlopen
+PROGS=libmy dlopen
+
+ifeq ($(UNAME_S),Linux)
+  PROGS+=ld-lazy
+endif
 
 all: $(PROGS)
 
@@ -10,10 +14,18 @@ dlopen: dlopen.o
 
 libmy.o: CFLAGS+=-fPIC
 
-libmy.so: libmy.o
-	$(CC) -shared -o $@ $^
-
 clean:
 	rm -f *.o a.out $(PROGS)
 
 include ../Makefile.common
+
+.PHONY: libmy
+
+libmy: libmy.$(LIB_EXT)
+
+libmy.$(LIB_EXT): libmy.o
+	$(CC) $(CFLAGS_DYNLIB) $(CFLAGS_DYNLIB_EXTRA) -o $@ $^
+
+ifeq ($(UNAME_S),Darwin)
+  CFLAGS_DYNLIB_EXTRA=-Wl,-undefined,dynamic_lookup
+endif
