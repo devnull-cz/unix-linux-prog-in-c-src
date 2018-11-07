@@ -23,8 +23,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
-#include <dlfcn.h>
-#include <link.h>
 #include <dirent.h>
 
 int nonini1;
