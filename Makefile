@@ -43,6 +43,7 @@ SUBDIRS=assert		\
 all: $(SUBDIRS) cstyle
 
 $(SUBDIRS):
+	@echo "=== $@"
 	@$(MAKE) -C $@
 
 clean cstyle:
