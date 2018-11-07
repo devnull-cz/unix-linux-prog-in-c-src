@@ -11,7 +11,6 @@ PROGS=alarm \
 	ping-pong \
 	siginfo \
 	signal-vs-sigaction \
-	sigqueue \
 	sigsegv \
 	sigwait
 
@@ -69,3 +68,7 @@ clean:
 	rm -f *.o a.out $(PROGS)
 
 include ../Makefile.common
+
+ifneq ($(UNAME_S),Darwin)
+  PROGS+=sigqueue
+endif
