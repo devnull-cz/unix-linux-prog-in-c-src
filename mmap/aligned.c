@@ -86,7 +86,8 @@ main(int argc, char *argv[])
 
 	/* Make sure we have reached end of the file. */
 	if (addr != eofptr) {
-		fprintf(stderr, "not reached EOF (0x%p != 0x%p)", addr, eofptr);
+		fprintf(stderr, "not reached EOF (0x%p != 0x%p)",
+		    (void *)addr, (void *)eofptr);
 		exit(1);
 	}
 
