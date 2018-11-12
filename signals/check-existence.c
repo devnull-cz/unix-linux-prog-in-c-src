@@ -22,10 +22,10 @@ main(int argc, char *argv[])
 		errx(1, "Need a PID as argument.");
 
 	pid = atoi(argv[1]);
-	if ((kill(pid, 0) == 0) || (errno == EPERM))
-		printf("process with pid %d exists\n", pid);
-	else
-		err(1, "kill for process with pid %d failed", pid);
+	if ((kill(pid, 0) == -1) && (errno != EPERM))
+		err(1, "Failed signalling pid %d.", pid);
+
+	printf("Process with pid %d exists.\n", pid);
 
 	return (0);
 }
