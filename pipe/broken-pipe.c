@@ -14,16 +14,15 @@
  *   kill -l $(expr $ret - 128)
  */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <err.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int
 main(void)
 {
 	int pd[2];
-	char c = 'a';
 
 	if (pipe(pd) == -1)
 		err(1, "pipe");
@@ -32,7 +31,7 @@ main(void)
 	(void) close(pd[0]);
 
 	/* This will fail as we are writing to a pipe without a reader. */
-	if (write(pd[1], &c, 1) == -1)
+	if (write(pd[1], "", 1) == -1)
 		err(1, "write");
 
 	return (0);
