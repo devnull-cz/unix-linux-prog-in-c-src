@@ -25,7 +25,7 @@
 int
 main(void)
 {
-	char c = 0;
+	char c;
 	char *addr;
 	sigset_t set;
 	int fd, pid, sig;
@@ -34,7 +34,7 @@ main(void)
 		err(1, "open");
 
 	/* Extend the file. */
-	if (write(fd, &c, 1) != 1)
+	if (write(fd, "", 1) != 1)
 		err(1, "write");
 
 	addr = mmap(0, 1, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
