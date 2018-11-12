@@ -33,11 +33,10 @@ main(void)
 {
 	int size;
 	char buf[BUFSIZE];
-	struct sigaction act;
+	struct sigaction act = { 0 };
 
 	act.sa_handler = handler;
 	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
 
 	sigaction(SIGALRM, &act, NULL);
 	printf("Type anything and hit enter, you have %d seconds...\n", SECS);
