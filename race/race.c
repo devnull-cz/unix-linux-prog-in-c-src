@@ -27,7 +27,7 @@
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
-unsigned int j;		/* j is number of races detected */
+unsigned int races;	/* number of races detected */
 volatile sig_atomic_t run = 1;
 
 void
@@ -78,7 +78,7 @@ main(int argc, char **argv)
 				if (dbg)
 					fprintf(stderr, "[child (%d/%d)] ",
 					    addr[0], addr[1]);
-				++j;
+				++races;
 			}
 			addr[0] = addr[1] = 2;
 			++i;
@@ -90,7 +90,7 @@ main(int argc, char **argv)
 				if (dbg)
 					fprintf(stderr, "[PARENT (%d/%d)] ",
 					    addr[0], addr[1]);
-				++j;
+				++races;
 			}
 			addr[0] = addr[1] = 1;
 			++i;
@@ -102,7 +102,8 @@ main(int argc, char **argv)
 	munmap(addr, 2);
 	close(fd);
 
-	printf("\nstats: inconsistencies %u out of %lu\n", j, i);
+	printf("\nstats [%d]: inconsistencies %u out of %lu\n",
+	    getpid(), races, i);
 
 	return (0);
 }
