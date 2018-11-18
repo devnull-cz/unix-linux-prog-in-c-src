@@ -8,7 +8,7 @@
  *
  * Note that with a job control, Ctrl-C makes the shell to send a SIGINT signal
  * to the whole process group so we don't have to worry about killing just
- * the father process.
+ * the parent process.
  *
  * (c) jp@devnull.cz
  */
