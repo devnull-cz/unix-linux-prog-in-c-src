@@ -12,7 +12,8 @@ PROGS=alarm \
 	siginfo \
 	signal-vs-sigaction \
 	sigsegv \
-	sigwait
+	sigwait \
+	sigpending
 
 all: $(PROGS)
 
@@ -62,6 +63,9 @@ sigsegv: sigsegv.o
 	$(CC) -o $@ $^
 
 sigwait: sigwait.o
+	$(CC) -o $@ $^
+
+sigpending: sigpending.o
 	$(CC) -o $@ $^
 
 clean:
