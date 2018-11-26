@@ -46,7 +46,7 @@ main(int argc, char **argv)
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		err(1, "socket");
 
-	if (connect(fd, (struct sockaddr *) &in, sizeof (in)) == -1)
+	if (connect(fd, (struct sockaddr *)&in, sizeof (in)) == -1)
 		err(1, "connect");
 
 	/* Now, read from the standard input and send it to the other side. */
