@@ -1,4 +1,5 @@
 PROGS=alarm \
+	catch-all \
 	catch-SIGKILL \
 	catch-SIGSEGV \
 	check-existence \
@@ -18,6 +19,9 @@ PROGS=alarm \
 all: $(PROGS)
 
 alarm: alarm.o
+	$(CC) -o $@ $^
+
+catch-all: catch-all.o
 	$(CC) -o $@ $^
 
 catch-SIGKILL: catch-SIGKILL.o
