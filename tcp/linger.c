@@ -1,6 +1,8 @@
 /*
- * Set SO_LINGER socket option and observe the behavior by dumping
- * traffic.
+ * The program reads data from stdin and sends it over to the remote side.
+ *
+ * Set SO_LINGER socket option and observe the behavior by dumping traffic, e.g.
+ * via tcpdump(1).
  *
  * (c) vlada@devnull.cz
  */
@@ -21,19 +23,16 @@
 static void
 usage(char *argv0)
 {
-	fprintf(stderr, "usage: %s [-L <value>] <addr> <port_number>\n",
-	    argv0);
-	exit(1);
+	errx(1, "usage: %s [-L <value>] <addr> <port_number>", argv0);
 }
 
 int
 main(int argc, char **argv)
 {
 	char buf[100];
-	int fd, error;
-	size_t n;
+	int fd, error, opt;
 	int linger = -1;
-	int opt;
+	size_t n;
 	struct addrinfo *res, *resorig, hints;
 	char *argv0 = basename(argv[0]);
 	struct linger lstr;
@@ -44,7 +43,7 @@ main(int argc, char **argv)
 			linger = atoi(optarg);
 			break;
 		case '?':
-			printf("unknown option: '%c'\n", optopt);
+			warn("unknown option: '%c'", optopt);
 			usage(argv0);
 			break;
 		}
