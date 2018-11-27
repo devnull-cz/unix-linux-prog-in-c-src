@@ -1,12 +1,13 @@
 /*
  * Example of getaddrinfo(3socket) usage where we try to print the actual
- * converted values back to ascii presentable form.  Normally this use of
- * getnameinfo() is not required since the members of the addrinfo structure can
- * be passed directly to functions such as bind() or connect().  Note that we
- * use NI_NUMERICSERV with getnameinfo() to get numeric address strings.
+ * converted values in the ASCII presentable form.  Normally this use of
+ * getnameinfo() to get numeric address strings is not required since the
+ * members of the addrinfo structure can be passed directly to functions such as
+ * bind() or connect().  Note that we use NI_NUMERICSERV with getnameinfo() to
+ * get numeric address strings.
  *
- * If this was code for a server one would use the AI_PASSIVE flag.
- * Notice that freeaddrinfo() is used to free the memory.
+ * If this was code for a server one would use the AI_PASSIVE flag.  Notice that
+ * freeaddrinfo() is used to free the memory.
  *
  * www.kame.net maps to both IPv4 and IPv6 address:
  *
@@ -59,11 +60,16 @@ main(int argc, char **argv)
 			continue;
 
 		/*
-		 * NI_NUMERICSERV makes sure we get numeric IP address strings
-		 * so that we can print those out. Similarly for NI_NUMERICHOST.
+		 * NI_NUMERICHOST makes sure we get numeric IP address strings
+		 * so that we can print those out (otherwise we would get
+		 * hostnames again).  We could use inet_ntop() but as shown in
+		 * ./addresses.c, you'd have to try both IPv4 and IPv6 one after
+		 * another, resulting in more code to write.  Similarly for
+		 * NI_NUMERICSERV where we also want the service number string.
+		 *
 		 * Note that when NI_NUMERICHOST is not set, numeric IP address
-		 * will be returned if the IP address cannot be located in the
-		 * name service.
+		 * would be returned anyway iff the IP address cannot be located
+		 * in the name service.
 		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    ip_str, sizeof (ip_str), port_str, sizeof (port_str),
@@ -71,7 +77,7 @@ main(int argc, char **argv)
 			errx(1, "%s", gai_strerror(error));
 		}
 
-		/* use getprotobynumber_r() in a threaded environment */
+		/* Use getprotobynumber_r() in a threaded environment. */
 		if ((proto = getprotobynumber(res->ai_protocol)) == NULL) {
 			err(1, "cannot get protocol entry for %d",
 			    res->ai_protocol);
