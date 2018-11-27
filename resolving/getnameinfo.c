@@ -64,10 +64,14 @@ main(int argc, char **argv)
 	for (resorig = res; res != NULL; res = res->ai_next) {
 		/* Here getnameinfo() is used ala inet_ntop(). */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
-		    numhost, sizeof (numhost), NULL, 0, NI_NUMERICHOST)) != 0)
+		    numhost, sizeof (numhost), NULL, 0, NI_NUMERICHOST)) != 0) {
 			errx(1, "%s", gai_strerror(error));
+		}
 
-		/* Now try to resolve the address back to hostname. */
+		/*
+		 * Call getnameinfo() again, now to resolve the address back to
+		 * hostname to avoid aliases.
+		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    host, sizeof (host), NULL, 0, 0)) != 0)
 			errx(1, "%s", gai_strerror(error));
