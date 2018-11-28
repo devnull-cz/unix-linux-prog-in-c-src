@@ -6,6 +6,9 @@
  * You can only get rid of this by killing it by SIGKILL from another terminal
  * (pkill -9 catch-all).
  */
+
+#define	_XOPEN_SOURCE	700
+
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
