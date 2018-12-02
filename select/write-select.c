@@ -84,10 +84,14 @@ main(int argc, char **argv)
 	 * interested in, the select(2) is an overkill, a simple write() without
 	 * it would suffice.  However, this is for a demonstration.
 	 */
+	FD_ZERO(&wrfds);
 	for (;;) {
-		/* Must do this each time before calling select(). */
-		FD_ZERO(&wrfds);
+		/*
+		 * Must add the socket to the write set each time before
+		 * calling select().
+		 */
 		FD_SET(newsock, &wrfds);
+
 		if (select(newsock + 1, NULL, &wrfds, NULL, NULL) == -1)
 			err(1, "select");
 
