@@ -3,6 +3,13 @@
  * should show all 3 situations we care about - a successful connect, a refused
  * connect, and a timeout.
  *
+ * Using FD_SETSIZE is not optimal - rewrite the code so that it stores
+ * maximum file descriptor number and use it for select().
+ *
+ * Also, the selection of host_t holding all file descriptors given host
+ * makes the program slower as it adds needless complexity into the select()
+ * loop.
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
