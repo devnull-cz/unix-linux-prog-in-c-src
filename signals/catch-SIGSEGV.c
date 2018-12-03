@@ -7,6 +7,12 @@
  * since what happens after returning from the handler is also undefined by the
  * standard.
  *
+ * Remember that to safely exit from signal handler, _exit() should be used.
+ *
+ * Note that the approach of handling SIGSEGV might result in no core file
+ * to be generated so consider calling abort() in the handler (although this
+ * may not be safe as it could flush the I/O streams).
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
@@ -22,6 +28,11 @@ void
 handle_segfault(int sig)
 {
 	write(1, MESSAGE, strlen(MESSAGE));
+
+	/*
+	 * Consider calling backtrace(3) after the signal is handled
+	 * to get stack trace information.
+	 */
 }
 
 int
@@ -40,7 +51,7 @@ main(void)
 		int *p = NULL;
 
 		sleep(1);
-		/* The following line definitely generates a signal. */
+		/* The following line definitely generates the SEGV signal. */
 		*p = 1;
 	}
 
