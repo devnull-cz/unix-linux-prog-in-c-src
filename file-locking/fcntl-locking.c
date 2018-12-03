@@ -96,37 +96,53 @@ sigint_handler(int sig)
 
 char c[NPROC] = {'/', '_', '#', '+', '.'};
 
+static void usage(char *progname)
+{
+		errx(1, "usage: %s [-l|-L] <filename>", progname);
+}
+
 int
 main(int argc, char **argv)
 {
 	struct sigaction act;
 	int i, j, fd, locking = 0;
 	struct flock fl;
-
-	if (argc < 2 || argc > 3)
-		errx(1, "usage: %s <-l|-L> <filename>", argv[0]);
+	char *progname = argv[0];
 
 	act.sa_handler = sigint_handler;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
 	(void) sigaction(SIGINT, &act, NULL);
 
-	/* simple way of processing one optional argument */
-	if (strcmp(argv[1], "-l") == 0) {
-		(void) printf("will use locking with shared fd...\n");
-		locking = 1;
-		++argv;
-	} else if (strcmp(argv[1], "-L") == 0) {
-		(void) printf("will use locking with private fd's...\n");
-		locking = 2;
-		++argv;
-	} else if (argc > 2) {
-		(void) printf("use -l or -L\n");
-		exit(1);
+	int r;
+	while ((r = getopt(argc, argv, "lL")) != -1) {
+		switch (r) {
+		case 'l':
+			(void) printf("will use locking with shared fd...\n");
+			locking = 1;
+			break;
+		case 'L':
+			(void) printf("will use locking with private "
+			    "fd's...\n");
+			locking = 2;
+			break;
+		default:
+			usage(progname);
+			break;
+		}
 	}
+	argv += optind;
+	argc -= optind;
+
+	if (argc != 1)
+		usage(progname);
+
+	if (locking == 0)
+		printf("will not use locking at all\n");
 
 	/* Create the file. */
-	if ((fd = open(argv[1], O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
+	char *filename = argv[0];
+	if ((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
 		err(1, "open");
 	if (locking == 2)
 		close(fd);
@@ -148,7 +164,7 @@ main(int argc, char **argv)
 
 		/* child */
 		if (locking == 2) {
-			if ((fd = open(argv[1], O_WRONLY, 0666)) == -1)
+			if ((fd = open(filename, O_WRONLY, 0666)) == -1)
 				err(1, "open");
 		}
 
