@@ -14,10 +14,11 @@
  * (c) vlada@devnull.cz
  */
 
-#define	_XOPEN_SOURCE	700	// for sigfillset()
+#define	_XOPEN_SOURCE	700
 
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <err.h>
@@ -27,8 +28,10 @@
 void
 recurse(int n)
 {
-	char foo[1024];	/* intentional unused variable */
+	char foo[1024];	/* intentionally unused variable to make the stack */
+			/* bigger */
 
+	foo[0] = 'F';	/* to silence the compiler warning */
 	printf("%d ", n);
 	fflush(stdout);
 
@@ -55,9 +58,10 @@ main(int argc, char *argv[])
 	int max;
 	pthread_attr_t attr;
 	size_t stacksize;
+	int e;
 
 	if (argc < 2)
-		errx(1, "Usage: %s <int> [stack_size]", argv[0]);
+		errx(1, "Usage: %s <iterations> [stack_size]", argv[0]);
 
 	max = atoi(argv[1]);
 
@@ -68,7 +72,8 @@ main(int argc, char *argv[])
 	if (argc == 3) {
 		stacksize = atoi(argv[2]);
 		printf("Setting stack size to %zd bytes\n", stacksize);
-		(void) pthread_attr_setstacksize(&attr, stacksize);
+		if ((e = pthread_attr_setstacksize(&attr, stacksize)) != 0)
+			errx(1, "set stack size: %s", strerror(e));
 		(void) pthread_attr_getstacksize(&attr, &stacksize);
 		printf("Current stack size = %zd bytes\n", stacksize);
 	}
