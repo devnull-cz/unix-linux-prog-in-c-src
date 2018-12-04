@@ -1,6 +1,11 @@
 /*
- * Create one thread and let it print a few numbers in a loop.
+ * Create one thread and let it print a few numbers in a loop with
+ * optionally waiting for it in the main thread.
+ *
+ * On Linux you can use 'ltrace -S ./pthread-create' to see the effect
+ * of pthread_create().
  */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
@@ -18,16 +23,19 @@ thread(void *x)
 }
 
 int
-main(void)
+main(int argc, char *argv[])
 {
 	pthread_t t;
 
 	(void) pthread_create(&t, NULL, thread, NULL);
+
 	/*
 	 * We have to do this for now so that we do not exit from main before
 	 * the thread has finished. Note that there is a better way (= correct
-	 * way) of doing this.
+	 * way) of doing this - joining the thread.
 	 */
-//	(void) sleep(5);
+	if (argc > 1)
+		(void) sleep(5);
+
 	return (0);
 }
