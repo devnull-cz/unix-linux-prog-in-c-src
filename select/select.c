@@ -1,7 +1,7 @@
 /*
- * select() example. The program accepts TCP connection on port from the 1st
- * parameter and reads the standard input as well. Note that there is no busy
- * waiting.
+ * A select() example.  The program accepts a TCP connection on a port from the
+ * 1st argument and reads the standard input as well.  Note that there is no
+ * busy waiting.
  *
  * Note that the server always finishes the TCP connection so during that, it
  * doesn't read from the terminal until the connection terminates. You can
@@ -16,16 +16,16 @@
 
 #define	_XOPEN_SOURCE	700
 
-#include <stdio.h>
-#include <strings.h>
 #include <err.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/select.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <fcntl.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <sys/select.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #define	BUF_LEN	100
@@ -53,7 +53,7 @@ main(int argc, char **argv)
 		err(1, "setsockopt");
 	}
 
-	if (bind(s, (struct sockaddr *) &sa, sizeof (sa)) == -1)
+	if (bind(s, (struct sockaddr *)&sa, sizeof (sa)) == -1)
 		err(1, "bind");
 
 	if (listen(s, SOMAXCONN) == -1)
@@ -82,7 +82,8 @@ main(int argc, char **argv)
 			/*
 			 * The accepted socket could be put into the RD set and
 			 * we could read data from fd 0 while receiving data
-			 * from the network.
+			 * from the network as well.
+			 *
 			 * It's left as an excercise to the reader.
 			 */
 			while ((n = read(newsock, buf, 100)) > 0)
