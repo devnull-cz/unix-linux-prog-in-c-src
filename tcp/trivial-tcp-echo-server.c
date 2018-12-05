@@ -4,8 +4,8 @@
  * server$ ./a.out 4444
  *
  * client$ telnet localhost 4444
- * <type anything, it will be printed on the server side>
- * <type anything, it will be printed on the server side>
+ * <type anything, it will be printed on the server side and echoed here as well>
+ * <type anything, it will be printed on the server side and echoed here as well>
  * ...
  *
  * Note: this example is IPv4-only !
@@ -58,8 +58,10 @@ main(int argc, char **argv)
 			err(1, "accept");
 
 		(void) fprintf(stderr, "-- connection accepted --\n");
-		while ((n = read(newsock, buf, BUF_LEN)) != 0)
+		while ((n = read(newsock, buf, BUF_LEN)) != 0) {
 			write(1, buf, n);
+			write(newsock, buf, n);
+		}
 
 		(void) close(newsock);
 		(void) fprintf(stderr, "-- connection closed --\n");
