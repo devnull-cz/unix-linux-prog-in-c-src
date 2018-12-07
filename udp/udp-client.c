@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <err.h>
 
-#define	BUF_LEN	1024
+#define	BUF_LEN	8192
 
 int
 main(int argc, char **argv)
