@@ -5,9 +5,10 @@
  * (c) jp@devnull.cz
  */
 
-
+#include <err.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #define	NUM_THREADS	5
@@ -16,10 +17,8 @@
 void *
 thread(void *x)
 {
-	int i;
-
-	for (i = 0; i < NUM_LOOPS; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *) x), i);
+	for (int i = 0; i < NUM_LOOPS; ++i) {
+		printf("Thread %d (loop #%d).\n", *((int *)x), i);
 		sleep(1);
 	}
 	return (NULL);
@@ -28,7 +27,7 @@ thread(void *x)
 int
 main(int argc, char *argv[])
 {
-	int i, yield = 0;
+	int e, i, yield = 0;
 	int id[NUM_THREADS];
 	pthread_t t[NUM_THREADS];
 
@@ -39,14 +38,24 @@ main(int argc, char *argv[])
 
 	for (i = 0; i < NUM_THREADS; ++i) {
 		id[i] = i;
-		pthread_create(&t[i], NULL, thread, id + i);
+		pthread_create(t + i, NULL, thread, id + i);
 
 		if (yield)
 			sched_yield();
 	}
 
-	/* Avoiding pthread_join() for now. */
-	sleep(NUM_LOOPS + 1);
+	/* Sleep to have nice output. */
+	sleep(NUM_LOOPS);
+
+	for (int j = 0; j < NUM_THREADS; ++j) {
+		void *p;
+
+		printf("Joining thread (%d)", j);
+		if ((e = pthread_join(*(t + j), &p)) != 0)
+			warnx(": error: %s", strerror(e));
+		else
+			printf(".\n");
+	}
 
 	return (0);
 }
