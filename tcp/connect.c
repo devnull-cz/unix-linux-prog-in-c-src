@@ -27,12 +27,11 @@ main(int argc, char **argv)
 {
 	int fd, n;
 	char buf[BUF_LEN];
-	struct sockaddr_in in;
+	struct sockaddr_in in = { 0 };
 
 	if (argc != 3)
 		errx(1, "usage: %s <ip-address> <port>", argv[0]);
 
-	bzero(&in, sizeof (in));
 	in.sin_family = AF_INET;
 	in.sin_port = htons(atoi(argv[2]));
 
