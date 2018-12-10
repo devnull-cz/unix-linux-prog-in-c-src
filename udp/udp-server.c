@@ -45,8 +45,7 @@ main(int argc, char **argv)
 		inet_ntop(AF_INET, &faddr.sin_addr, addr, sizeof (addr));
 		fprintf(stderr, "DBG: received %d bytes from %s:%d\n",
 		    n, addr, ntohs(faddr.sin_port));
-		buf[n] = '\0';
-		printf("%s", buf);
+		write(1, buf, n);
 	}
 	close(s);
 
