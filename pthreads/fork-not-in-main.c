@@ -13,16 +13,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#define	NLOOPS	3
+
 void *
 thread(void *x)
 {
-	int i;
 	pid_t pid;
 
 	printf("%d: before fork()\n", getpid());
-	pid = fork();
-
-	if (pid == -1)
+	if ((pid = fork()) == -1)
 		err(1, "fork");
 
 	if (pid == 0)
@@ -30,7 +29,7 @@ thread(void *x)
 	else
 		printf("%d: I'm parent\n", getpid());
 
-	for (i = 0; i < 8; ++i) {
+	for (int i = 0; i < NLOOPS; ++i) {
 		printf("%d: loop #%d\n", getpid(), i);
 		sleep(1);
 	}
@@ -46,6 +45,4 @@ main(void)
 	(void) pthread_create(&t, NULL, thread, NULL);
 	(void) pthread_join(t, NULL);
 	(void) printf("%d: in main: exiting.\n", getpid());
-
-	return (0);
 }
