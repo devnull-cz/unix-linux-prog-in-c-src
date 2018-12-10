@@ -1,9 +1,10 @@
 /*
- * Work with 2 global variables from 2 threads. At each loop each thread sets
- * both to its value passed in by pthread_create(). Before the assignment it
- * checks whether our variables are equal. If not, the thread prints its
- * identification character. There should be no races since both variables are
- * protected by a mutex. No races means no output.
+ * From two threads, work with members of a global variable.  At every loop,
+ * each thread sets both members to the value passed in by pthread_create().
+ * Before the assignment it checks whether the structure members are equal.  If
+ * not, the thread prints its identification character.  There should be no
+ * races since access to the structure is protected by a mutex.  No races means
+ * there is no output.
  *
  * Compile with:
  *
@@ -38,8 +39,8 @@ thread(void *x)
 	while (1) {
 		pthread_mutex_lock(&mutex);
 		/*
-		 * If there is a race, print a character depending on
-		 * which thread is experiencing the inconsistency.
+		 * If there is a race, print a character depending on which
+		 * thread is experiencing the inconsistency.
 		 */
 		if (foo.a != foo.b) {
 			if (data == 0)
