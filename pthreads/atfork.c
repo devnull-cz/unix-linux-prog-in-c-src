@@ -17,7 +17,7 @@
  *
  * 	$ ./atfork -d
  *
- * vlada@devnull.cz
+ * vlada@devnull.cz, jp@devnull.cz
  */
 
 #include <err.h>
@@ -200,6 +200,4 @@ main(int argc, char **argv)
 
 	printf("%d in main: waiting for child %d to exit\n", getpid(), pid);
 	(void) wait(NULL);
-
-	return (0);
 }
