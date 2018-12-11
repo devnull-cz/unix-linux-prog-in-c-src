@@ -31,7 +31,7 @@ thread(void *x)
 	int i;
 
 	for (i = 0; i < NUM_LOOPS; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *) x), i);
+		printf("Thread %d (loop #%d).\n", *((int *)x), i);
 		sleep(1);
 	}
 	return (NULL);
