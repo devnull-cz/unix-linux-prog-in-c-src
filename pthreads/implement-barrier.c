@@ -83,7 +83,6 @@ main(int argc, char **argv)
 	if (max < 2)
 		errx(1, "The argument must be larger than 1.");
 
-
 	tid = malloc(sizeof (tid) * max);
 	assert(tid != NULL);
 	id = malloc(sizeof (id) * max);
