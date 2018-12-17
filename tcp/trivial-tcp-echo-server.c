@@ -3,9 +3,9 @@
  *
  * server$ ./a.out 4444
  *
- * client$ telnet localhost 4444
- * <type anything, it will be printed on the server side and echoed here as well>
- * <type anything, it will be printed on the server side and echoed here as well>
+ * client$ nc localhost 4444
+ * <type anything, it will be printed on the server side and here as well>
+ * <type anything, it will be printed on the server side and here as well>
  * ...
  *
  * Note: this example is IPv4-only !
