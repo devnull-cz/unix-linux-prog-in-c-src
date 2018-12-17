@@ -68,17 +68,15 @@ count(void *arg)
 	if (atomic) {
 		for (i = 1; i < n; ++i)
 			ATOMIC_ADD(&x, i);
-	} else {
-		if (mutex) {
-			for (i = 1; i < n; ++i) {
-				pthread_mutex_lock(&m);
-				x = x + i;
-				pthread_mutex_unlock(&m);
-			}
-		} else {
-			for (i = 1; i < n; ++i)
-				x = x + i;
+	} else if (mutex) {
+		for (i = 1; i < n; ++i) {
+			pthread_mutex_lock(&m);
+			x = x + i;
+			pthread_mutex_unlock(&m);
 		}
+	} else {
+		for (i = 1; i < n; ++i)
+			x = x + i;
 	}
 
 	return (NULL);
