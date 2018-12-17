@@ -32,8 +32,6 @@
 #include <unistd.h>
 #include <err.h>
 
-#define	MAX_WAIT	10
-
 int queue, max;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
