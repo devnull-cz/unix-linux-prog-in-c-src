@@ -10,6 +10,7 @@ PROGS=	atfork \
 	pthread-detach-join \
 	pthread-join \
 	pthread-stack-overflow \
+	pthread-rwlock \
 	set-detachstate \
 	setjmp \
 	sigwait \
@@ -62,6 +63,9 @@ pthread-join: pthread-join.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 pthread-stack-overflow: pthread-stack-overflow.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+pthread-rwlock: pthread-rwlock.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 set-detachstate: set-detachstate.o
