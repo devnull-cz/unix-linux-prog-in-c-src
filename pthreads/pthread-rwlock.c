@@ -2,6 +2,8 @@
  * See if RW lock implementation is writer biased.
  */
 
+#define	_XOPEN_SOURCE   700
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
