@@ -81,7 +81,10 @@ consumer(void *x)
 	while (1) {
 		pthread_mutex_lock(&mutex);
 
-		/* We cannot get a "message" when there is none so go to sleep. */
+		/*
+		 * We cannot get a "message" when there is none so go to
+		 * sleep.
+		 */
 		while (in_queue == 0) {
 			pthread_cond_wait(&cond, &mutex);
 		}
