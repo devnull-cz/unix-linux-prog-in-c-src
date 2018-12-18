@@ -18,6 +18,7 @@ int
 main(int argc, char *argv[])
 {
 	size_t numlocks;
+	int e;
 
 	if (argc != 2)
 		errx(1, "usage: %s num_locks", argv[0]);
@@ -26,12 +27,12 @@ main(int argc, char *argv[])
 	printf("will try: %zu\n", numlocks);
 
 	for (size_t i = 0; i < numlocks; i++) {
-		if (pthread_rwlock_rdlock(&rwlock) != 0) {
-			if (errno == EAGAIN) {
+		if ((e = pthread_rwlock_rdlock(&rwlock)) != 0) {
+			if (e == EAGAIN) {
 				printf("lock count = %zu\n", i);
 				exit(0);
 			} else {
-				errx(1, "rdlock: %s", strerror(errno));
+				errx(1, "rdlock: %s", strerror(e));
 			}
 		}
 	}
