@@ -26,7 +26,7 @@ size_t wcount;
 void *
 thread(void *arg)
 {
-	int i;
+	int i, e;
 	struct timespec tspec;
 	bool writer = (bool)arg;
 
@@ -44,14 +44,14 @@ thread(void *arg)
 			wcount++;
 			pthread_mutex_unlock(&wcount_mutex);
 		} else {
-			while (pthread_rwlock_tryrdlock(&rwlock) != 0) {
-				if ((errno == EBUSY) || (errno == ETIMEDOUT)) {
+			while ((e = pthread_rwlock_tryrdlock(&rwlock)) != 0) {
+				if ((e == EBUSY) || (e == ETIMEDOUT)) {
 					pthread_mutex_lock(&rcount_mutex);
 					rwaitcount++;
 					pthread_mutex_unlock(&rcount_mutex);
 				} else {
 					errx(1, "tryrdlock: %s",
-					    strerror(errno));
+					    strerror(e));
 				}
 			}
 		}
