@@ -5,7 +5,7 @@ PROGS=	atfork \
 	implement-barrier \
 	implement-barrier-fixed \
 	int-as-arg \
-	pthread-cancel \
+	pthread-setcanceltype \
 	pthread-create \
 	pthread-detach-join \
 	pthread-join \
@@ -51,7 +51,7 @@ int-as-arg: int-as-arg.o
 pthread-barrier: pthread-barrier.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-pthread-cancel: pthread-cancel.o
+pthread-setcanceltype: pthread-setcanceltype.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 pthread-create: pthread-create.o
