@@ -3,6 +3,9 @@
  * are printing messages in turns. Parent exits first, child continues along
  * and its parent is now the init process (which *usually* has pid = 1).
  *
+ * Note that you get a new prompt before the child finishes as the shell waits
+ * only for the command it started, not for it children.
+ *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
@@ -33,7 +36,7 @@ main(void)
 	}
 
 	for (i = 0; i < limit; ++i) {
-		printf("%s: loop %d [parent %d]\n", name, i, getppid());
+		printf("%s: loop %d [my parent is %d]\n", name, i, getppid());
 		sleep(1);
 	}
 
