@@ -59,7 +59,7 @@ thread_info_t threads[MAX];
 char *
 print_id(void)
 {
-	for (int i = 0; i < sizeof (threads) / sizeof (pthread_t); i++) {
+	for (int i = 0; i < MAX; i++) {
 		if (pthread_equal(pthread_self(), threads[i].t) != 0)
 			return (threads[i].name);
 	}
