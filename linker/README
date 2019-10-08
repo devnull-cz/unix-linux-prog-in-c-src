@@ -1,0 +1,23 @@
+# Using ld directly as not trivial.
+
+$ cc -o a.o -c a.c
+$ cc -o b.o -c b.c
+$ ls
+a.c  a.o  b.c  b.o
+$ ld
+ld: no input files
+$ ld a.o b.o
+ld: warning: cannot find entry symbol _start; defaulting to 0000000000401000
+ld: a.o: in function `main':
+a.c:(.text+0x19): undefined reference to `printf'
+$ ld -lc a.o b.o
+ld: warning: cannot find entry symbol _start; defaulting to 0000000000401020
+$ ./a.out
+-bash: ./a.out: No such file or directory
+$ ls
+a.c  a.o  a.out*  b.c  b.o
+
+# The compiler can do it for you though.
+$ cc a.c b.c
+$ ./a.out
+13
