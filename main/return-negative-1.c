@@ -6,8 +6,6 @@
  *   255
  *
  * Never use that in your code, it's confusing.
- *
- * (c) jp@devnull.cz
  */
 
 int

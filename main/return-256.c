@@ -5,8 +5,6 @@
  *   $ ./a.out
  *   $ echo $?
  *   0
- *
- * (c) jp@devnull.cz
  */
 
 int
