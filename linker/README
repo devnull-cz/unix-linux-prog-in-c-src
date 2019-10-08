@@ -21,3 +21,58 @@ a.c  a.o  a.out*  b.c  b.o
 $ cc a.c b.c
 $ ./a.out
 13
+
+# Building a library.
+$ cc -shared -o libmy.so libmy.c
+$ ls
+a.c  b.c  main.c  libmy.c  libmy.so*  README
+
+# Using the library.
+$ cc -lmy main.c
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../x86_64-pc-linux-gnu/bin/ld: cannot find -lmy
+collect2: error: ld returned 1 exit status
+
+$ cc -lmy -L. main.c
+$ ./a.out
+./a.out: error while loading shared libraries: libmy.so: cannot open shared object file: No such file or directory
+
+$ cc -lmy -L. -Xlinker -R . main.c
+$ ./a.out
+called myfn
+
+$ readelf -d a.out
+
+Dynamic section at offset 0x2dd8 contains 28 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libmy.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000001d (RUNPATH)            Library runpath: [.]
+ 0x000000000000000c (INIT)               0x1000
+ 0x000000000000000d (FINI)               0x1220
+ 0x0000000000000019 (INIT_ARRAY)         0x3dc8
+ 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)
+ 0x000000000000001a (FINI_ARRAY)         0x3dd0
+ 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)
+ 0x000000006ffffef5 (GNU_HASH)           0x2e8
+ 0x0000000000000005 (STRTAB)             0x3d0
+ 0x0000000000000006 (SYMTAB)             0x310
+ 0x000000000000000a (STRSZ)              168 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000015 (DEBUG)              0x0
+ 0x0000000000000003 (PLTGOT)             0x4000
+ 0x0000000000000002 (PLTRELSZ)           48 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x578
+ 0x0000000000000007 (RELA)               0x4b8
+ 0x0000000000000008 (RELASZ)             192 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffb (FLAGS_1)            Flags: PIE
+ 0x000000006ffffffe (VERNEED)            0x488
+ 0x000000006fffffff (VERNEEDNUM)         1
+ 0x000000006ffffff0 (VERSYM)             0x478
+ 0x000000006ffffff9 (RELACOUNT)          3
+ 0x0000000000000000 (NULL)               0x0
+
+$ cd /
+$ ~/unix-linux-prog-in-c-src/linker/a.out
+/afs/ms/u/p/pechanec/unix-linux-prog-in-c-src/linker/a.out: error while loading shared libraries: libmy.so: cannot open shared object file: No such file or directory
