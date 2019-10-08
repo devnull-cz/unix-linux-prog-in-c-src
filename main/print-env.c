@@ -1,7 +1,5 @@
 /*
  * Print all environment variables.
- *
- * (c) jp@devnull.cz
  */
 
 #include <stdio.h>
