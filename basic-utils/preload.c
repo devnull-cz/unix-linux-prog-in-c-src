@@ -16,11 +16,11 @@
 /* On Solaris cat(1) calls fclose() which in turn calls _close(). */
 int
 #ifdef __sun
-_close(int d)
+_close(int fd)
 #else
-close(int d)
+close(int fd)
 #endif
 {
-	(void) printf("fd %d will not be closed!\n", d);
+	(void) printf("fd %d will not be closed!\n", fd);
 	return (0);
 }
