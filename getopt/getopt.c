@@ -68,16 +68,15 @@ main(int argc, char **argv)
 	argv += optind;
 	argc -= optind;
 
-	if (argc >= 1) {
-		printf("filenames:");
-		while (argv[0] != NULL) {
-			printf(" '%s'", argv[0]);
-			++argv;
-		}
-	} else {
-		printf("no filenames entered");
+	if (argc == 0) {
+		printf("no filenames entered\n");
+		return (0);
+	}
+
+	printf("filenames:");
+	while (argv[0] != NULL) {
+		printf(" '%s'", argv[0]);
+		++argv;
 	}
 	printf("\n");
-
-	return (0);
 }
