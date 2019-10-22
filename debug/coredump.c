@@ -5,6 +5,7 @@
  * actually get the core file.  The easiest might be "ulimit -c unlimited" but
  * the size of 1000 (0.5MB) should be enough for this.
  */
+#include <stdio.h>
 
 void
 bad_memory_access(void)
