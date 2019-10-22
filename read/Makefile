@@ -1,4 +1,4 @@
-PROGS=big-file cat isstdout lseek redirect redirect2
+PROGS=big-file cat isstdout lseek redirect redirect2 simple-cat
 
 all: $(PROGS)
 
@@ -18,6 +18,9 @@ redirect: redirect.o
 	$(CC) -o $@ $^
 
 redirect2: redirect2.o
+	$(CC) -o $@ $^
+
+simple-cat: simple-cat.o
 	$(CC) -o $@ $^
 
 clean:
