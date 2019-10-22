@@ -14,6 +14,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <limits.h>
+/* PIPE_BUF */
+
 int
 main(int argc, char **argv)
 {
