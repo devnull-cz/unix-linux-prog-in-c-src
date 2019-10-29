@@ -17,7 +17,7 @@ main(int argc, char **argv)
 	char buf[128];
 
 	assert(argc == 1);
-	(void)argv;
+	(void) argv;
 
 	while ((n = read(0, buf, sizeof (buf))) > 0)
 		write(1, buf, n);
