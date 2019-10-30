@@ -17,6 +17,7 @@ main(int argc, char **argv)
 	char buf[128];
 
 	assert(argc == 1);
+	/* Quell the warning about an unused variable. */
 	(void) argv;
 
 	while ((n = read(0, buf, sizeof (buf))) > 0)
