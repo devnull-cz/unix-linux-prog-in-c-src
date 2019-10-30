@@ -36,6 +36,7 @@ SUBDIRS=assert		\
 	tcp		\
 	udp		\
 	uid		\
+	unlink		\
 	unix-socket	\
 	unix-standards	\
 	wait
