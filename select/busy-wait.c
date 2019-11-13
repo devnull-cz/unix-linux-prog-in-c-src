@@ -16,6 +16,8 @@
  * (c) jp@devnull.cz
  */
 
+#define	_XOPEN_SOURCE	700
+
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
@@ -27,6 +29,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <unistd.h>
+#include <poll.h>
 
 #define	BUF_LEN	100
 
@@ -104,7 +108,7 @@ main(int argc, char **argv)
 
 		/* Wait a little bit before the next loop. */
 		fprintf(stderr, "-- waiting --\n");
-		sleep(2);
+		poll(NULL, 0, 100);
 	}
 
 	return (0);
