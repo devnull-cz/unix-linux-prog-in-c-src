@@ -2,6 +2,7 @@ PROGS=libmy dlopen
 
 ifeq ($(UNAME_S),Linux)
   PROGS+=ld-lazy
+  PROGS+=myread.so
 endif
 
 all: $(PROGS)
@@ -13,6 +14,9 @@ dlopen: dlopen.o
 	$(CC) -o $@ $^ -ldl
 
 libmy.o: CFLAGS+=-fPIC
+
+myread.so: rtld_next.c
+	$(CC) -m64 -fPIC -D_GNU_SOURCE -shared -o $@ $^ -ldl
 
 clean:
 	rm -f *.o a.out $(PROGS)
