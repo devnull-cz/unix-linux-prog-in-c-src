@@ -12,6 +12,14 @@
  *   ret=$?
  *   echo $ret
  *   kill -l $(expr $ret - 128)
+ *
+ * Note that some kill(1) implementations will decrement the 128 value
+ * automatically:
+ *
+ *  $ kill -l 13
+ *  PIPE
+ *  $ kill -l 141
+ *  PIPE
  */
 
 #include <err.h>
