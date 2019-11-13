@@ -56,7 +56,6 @@ thread(void *arg)
 			}
 		}
 
-		/* sleep 100 msec */
 		tspec.tv_sec = 0;
 		tspec.tv_nsec = writer ? MSEC2NSEC(100) : MSEC2NSEC(1);
 		nanosleep(&tspec, NULL);
