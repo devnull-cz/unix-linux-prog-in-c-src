@@ -16,7 +16,7 @@
  *      $ gcc -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup \
  *          -o myread.dylib rtld_next.c
  *   Linux: (_GNU_SOURCE is needed for RTLD_NEXT to be defined)
- *	$ gcc -m64 -fPIC -D_GNU_SOURCE -shared -o myread.so -ldl rtld_next.c
+ *	$ gcc -m64 -fPIC -D_GNU_SOURCE -shared -o myread.so rtld_next.c -ldl
  *
  * Run:
  *   Solaris(if cat(1) is 32-bit remove "-m64" and use LD_PRELOAD_32):
