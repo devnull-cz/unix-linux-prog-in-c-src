@@ -18,7 +18,6 @@
 
 #define	_XOPEN_SOURCE	700
 
-#include <string.h>
 #include <signal.h>
 #include <unistd.h>
 
@@ -27,7 +26,7 @@
 void
 handle_segfault(int sig)
 {
-	write(1, MESSAGE, strlen(MESSAGE));
+	write(1, MESSAGE, sizeof (MESSAGE) - 1);
 
 	/*
 	 * Consider calling backtrace(3) after the signal is handled
@@ -45,7 +44,7 @@ main(void)
 
 	/*
 	 * Intentionally in the loop.  Let's see what happens if we catch the
-	 * signal but will not exit.
+	 * signal and not exit.
 	 */
 	while (1) {
 		int *p = NULL;
@@ -54,6 +53,4 @@ main(void)
 		/* The following line definitely generates the SEGV signal. */
 		*p = 1;
 	}
-
-	return (0);
 }
