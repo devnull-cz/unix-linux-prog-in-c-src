@@ -36,6 +36,7 @@ main(void)
 
 	while (1) {
 		printf("Sleeping for 10 seconds.\n");
+		/* poll is interruptible */
 		if (poll(NULL, 0, 10000) == -1)
 			warn("poll");
 		if (delivered == 1) {
@@ -43,7 +44,4 @@ main(void)
 			delivered = 0;
 		}
 	}
-
-	printf("Cleaning up.\n");
-	return (0);
 }
