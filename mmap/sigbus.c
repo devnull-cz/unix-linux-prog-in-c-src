@@ -24,7 +24,7 @@ int
 main(void)
 {
 	int fd, i;
-	char c = (char) 'a';
+	char c = 'a';
 	char *addr = NULL;
 
 	printf("pagesize = %ld bytes\n", sysconf(_SC_PAGE_SIZE));
@@ -47,6 +47,4 @@ main(void)
 		printf("%d byte 0x%02x\n", i, addr[i]);
 		addr[i] = 0;
 	}
-
-	return (0);
 }
