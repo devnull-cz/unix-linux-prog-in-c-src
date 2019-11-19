@@ -13,14 +13,15 @@
 
 #define	_XOPEN_SOURCE	700
 
-#include <sys/mman.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <err.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 int
 main(void)
@@ -41,15 +42,14 @@ main(void)
 	if (addr == MAP_FAILED)
 		err(1, "mmap");
 
-	sigemptyset(&set);
-	sigaddset(&set, SIGUSR1);
-	sigprocmask(SIG_SETMASK, &set, NULL);
-
 	switch (pid = fork()) {
 	case -1:
 		err(1, "fork");
 	case 0:
 		printf("%d: this is a child\n", getpid());
+		sigemptyset(&set);
+		sigaddset(&set, SIGUSR1);
+		sigprocmask(SIG_SETMASK, &set, NULL);
 		sigwait(&set, &sig);
 		assert(sig == SIGUSR1);
 		printf("%d: got '%c'\n", getpid(), addr[0]);
@@ -63,9 +63,9 @@ main(void)
 		addr[0] = c;
 		printf("%d: sending a signal to %d\n", getpid(), pid);
 		kill(pid, SIGUSR1);
+		wait(NULL);
 	}
 
 	munmap(addr, 1);
 	close(fd);
-	return (0);
 }
