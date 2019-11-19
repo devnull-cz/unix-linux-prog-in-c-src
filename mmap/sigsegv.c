@@ -10,6 +10,8 @@
  *     8192 generates SIGSEGV.
  *   - 64-bit program on Intel OS X gets SIGSEGV after access behind 1st
  *     4k page.
+ *    
+ * You may get a SIGBUS as well.
  */
 
 #include <assert.h>
