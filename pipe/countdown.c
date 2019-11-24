@@ -17,6 +17,8 @@ child(int p[2], int num)
 		close(p[0]);
 		sleep(num);
 		printf("%d exiting\n", getpid());
+		// This will close the write end of the pipe,
+		// the unblocking the reader.
 		_exit(0);
 	} else {
 		printf("%d forked %d\n", getpid(), pid);
@@ -31,6 +33,7 @@ main(void)
 
 	pipe(p);
 
+	// Spawn the pseudo-writers.
 	for (int i = 0; i < CHILDREN; i++)
 		child(p, i + 1);
 
