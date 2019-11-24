@@ -14,9 +14,9 @@ child(int p[2], int num)
 	pid_t pid;
 
 	if ((pid = fork()) == 0) {
-		sleep(num);
-		printf("%d closing\n", getpid());
 		close(p[0]);
+		sleep(num);
+		printf("%d exiting\n", getpid());
 		_exit(0);
 	} else {
 		printf("%d forked %d\n", getpid(), pid);
