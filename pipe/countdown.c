@@ -2,12 +2,13 @@
  * Pipe reader waits for the last writer to close the pipe.
  *
  * Note parent does not wait for the children. read() is interrupted
- * with the SIGCHLD signal however is automatically restarted.
+ * with the SIGCHLD signal.
  */
 
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <assert.h>
 
 #define	CHILDREN	3
 
@@ -42,7 +43,7 @@ main(void)
 
 	close(p[1]);
 	printf("%d reading\n", getpid());
-	read(p[0], buf, sizeof (buf));
+	assert(read(p[0], buf, sizeof (buf)) == 0);
 	printf("%d got EOF\n", getpid());
 
 	return (0);
