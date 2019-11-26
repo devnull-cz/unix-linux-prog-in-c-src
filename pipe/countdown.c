@@ -1,5 +1,8 @@
 /*
  * Pipe reader waits for the last writer to close the pipe.
+ *
+ * Note parent does not wait for the children. read() is interrupted
+ * with the SIGCHLD signal however is automatically restarted.
  */
 
 #include <stdio.h>
