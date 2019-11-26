@@ -23,7 +23,7 @@ trap "rm -f $1; exit" INT TERM
 [ -x $lock ] || { echo "program '$lock' does not exist"; exit 1; }
 
 while true; do
-	# loop until lock acquired
+	# loop until lock acquired (active/busy waiting !)
 	while true; do
 		$lock $1 lock
 		ret=$?
