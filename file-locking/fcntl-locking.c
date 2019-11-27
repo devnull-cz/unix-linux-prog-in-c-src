@@ -96,7 +96,8 @@ sigint_handler(int sig)
 
 char c[NPROC] = {'/', '_', '#', '+', '.'};
 
-static void usage(char *progname)
+static void
+usage(char *progname)
 {
 		errx(1, "usage: %s [-l|-L] <filename>", progname);
 }
