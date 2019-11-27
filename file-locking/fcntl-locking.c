@@ -148,7 +148,6 @@ main(int argc, char **argv)
 	(void) lseek(fd, SEEK_SET, FILE_LEN - 1);
 	(void) write(fd, "", 1);
 
-	/* set the structure */
 	fl.l_whence = SEEK_SET;
 	fl.l_start = FILE_LEN / 2;
 	fl.l_len = FILE_LEN / 2;
