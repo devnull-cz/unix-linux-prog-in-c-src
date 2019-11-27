@@ -1,4 +1,4 @@
-PROGS=aligned close lseek override reverse sigbus map-nocore
+PROGS=aligned close lseek override reverse sigsegv map-nocore
 
 all: $(PROGS)
 
