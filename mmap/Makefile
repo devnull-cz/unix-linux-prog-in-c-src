@@ -18,7 +18,7 @@ override: override.o
 reverse: reverse.o
 	$(CC) -o $@ $^
 
-sigbus: sigbus.o
+sigsegv: sigsegv.o
 	$(CC) -o $@ $^
 
 map-nocore: map-nocore.o
