@@ -10,16 +10,12 @@
  *
  * The file middle is denoted via '|' character.
  *
- * Compile as:
- *   cc fcntl-locking.c
- *   cc -o reader reader.c
- *
  * You have three ways of running it.
  *
  * (1) The following will not lock at all:
  *
- *   terminal1$ ./a.out xxx
- *   terminal2$ gcc -o reader reader.c
+ *   terminal1$ ./fcntl-locking xxx
+ *
  *   terminal2$ ./reader -l xxx
  *
  * You could also use the shell to print the file without locking on read:
@@ -33,8 +29,8 @@
  * (2) Will use locking for the 2nd half of the file with descriptor sharing
  * (that's the wrong solution, see "NOTE" below in the code):
  *
- *   terminal1$ ./a.out -l xxx
- *   terminal2$ gcc -o reader reader.c
+ *   terminal1$ ./fcntl-locking -l xxx
+ *
  *   terminal2$ ./reader -l xxx
  *
  * You will see something "better" but obviously it does not work correctly.
@@ -47,8 +43,8 @@
  *
  * (3) Will use locking for the 2nd half of the file without descriptor sharing:
  *
- *   terminal1$ ./a.out -L xxx
- *   terminal2$ gcc -o reader reader.c
+ *   terminal1$ ./fcntl-locking -L xxx
+ *
  *   terminal2$ ./reader -l xxx
  *
  * You should see something like the following output.  Note that the 1st half
