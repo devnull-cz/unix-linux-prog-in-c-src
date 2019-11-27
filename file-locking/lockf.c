@@ -10,8 +10,7 @@
  *   # Linux
  *   chmod g-x,g+s /var/tmp/mandatory.txt
  *
- *   gcc lockf.c
- *   ./a.out /var/tmp/mandatory.txt &
+ *   ./lockf /var/tmp/mandatory.txt &
  *
  *   # in new terminal run this:
  *   echo foo >> /var/tmp/mandatory.txt
