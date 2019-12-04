@@ -4,7 +4,8 @@ PROGS=	addresses \
 	gethostbyaddr \
 	gethostbyname \
 	getnameinfo \
-	hname-resolver
+	hname-resolver \
+	passive
 
 all: $(PROGS)
 
@@ -27,6 +28,9 @@ getnameinfo: getnameinfo.o
 	$(CC) -o $@ $^
 
 hname-resolver: hname-resolver.o
+	$(CC) -o $@ $^
+
+passive: passive.o
 	$(CC) -o $@ $^
 
 clean:

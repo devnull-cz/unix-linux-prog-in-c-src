@@ -48,8 +48,6 @@ main(int argc, char **argv)
 	memset(&hints, 0, sizeof (hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
-	/* needed when address structures will be used with bind/listen */
-	/* hints.ai_flags = AI_PASSIVE; */
 
 	if ((error = getaddrinfo(argv[1], argv[2], &hints, &res)) != 0)
 		errx(1, "%s", gai_strerror(error));
