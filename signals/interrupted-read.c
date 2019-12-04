@@ -36,7 +36,7 @@ main(int argc, char **argv)
 	int fd[2];
 	struct sigaction act = { 0 };
 
-	(void)argc;
+	(void) argc;
 
 	printf("My PID is %d (use -r for SA_RESTART).\n", getpid());
 
