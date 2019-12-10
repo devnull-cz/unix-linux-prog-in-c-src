@@ -28,10 +28,11 @@
 void
 recurse(int n)
 {
-	char foo[1024];	/* intentionally unused variable to make the stack */
-			/* bigger */
+	/* Intentionally unused variable to make the stack bigger */
+	char foo[1024];
 
-	foo[0] = 'F';	/* to silence the compiler warning */
+	/* To silence the compiler warning */
+	(void)foo;
 	printf("%d ", n);
 	fflush(stdout);
 
@@ -79,7 +80,6 @@ main(int argc, char *argv[])
 	}
 
 	(void) pthread_create(&t, &attr, thread, (void *)(intptr_t)max);
-
 	(void) pthread_join(t, NULL);
 
 	return (0);
