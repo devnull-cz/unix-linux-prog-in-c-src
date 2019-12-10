@@ -21,9 +21,9 @@
 int
 main(int argc, char **argv)
 {
+	int s, n;
 	char buf[BUF_LEN + 1];
 	char addr[INET_ADDRSTRLEN];
-	int s, n;
 	struct sockaddr_in in, faddr;
 	socklen_t addrsize = sizeof (faddr);
 
@@ -37,7 +37,7 @@ main(int argc, char **argv)
 	in.sin_port = htons(atoi(argv[1]));
 	in.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	if (bind(s, (struct sockaddr *) &in, sizeof (in)) == -1)
+	if (bind(s, (struct sockaddr *)&in, sizeof (in)) == -1)
 		err(1, "bind");
 
 	while ((n = recvfrom(s, buf, BUF_LEN, 0, (struct sockaddr *)&faddr,
@@ -51,6 +51,4 @@ main(int argc, char **argv)
 
 	if (n == -1)
 		err(1, "recvfrom");
-
-	return (0);
 }
