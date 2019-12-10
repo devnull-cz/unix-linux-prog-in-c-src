@@ -28,9 +28,7 @@
 void *
 thread(void *x)
 {
-	int i;
-
-	for (i = 0; i < NUM_LOOPS; ++i) {
+	for (int i = 0; i < NUM_LOOPS; ++i) {
 		printf("Thread %d (loop #%d).\n", *((int *)x), i);
 		sleep(1);
 	}
@@ -40,9 +38,11 @@ thread(void *x)
 int
 main(int argc, char *argv[])
 {
-	int i, j, e, yield = 0;
+	int i, e, yield = 0;
 	pthread_t t[NUM_THREADS];
 	void *p;
+
+	printf("Run with any argument to use sched_yield().\n");
 
 	if (argc > 1) {
 		printf("Running with sched_yield().\n");
@@ -62,13 +62,11 @@ main(int argc, char *argv[])
 	 */
 	sleep(NUM_LOOPS);
 
-	for (j = 0; j < NUM_THREADS; ++j) {
+	for (int j = 0; j < NUM_THREADS; ++j) {
 		printf("Joining thread (%d)", j);
 		if ((e = pthread_join(*(t + j), &p)) != 0)
 			warnx(": error: %s", strerror(e));
 		else
 			printf(".\n");
 	}
-
-	return (0);
 }
