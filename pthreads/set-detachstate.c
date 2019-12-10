@@ -24,7 +24,7 @@ thread(void *x)
 	 * threads will fail.
 	 */
 	for (i = 0; i < 10; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *) x), i);
+		printf("Thread %d (loop #%d).\n", *((int *)x), i);
 		sleep(1);
 	}
 
@@ -53,6 +53,4 @@ main(void)
 		warnx("pthread_join: thread 1: %s", strerror(e));
 	if ((e = pthread_join(t2, NULL)) != 0)
 		warnx("pthread_join: thread 2: %s", strerror(e));
-
-	return (0);
 }
