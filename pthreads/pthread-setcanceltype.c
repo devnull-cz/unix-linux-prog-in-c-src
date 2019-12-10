@@ -46,7 +46,7 @@
 #include <libgen.h>
 #include <pthread.h>
 
-#define	NSECS	5
+#define	NSECS	10
 
 int cancel_type;
 
@@ -63,7 +63,7 @@ mythread(void *x)
 	else
 		pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 
-	printf("For the next %d seconds, the thread should not be canceled.\n",
+	printf("For the next %d seconds, this thread should not be canceled.\n",
 	    NSECS);
 	printf("...unless PTHREAD_CANCEL_ASYNCHRONOUS (-a) was used\n");
 
@@ -84,11 +84,11 @@ mythread(void *x)
 	 * We will not probably be able to see this since before this is
 	 * printed, we enter some cancellation point and get terminated.
 	 */
-	printf("%d seconds passed; we should be canceled now...\n", NSECS);
+	printf("%d seconds passed; we should get canceled now...\n", NSECS);
 
 	/*
 	 * In case we are not terminated in printf(), we wait for a producer
-	 * here so we will block. However, open() is a cancellation point so we
+	 * here so we will block.  However, open() is a cancellation point so we
 	 * should exit as soon we call open().
 	 */
 	open("fifo", O_RDONLY);
@@ -120,7 +120,7 @@ main(int argc, char **argv)
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
 
-	printf("main() has just called pthread_cancel() on the thread.\n");
+	printf("main() has just returned from pthread_cancel() on the thread.\n");
 
 	/*
 	 * The pointer for canceled thread is defined in PTHREAD_CANCELED and
@@ -130,8 +130,13 @@ main(int argc, char **argv)
 	 */
 	if ((e = pthread_join(t, &ptr)) != 0)
 		errx(1, "pthread_join: %s", strerror(e));
-	else
-		printf("pthread_join()'s returned pointer: %p\n", ptr);
 
-	return (0);
+	if (ptr == PTHREAD_CANCELED) {
+		printf("pthread_join() correctly returned PTHREAD_CANCELED.\n");
+		return (0);
+	}
+
+	printf("pthread_join() did not returned PTHREAD_CANCELED (%p) but %p.\n",
+	    PTHREAD_CANCELED, ptr);
+	return (1);
 }
