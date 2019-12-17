@@ -33,32 +33,31 @@ thread(void *x)
 	return (NULL);
 }
 
+/*
+ * We should never mask synchronnous signals like SIGSEGV.  It is undefined what
+ * happens if such a signal is delivered when masked (module some specific
+ * situations we dot care about here).
+ */
+int sync_sigs[] = { SIGFPE, SIGILL, SIGSEGV, SIGBUS };
+
 int
 main(void)
 {
 	pthread_t t1, t2;
 	int sig, n1 = 1, n2 = 2;
 
-	/*
-	 * We should never really do this, we should never mask synchronnous
-	 * signals like SIGSEGV, SIGILL, etc.  See the slide on sigwait() in the
-	 * lecture material to understand why.  Also, see another source code
-	 * file (sigwait-with-sync-signals.c).
-	 *
-	 * However, this code is just a simple example.
-	 */
 	sigfillset(&sset);
+	for (int i = 0; i < sizeof (sync_sigs) / sizeof (int); ++i)
+		sigdelset(&sset, sync_sigs[i]);
 	pthread_sigmask(SIG_SETMASK, &sset, NULL);
 
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("You can ^C or ^\\ me now. Use 'kill -9 %d' " \
+	printf("You can to ^C, ^\\, or ^Z me now.  Use 'kill -9 %d' " \
 	    "from separate terminal to get rid of me.\n", getpid());
 	while (1) {
 		sigwait(&sset, &sig);
 		printf("---> caught signal #%d\n", sig);
 	}
-
-	return (0);
 }
