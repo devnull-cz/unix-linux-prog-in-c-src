@@ -19,6 +19,9 @@
  * Can you find the problem?  The solution is in implement-barrier-fixed.c but
  * go find the fix on your own.
  *
+ * You can also rewrite this to use pthead_barrier API which should also "fix"
+ * the problem.  Why is that?
+ *
  * To quickly deadlock, run like this: "./a.out 10 0"
  */
 
