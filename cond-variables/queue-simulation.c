@@ -17,6 +17,8 @@
  * (c) jp@devnull.cz
  */
 
+#define _XOPEN_SOURCE 700       // needed for random() on Linux
+
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -45,13 +47,12 @@ producer(void *x)
 			(void) printf("Producer: queue already full, "
 			    "putting myself to sleep.\n");
 			pthread_cond_wait(&cond, &mutex);
+			(void) printf("Producer: woken up.\n");
 		}
 
 		msg_created = random() % 2;
 
 		in_queue = in_queue + msg_created;
-		if (in_queue == capacity)
-			(void) printf("Producer: queue just filled up.\n");
 
 		/*
 		 * If the queue was empty and we produced a "message",  we must
@@ -94,6 +95,7 @@ consumer(void *x)
 			(void) printf("Consumer: queue already empty, "
 			    "putting myself to sleep.\n");
 			pthread_cond_wait(&cond, &mutex);
+			(void) printf("Consumer: woken up.\n");
 		}
 
 		msg_removed = random() % 2;
@@ -104,9 +106,6 @@ consumer(void *x)
 		 * messages again.
 		 */
 		in_queue = in_queue - msg_removed;
-		if (in_queue == 0)
-			(void) printf("Consumer: removed the last remaining "
-			    "message.\n");
 		if ((in_queue + msg_removed) == capacity && msg_removed == 1) {
 			(void) printf("Consumer: queue no longer full, "
 			    "signalling the producer.\n");
