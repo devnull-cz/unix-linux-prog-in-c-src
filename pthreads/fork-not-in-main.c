@@ -20,14 +20,14 @@ thread(void *x)
 {
 	pid_t pid;
 
-	printf("%d: before fork()\n", getpid());
+	printf("%d: before fork() in non-main thread\n", getpid());
 	if ((pid = fork()) == -1)
 		err(1, "fork");
 
 	if (pid == 0)
-		printf("%d: I'm child\n", getpid());
+		printf("%d: I'm child thread()\n", getpid());
 	else
-		printf("%d: I'm parent\n", getpid());
+		printf("%d: I'm parent thread()\n", getpid());
 
 	for (int i = 0; i < NLOOPS; ++i) {
 		printf("%d: loop #%d\n", getpid(), i);
