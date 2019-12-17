@@ -25,12 +25,13 @@
 /* For srandom() and random(). */
 #define	_XOPEN_SOURCE	700
 
-#include <pthread.h>
-#include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>
-#include <unistd.h>
 #include <err.h>
+#include <poll.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int queue, max;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
@@ -38,14 +39,14 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 int max = 10;
 int on_barrier;
-int maxsecs = 10;
+int maxrand = 100;
 
 void *
 th(void *arg)
 {
 	while (1) {
-		if (maxsecs > 0)
-			sleep(random() % maxsecs + 1);
+		if (maxrand > 0)
+			poll(NULL, 0, (random() % maxrand) * 10);
 
 		printf("%d ", *(int *)arg);
 		fflush(stdout);
@@ -76,7 +77,7 @@ main(int argc, char **argv)
 	if (argc > 1)
 		max = atoi(argv[1]);
 	if (argc > 2)
-		maxsecs = atoi(argv[2]);
+		maxrand = atoi(argv[2]);
 
 	if (max < 2)
 		errx(1, "The argument must be larger than 1.");
