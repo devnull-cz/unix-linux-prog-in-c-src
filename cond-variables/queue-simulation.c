@@ -1,8 +1,13 @@
 /*
- * A queue simulation.  At every interval, the producer randomly generates a
- * message or not, and at each step, the consumer randomly takes a message or
- * not.  One condition variable and one mutex is used.  Note that if we used
- * semaphores, we would need 2 of them to represent both "sleeping" states.
+ * A queue simulation using two threads - a consumer and a producer.
+ *
+ * At every interval, the producer randomly inserts a message to the queue or
+ * not, and at each step, the consumer randomly takes a message or not.  One
+ * condition variable and one mutex is used.  Note that if we used semaphores,
+ * we would need 2 of them to represent both "sleeping" states.
+ *
+ * On a full queue, insertion will put the producer to sleep, on an empty queue,
+ * taking a message puts the consumer to sleep.
  *
  * A randomness factor is used here to have the queue get some items in it and
  * also to hit both boundary cases (empty and full queue) from time to time.
@@ -11,8 +16,6 @@
  *
  * (c) jp@devnull.cz
  */
-
-#define	_XOPEN_SOURCE 700	// needed for F_LOCK
 
 #include <pthread.h>
 #include <stdio.h>
@@ -39,8 +42,8 @@ producer(void *x)
 		pthread_mutex_lock(&mutex);
 		/* We can't insert a "message" when the queue is full. */
 		while (in_queue == capacity) {
-			(void) printf("Queue already full, producer "
-			    "sleeping.\n");
+			(void) printf("Producer: queue already full, "
+			    "putting myself to sleep.\n");
 			pthread_cond_wait(&cond, &mutex);
 		}
 
@@ -48,7 +51,7 @@ producer(void *x)
 
 		in_queue = in_queue + msg_created;
 		if (in_queue == capacity)
-			(void) printf("Note: queue just filled up.\n");
+			(void) printf("Producer: queue just filled up.\n");
 
 		/*
 		 * If the queue was empty and we produced a "message",  we must
@@ -62,6 +65,8 @@ producer(void *x)
 		 */
 		if (in_queue == 1 && msg_created == 1) {
 			pthread_mutex_unlock(&mutex);
+			(void) printf("Producer: we inserted a message to "
+			    "an empty queue, signalling the consumer.\n");
 			pthread_cond_signal(&cond);
 		} else {
 			pthread_mutex_unlock(&mutex);
@@ -86,6 +91,8 @@ consumer(void *x)
 		 * sleep.
 		 */
 		while (in_queue == 0) {
+			(void) printf("Consumer: queue already empty, "
+			    "putting myself to sleep.\n");
 			pthread_cond_wait(&cond, &mutex);
 		}
 
@@ -98,10 +105,11 @@ consumer(void *x)
 		 */
 		in_queue = in_queue - msg_removed;
 		if (in_queue == 0)
-			(void) printf("Note: queue just emptied.\n");
+			(void) printf("Consumer: removed the last remaining "
+			    "message.\n");
 		if ((in_queue + msg_removed) == capacity && msg_removed == 1) {
-			(void) printf("Queue no longer full, signalling "
-			    "producer.\n");
+			(void) printf("Consumer: queue no longer full, "
+			    "signalling the producer.\n");
 			pthread_mutex_unlock(&mutex);
 			pthread_cond_signal(&cond);
 		} else {
@@ -131,7 +139,8 @@ main(int argc, char **argv)
 
 	/*
 	 * Main thread.  Periodically print the "contents" of the queue.  A dot
-	 * means an item, a space means an empty slot.
+	 * means an item, a space means an empty slot.  Note that we do that
+	 * under a lock to make sure we work with consistent data.
 	 */
 	while (1) {
 		pthread_mutex_lock(&mutex);
@@ -144,7 +153,5 @@ main(int argc, char **argv)
 		pthread_mutex_unlock(&mutex);
 		poll(NULL, 0, 85); /* sleep 85 ms */
 	}
-
 	/* Never reached. */
-	return (0);
 }
