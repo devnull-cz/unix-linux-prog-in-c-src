@@ -45,10 +45,10 @@ main(void)
 		err(1, "fork");
 
 	if (pid == 0) {
-		printf("%d: child sleeping for %d seconds...\n", getpid(),
-		    NSECS);
+		printf("%d: child main() sleeping for %d seconds...\n",
+		    getpid(), NSECS);
 		sleep(NSECS);
-		printf("%d: child exiting\n", getpid());
+		printf("%d: child exiting from main()\n", getpid());
 		return (0);
 	}
 
