@@ -75,8 +75,13 @@ count(void *arg)
 			pthread_mutex_unlock(&m);
 		}
 	} else {
-		for (i = 1; i < n; ++i)
+		for (i = 1; i < n; ++i) {
+			/*
+			 * Also try with x += i and see if there is any
+			 * difference.
+			 */
 			x = x + i;
+		}
 	}
 
 	return (NULL);
