@@ -1,5 +1,6 @@
 /*
- * See if RW lock implementation is writer biased.
+ * A naive test (like not considering complexities like lenght of queue
+ * of waiting threads) to see if RW lock implementation is writer biased.
  */
 
 #define	_XOPEN_SOURCE   700
@@ -13,89 +14,70 @@
 #include <err.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/types.h>
 
-#define	NUM_ITER	5	// iterations per thread
-#define	MSEC2NSEC(n)	((n) * 1000 * 1000)
+#define	MSEC2NSEC(n)	((n) * 1000 * 1000)	// milli to nano
 
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
-pthread_mutex_t rcount_mutex = PTHREAD_MUTEX_INITIALIZER;
-size_t rwaitcount;
-pthread_mutex_t wcount_mutex = PTHREAD_MUTEX_INITIALIZER;
-size_t wcount;
+static void
+millisleep(int msec)
+{
+	struct timespec tspec = { .tv_sec = 0, .tv_nsec = MSEC2NSEC(msec) };
+
+	nanosleep(&tspec, NULL);
+}
+
 
 void *
-thread(void *arg)
+writer_thread(void *arg)
 {
-	int i, e;
-	struct timespec tspec;
-	bool writer = (bool)arg;
+	printf("writer %ld grabbing lock\n", (intptr_t)arg);
 
-	for (i = 0; i < NUM_ITER; ++i) {
-		(void) printf("thread %12d (%s) loop #%d\n",
-		    (int)pthread_self(), writer ? "writer" : "reader", i);
+	pthread_rwlock_wrlock(&rwlock);
 
-		if (writer) {
-			pthread_rwlock_wrlock(&rwlock);
+	printf("writer %ld locked\n", (intptr_t)arg);
 
-			printf("writer!\n");
-			pthread_mutex_lock(&wcount_mutex);
-			wcount++;
-			pthread_mutex_unlock(&wcount_mutex);
-		} else {
-			while ((e = pthread_rwlock_tryrdlock(&rwlock)) != 0) {
-				if ((e == EBUSY) || (e == ETIMEDOUT)) {
-					pthread_mutex_lock(&rcount_mutex);
-					rwaitcount++;
-					pthread_mutex_unlock(&rcount_mutex);
-				} else {
-					errx(1, "tryrdlock: %s",
-					    strerror(e));
-				}
-			}
-		}
+	millisleep(5000);
 
-		tspec.tv_sec = 0;
-		tspec.tv_nsec = writer ? MSEC2NSEC(100) : MSEC2NSEC(1);
-		nanosleep(&tspec, NULL);
+	pthread_rwlock_unlock(&rwlock);
+	printf("writer %ld unlocked\n", (intptr_t)arg);
 
-		pthread_rwlock_unlock(&rwlock);
-	}
+	return (NULL);
+}
+
+void *
+reader_thread(void *arg)
+{
+	int e;
+
+	printf("reader grabbing lock\n");
+	if ((e = pthread_rwlock_rdlock(&rwlock)) != 0)
+		errx(1, "tryrdlock: %s", strerror(e));
+
+	printf("reader locked\n");
+	millisleep(500);
+
+	pthread_rwlock_unlock(&rwlock);
 
 	return (NULL);
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
-	pthread_t *threads;
-	int numthreads;
+	int numthreads = 3, i = 0;
+	pthread_t threads[numthreads];
 
-	if (argc != 2)
-		errx(1, "usage: %s num_threads", argv[0]);
+	pthread_create(&threads[i++], NULL, writer_thread, (void *)1);
+	millisleep(500); // give the others chance to run
 
-	numthreads = atoi(argv[1]);
-	if ((threads = malloc(sizeof (pthread_t) * numthreads)) == NULL)
-		err(1, "malloc");
+	pthread_create(&threads[i++], NULL, reader_thread, NULL);
+	millisleep(100); // run reader first
+	pthread_create(&threads[i++], NULL, writer_thread, (void *)2);
 
-	for (int i = 0; i < numthreads; i++) {
-		/*
-		 * There is only one writer thread and it is created as the
-		 * first thread so chances are it will start running first.
-		 */
-		if (pthread_create(&threads[i], NULL, thread,
-		    i == 0 ? (void *)true : (void *)false) != 0) {
-			errx(1, "pthread create: %s", strerror(errno));
-		}
-	}
-
-	for (int i = 0; i < numthreads; i++)
+	for (i = 0; i < numthreads; i++)
 		pthread_join(threads[i], NULL);
-
-	free(threads);
-
-	printf("writer entered %zu times\n", wcount);
-	printf("readers could not enter %zu times\n", rwaitcount);
 
 	return (0);
 }
