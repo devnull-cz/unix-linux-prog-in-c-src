@@ -94,6 +94,8 @@ main(int argc, char *argv[])
 	for (int i = 0; i < numthreads; i++)
 		pthread_join(threads[i], NULL);
 
+	free(threads);
+
 	printf("writer entered %zu times\n", wcount);
 	printf("readers could not enter %zu times\n", rwaitcount);
 
