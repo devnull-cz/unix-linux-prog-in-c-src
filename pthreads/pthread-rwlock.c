@@ -14,6 +14,7 @@
 #include <string.h>
 #include <errno.h>
 
+#define	NUM_ITER	5	// iterations per thread
 #define	MSEC2NSEC(n)	((n) * 1000 * 1000)
 
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
@@ -30,7 +31,7 @@ thread(void *arg)
 	struct timespec tspec;
 	bool writer = (bool)arg;
 
-	for (i = 0; i < 5; ++i) {
+	for (i = 0; i < NUM_ITER; ++i) {
 		(void) printf("thread %12d (%s) loop #%d\n",
 		    (int)pthread_self(), writer ? "writer" : "reader", i);
 
