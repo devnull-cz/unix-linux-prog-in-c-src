@@ -81,11 +81,10 @@ main(int argc, char *argv[])
 	for (int i = 0; i < numthreads; i++) {
 		/*
 		 * There is only one writer thread and it is created as the
-		 * last thread so chances are the reader threads will be
-		 * already running.
+		 * first thread so chances are it will start running first.
 		 */
 		if (pthread_create(&threads[i], NULL, thread,
-		    i == numthreads - 1 ? (void *)true : (void *)false) != 0) {
+		    i == 0 ? (void *)true : (void *)false) != 0) {
 			errx(1, "pthread create: %s", strerror(errno));
 		}
 	}
