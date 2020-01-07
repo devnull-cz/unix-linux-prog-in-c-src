@@ -30,11 +30,9 @@ thread(void *arg)
 	struct timespec tspec;
 	bool writer = (bool)arg;
 
-	(void) printf("thread %12d is %s\n", (int)pthread_self(),
-	    writer ? "writer" : "reader");
-
 	for (i = 0; i < 5; ++i) {
-		(void) printf("thread %12d loop #%d\n", (int)pthread_self(), i);
+		(void) printf("thread %12d (%s) loop #%d\n",
+		    (int)pthread_self(), writer ? "writer" : "reader", i);
 
 		if (writer) {
 			pthread_rwlock_wrlock(&rwlock);
