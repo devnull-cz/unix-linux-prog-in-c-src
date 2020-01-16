@@ -10,7 +10,7 @@
  *     8192 generates SIGSEGV.
  *   - 64-bit program on Intel OS X gets SIGSEGV after access behind 1st
  *     4k page.
- *    
+ *
  * You may get a SIGBUS as well.
  */
 
@@ -38,7 +38,7 @@ main(void)
 	write(fd, &c, 1);
 
 	addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	if (addr == NULL)
+	if (addr == MAP_FAILED)
 		err(1, "mmap");
 
 	for (i = 4090; i < 16384; i++) {
