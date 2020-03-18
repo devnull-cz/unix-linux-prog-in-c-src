@@ -27,7 +27,8 @@ done
 
 echo "...done reading option arguments"
 
-# -1 is for "shift 1" already done above
+# $OPTIND is an index of the first unprocessed argument.  Note that $1 is
+# argv[1].
 shift `expr $OPTIND - 1`
 
 [ -n "$1" ] && echo "filenames: $*" || echo "no filenames entered"
