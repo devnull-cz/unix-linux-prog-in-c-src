@@ -17,7 +17,7 @@
  * (c) jp@devnull.cz
  */
 
-#define	_XOPEN_SOURCE 700       // needed for random() on Linux
+#define	_XOPEN_SOURCE 700	// needed for random() on Linux
 
 #include <pthread.h>
 #include <stdio.h>
