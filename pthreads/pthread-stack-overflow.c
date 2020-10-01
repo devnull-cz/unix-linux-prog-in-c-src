@@ -32,7 +32,7 @@ recurse(int n)
 	char foo[1024];
 
 	/* To silence the compiler warning */
-	(void)foo;
+	(void) foo;
 	printf("%d ", n);
 	fflush(stdout);
 
