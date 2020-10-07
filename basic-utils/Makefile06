@@ -6,6 +6,12 @@
 #   MYVAR="from outside" make -f Makefile06
 #   MYVAR="from outside" make -f Makefile06 -e
 #
+# Note that that is different from setting macros as arguments of the make
+# command itself.  Both invocations below will print "from make argument":
+#
+#   make -f Makefile06 MYVAR="from make argument"
+#   make -f Makefile06 -e MYVAR="from make argument"
+#
 
 MYVAR="from inside"
 
