@@ -1,4 +1,4 @@
-# Using ld directly as not trivial.
+# Using ld directly is not trivial.
 
 $ cc -o a.o -c a.c
 $ cc -o b.o -c b.c
@@ -12,6 +12,8 @@ ld: a.o: in function `main':
 a.c:(.text+0x19): undefined reference to `printf'
 $ ld -lc a.o b.o
 ld: warning: cannot find entry symbol _start; defaulting to 0000000000401020
+$ echo $?
+0
 $ ./a.out
 -bash: ./a.out: No such file or directory
 $ ls
@@ -36,6 +38,19 @@ $ cc -lmy -L. main.c
 $ ./a.out
 ./a.out: error while loading shared libraries: libmy.so: cannot open shared object file: No such file or directory
 
+# The library name is in the executable but with no additional information on
+# where to find it (so only system directories are searched).
+$ ldd a.out
+	linux-vdso.so.1 (0x00007fff61188000)
+	libmy.so => not found
+	libc.so.6 => /lib64/libc.so.6 (0x00007fc39ea3b000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fc39ecc9000)
+
+# You can provide information through environment variables (that is dynamic
+# linker).
+$ LD_LIBRARY_PATH=. ./a.out
+called myfn
+
 $ cc -lmy -L. -Xlinker -R . main.c
 $ ./a.out
 called myfn
@@ -46,6 +61,7 @@ Dynamic section at offset 0x2dd8 contains 28 entries:
   Tag        Type                         Name/Value
  0x0000000000000001 (NEEDED)             Shared library: [libmy.so]
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+# this followin one is from those "-Xlinker -R." options
  0x000000000000001d (RUNPATH)            Library runpath: [.]
  0x000000000000000c (INIT)               0x1000
  0x000000000000000d (FINI)               0x1220
