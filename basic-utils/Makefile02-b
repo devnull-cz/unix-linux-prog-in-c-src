@@ -1,0 +1,7 @@
+# As in Makefile02, this is run within one shell.  The parent PIDs will be
+# identical.
+
+all:
+	ps -o ppid= -p $$$$; \
+	    ps -o ppid= -p $$$$; \
+	    ps -o ppid= -p $$$$
