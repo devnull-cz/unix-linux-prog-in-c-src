@@ -1,3 +1,8 @@
+# Search for "gmake automatic variables" to learn more.
+#
+# However, this Makefile is part of the make system that builds the whole
+# unix-linux-programming-in-c-src repository.
+
 all: standards suvreq lineinfo main libpreload.so
 
 standards: standards.o
