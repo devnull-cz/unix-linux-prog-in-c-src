@@ -1,7 +1,6 @@
 /*
  * Print all environment variables.
  */
-
 #include <stdio.h>
 
 /* This variable is defined in libc.so. */
@@ -14,6 +13,4 @@ main(void)
 
 	while (environ[i] != NULL)
 		printf("%s\n", environ[i++]);
-
-	return (0);
 }
