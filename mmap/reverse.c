@@ -8,11 +8,14 @@
  *   $ cat numbers.txt
  */
 
+#include <err.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <sys/mman.h>
+#include <unistd.h>
+
+#define	FNAME	"numbers.txt"
 
 int
 main(void)
@@ -21,7 +24,9 @@ main(void)
 	int fd, size;
 	char *addr, *p1, *p2;
 
-	fd = open("numbers.txt", O_RDWR);
+	if ((fd = open(FNAME, O_RDWR)) == -1)
+		err(1, "open %s", FNAME);
+
 	size = lseek(fd, 0, SEEK_END);
 	p1 = addr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
