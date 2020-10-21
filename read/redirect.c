@@ -42,13 +42,7 @@ main(int argc, char **argv)
 	if (open(argv[2], O_CREAT | O_TRUNC | O_WRONLY, 0666) == -1)
 		err(1, "open");
 
-	/*
-	 * No need to use "if" for error checking.  If we get past this call we
-	 * know execl() failed.
-	 */
+	/* No need for "if".  If we get past this one we know execl() failed. */
 	execl("/bin/cat", "cat", NULL);
 	err(1, "execl");
-
-	/* Not reached. */
-	return (1);
 }
