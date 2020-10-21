@@ -1,7 +1,7 @@
 /*
  * Open a file, set a position, and then move from that position. Read one
  * character from there. Proves that you can use a negative number for the
- * offset used with SEEK_CUR.
+ * offset used with SEEK_CUR.  Remember that the first byte is on position 0.
  *
  * If the file contains "123456....", then:
  *
@@ -46,6 +46,4 @@ main(int argc, char **argv)
 	}
 
 	printf("Character read: '%c'\n", c);
-
-	return (0);
 }
