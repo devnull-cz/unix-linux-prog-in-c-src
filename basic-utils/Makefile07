@@ -4,4 +4,4 @@ xxx=a\
 b
 
 all:
-	@echo "$(xxx)"
+	@echo $(xxx)
