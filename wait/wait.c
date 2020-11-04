@@ -32,15 +32,15 @@
  *
  * (c) jp@devnull.cz
  */
-#include <sys/types.h>
-#include <sys/wait.h>
+#include <assert.h>
+#include <err.h>
+#include <errno.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-#include <err.h>
-#include <assert.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 int
 main(void)
@@ -84,6 +84,4 @@ main(void)
 		if (WIFCONTINUED(status))
 			printf("Child continued.\n");
 	}
-
-	return (0);
 }
