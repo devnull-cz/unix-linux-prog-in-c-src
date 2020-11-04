@@ -6,7 +6,7 @@
  * /bin/ls will get whatever is on stack after that.  That could be a list of
  * environment variables, for example (happened on FreeBSD in the past), making
  * it quite confusing:
- * 
+ *
  *	$ ./a.out
  *	: BLOCKSIZE=K: No such file or directory
  *	: FTP_PASSIVE_MODE=YES: No such file or directory
