@@ -17,8 +17,6 @@ main(void)
 	 */
 	if (execl("/bin/date", "date", (char *)NULL) == -1)
 #endif
-	execl("/bin/date", "date", (char *)NULL);
+	execl("/bin/date", "date", NULL);
 	err(1, "execl");
-
-	return (0);
 }
