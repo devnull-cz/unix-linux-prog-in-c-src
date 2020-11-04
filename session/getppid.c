@@ -29,7 +29,7 @@ main(void)
 	if (child_pid != 0) {
 		printf("parent: pid = %d child pid: %d grandparent = %d\n",
 		    getpid(), child_pid, getppid());
-		sleep(2);
+		sleep(4);
 		printf("parent: exiting\n");
 		exit(0);
 	}
@@ -49,7 +49,7 @@ main(void)
 		sleep(1);
 	}
 	if (errno == ESRCH) {
-		printf("child: parent exited, current parent: %d\n", getppid());
+		printf("child: parent exited, new parent: %d\n", getppid());
 		/*
 		 * NOTE: we could check if the current PID is 1 to see if init
 		 * has taken over the parenthood but this is not universally
@@ -59,6 +59,4 @@ main(void)
 		 */
 		exit(0);
 	}
-
-	return (0);
 }
