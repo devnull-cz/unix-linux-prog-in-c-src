@@ -32,6 +32,9 @@
  *
  * (c) jp@devnull.cz
  */
+
+#define	_XOPEN_SOURCE	700
+
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
