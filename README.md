@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/devnull-cz/unix-linux-prog-in-c-src.svg?branch=master)](https://travis-ci.org/devnull-cz/unix-linux-prog-in-c-src)
+![Build](https://github.com/devnull-cz/unix-linux-prog-in-c-src/workflows/Build/badge.svg)
 
 The files in this directory and all sub-directories are used for demonstrations
 in the course of teaching "Unix programming in C" (NSWI015) at Faculty of
