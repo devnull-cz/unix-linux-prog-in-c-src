@@ -16,8 +16,7 @@ int
 main(int argc, char *argv[])
 {
 	char c;
-	sigset_t set;
-	int pid, sig;
+	int pid;
 	int ignore = 0;
 
 	if (argc > 1) {
