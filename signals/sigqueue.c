@@ -1,5 +1,6 @@
 /*
- * Demonstrate what is sigqueue() good for.
+ * Demonstrate what is sigqueue() can be used to pass integers between
+ * processes.
  *
  * compile and run:
  *   cc sigqueue.c
