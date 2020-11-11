@@ -49,9 +49,7 @@ main(int argc, char *argv[])
 		printf("%d: sending a signal to %d\n", getpid(), pid);
 		kill(pid, SIGTERM);
 		// wait(NULL);
-		printf("%d: waiting for two signals\n", getpid());
-		pause();
-		printf("got one\n");
+		printf("%d: waiting for a signal\n", getpid());
 		pause();
 	}
 }
