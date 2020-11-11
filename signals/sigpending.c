@@ -1,3 +1,8 @@
+/*
+ * Demonstrate how sigpending(2) works. Run the program, send SIGTERM to it,
+ * input a character. Ty with different signal.
+ */
+
 #define	_XOPEN_SOURCE	700
 
 #include <stdio.h>
@@ -7,7 +12,7 @@
 #include <err.h>
 #include <assert.h>
 
-#define	MESSAGE "SIGINT caught !\n"
+#define	MESSAGE "SIGTERM caught !\n"
 
 void
 ctrl_c(int sig)
@@ -22,25 +27,25 @@ main(void)
 
 	sigset_t sigset;
 
-	/* Block the SIGINT first. */
+	/* Block the SIGTERM first. */
 	sigemptyset(&sigset);
-	sigaddset(&sigset, SIGINT);
+	sigaddset(&sigset, SIGTERM);
 	sigprocmask(SIG_BLOCK, &sigset, NULL);
 
-	/* Install SIGINT handler. */
+	/* Install SIGTERM handler. */
 	act.sa_handler = ctrl_c;
-	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGTERM, &act, NULL);
 
 	char buf[1];
 
-	printf("Waiting for a char #1\n");
-	if (read(1, buf, sizeof (buf)) == -1)
-		err(1, "1st read()");
+	printf("%d: Waiting for a char\n", getpid());
+	if (read(0, buf, sizeof (buf)) == -1)
+		err(1, "read");
 
 	sigset_t freshset;
 	sigemptyset(&freshset); // just to make it obvious
 	sigpending(&freshset);
-	assert(sigismember(&freshset, SIGINT));
+	assert(sigismember(&freshset, SIGTERM));
 
 	return (0);
 }
