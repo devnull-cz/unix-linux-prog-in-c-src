@@ -37,7 +37,7 @@ main(void)
 	lseek(fd, 99, SEEK_SET);
 	write(fd, &c, 1);
 
-	addr = mmap(0, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	addr = mmap(NULL, 100, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	if (addr == MAP_FAILED)
 		err(1, "mmap");
 
