@@ -1,6 +1,7 @@
 /*
  * An example on an interrupted read(2).  Run the program, then kill it from
- * another terminal.  read(2) should return an error, with EINTR errno.
+ * another terminal.  read(2) should return an error, with EINTR errno, and the
+ * process exists.
  *
  *  $ ./a.out
  *  My PID is 30794.
@@ -8,7 +9,9 @@
  *  TERM signal caught !
  *  a.out: read: Interrupted system call
  *
- * Use -r option for SA_RESTART.
+ * Use -r option for SA_RESTART.  In that case, sending SIGTERM will not
+ * terminate the process as the read system call is restarted (and continues to
+ * be blocked on a pipe).
  *
  * (c) jp@devnull.cz
  */
