@@ -1,5 +1,5 @@
 /*
- * See what happens when writing behind the end of file using mmap'd segment.
+ * See what happens when writing behind the end of file using mmap'ed segment.
  *
  * Run the program like this and compare:
  *
@@ -21,7 +21,7 @@ int
 main(int argc, char *argv[])
 {
 	int fd;
-	char c = (char) 'a';
+	char c = (char)'a';
 	char *addr = NULL;
 	int mode;
 
@@ -47,7 +47,7 @@ main(int argc, char *argv[])
 	if (mode == 2)
 		write(fd, &c, 1);
 
-	addr[SEEK_N - 2] = 0;
-
+	/* Must crash on argv1 == 0. */
+	addr[SEEK_N - 1] = 0;
 	return (0);
 }
