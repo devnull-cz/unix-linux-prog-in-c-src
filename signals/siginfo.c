@@ -86,7 +86,7 @@ main(void)
 {
 	struct sigaction act = { 0 };
 
-	printf("PID %d started...\n", getpid());
+	printf("PID %d started, kill me with SIGINT...\n", getpid());
 
 	act.sa_sigaction = sig_handler;
 	/*
