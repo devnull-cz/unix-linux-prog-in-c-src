@@ -1,6 +1,6 @@
 /*
- * Demonstrate how sigpending(2) works. Run the program, send SIGTERM to it,
- * input a character. Ty with different signal.
+ * This code demonstrates how sigpending(2) works.  Run the program, send
+ * SIGTERM to it, and then press Enter.  Try with a different signal.
  */
 
 #define	_XOPEN_SOURCE	700
@@ -23,9 +23,8 @@ ctrl_c(int sig)
 int
 main(void)
 {
-	struct sigaction act = { 0 };
-
 	sigset_t sigset;
+	struct sigaction act = { 0 };
 
 	/* Block the SIGTERM first. */
 	sigemptyset(&sigset);
@@ -38,14 +37,12 @@ main(void)
 
 	char buf[1];
 
-	printf("%d: Waiting for a char\n", getpid());
+	printf("%d: send me a SIGTERM, then pres Enter\n", getpid());
 	if (read(0, buf, sizeof (buf)) == -1)
 		err(1, "read");
 
 	sigset_t freshset;
-	sigemptyset(&freshset); // just to make it obvious
 	sigpending(&freshset);
 	assert(sigismember(&freshset, SIGTERM));
-
-	return (0);
+	printf("Yes, we got a pending SIGTERM.\n");
 }
