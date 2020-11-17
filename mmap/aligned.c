@@ -1,13 +1,14 @@
 /*
- * Create file with of this structure (each size+data chunk is called record):
+ * The program creates a file of the following structure (each size+data chunk
+ * is called a record).  The size field is uint32_t.
  *
- * | size       | data | size       | data | ... |
- *   [uint32_t]          [uint32_t]
+ * | size | data ... | size | data ... |
  *
- * with 2 records, map it in using mmap() and read using using pointer
+ * With 2 records, map it in using mmap() and read it using using pointer
  * arithmetics.
  *
  * Run e.g. like this on x86 and then on SPARC:
+ *
  *   ./a.out 16 16
  *   ./a.out 17 16
  *
@@ -43,13 +44,13 @@ main(int argc, char *argv[])
 		exit(1);
 	}
 
-	/* Create 1st record. */
+	/* Create the 1st record. */
 	num = atoi(argv[1]);
 	write(fd, &num, sizeof (num));
 	for (i = 0; i < atoi(argv[1]); i++)
 		write(fd, &c, 1);
 
-	/* Create 2nd record. */
+	/* Create the 2nd record. */
 	num = atoi(argv[2]);
 	write(fd, &num, sizeof (num));
 	c++;
@@ -58,23 +59,24 @@ main(int argc, char *argv[])
 
 	addr = mmap(0, 2 * sizeof (num) + atoi(argv[1]) + atoi(argv[2]),
 	    PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	if ((void *) addr == MAP_FAILED) {
+	if ((void *)addr == MAP_FAILED) {
 		perror("mmap");
 		exit(1);
 	}
+	/* One byte past the file end. */
 	eofptr = addr + 2 * sizeof (num) + atoi(argv[1]) + atoi(argv[2]);
 
-	/* Read 1st record. */
+	/* Read the 1st record. */
 	tag = (uint32_t *)addr;
+	/* This should be always aligned by the kernel. */
 	printf("tag ptr = 0x%p [%s]\n",
 		(void *)tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
 	printf("tag = %d\n", *tag);
-
 	/* skip past tag and data */
 	addr += sizeof (*tag);
 	addr += *tag;
 
-	/* Read 2nd record. */
+	/* Read the 2nd record. */
 	tag = (uint32_t *)addr;
 	printf("tag ptr = 0x%p [%s]\n",
 		(void *)tag, IS_ALIGNED(tag) ? "aligned" : "not aligned");
@@ -90,6 +92,4 @@ main(int argc, char *argv[])
 		    (void *)addr, (void *)eofptr);
 		exit(1);
 	}
-
-	return (0);
 }
