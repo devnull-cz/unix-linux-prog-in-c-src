@@ -2,9 +2,9 @@
 
 #
 # Use lock-unlock.c (build it and name it "lock-unlock") for file locking.
-# This simple shell script simulates a worker. If holding a lock, it simulates
-# some work by printing its PID. You will see that only one process at a time
-# is working. Run it like this to see something:
+# This simple shell script simulates a single worker.  If holding a lock, it
+# does some work by printing its PID.  You will see that only one process at a
+# time is working.  Run it like this to see something:
 #
 #	$ ./run.sh xxx & ./run.sh xxx & ./run.sh xxx & ./run.sh xxx &
 #
@@ -23,7 +23,7 @@ trap "rm -f $1; exit" INT TERM
 [ -x $lock ] || { echo "program '$lock' does not exist"; exit 1; }
 
 while true; do
-	# loop until lock acquired (active/busy waiting !)
+	# loop until lock acquired (active/busy waiting!)
 	while true; do
 		$lock $1 lock
 		ret=$?
@@ -40,9 +40,9 @@ while true; do
 	done
 
 	# simulate some work by printing its PID every second
-	n=`expr $RANDOM % 3 + 1`
+	n=$(expr $RANDOM % 3 + 1)
 	echo "lock acquired by $$, will do some work"
-	for i in `yes | head -$n`; do
+	for i in $(yes | head -$n); do
 		echo "  $$"
 		sleep 1
 	done
