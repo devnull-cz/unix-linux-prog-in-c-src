@@ -189,12 +189,12 @@ main(int argc, char **argv)
 			 *	 is shared among the NPROC processes so it could
 			 *	 happen that (timewise):
 			 *
-			 *	   1) process in upper half lseek()'s
-			 *		to offset > FILE_LEN / 2
-			 *	   2) a process in lower half lseek()'s
-			 *		to offset < FILE_LEN / 2
-			 *	   3) the process in upper half write()'s
-			 *		BUT THE WRITE IS DONE TO LOWER HALF !
+			 *	   1) process in upper half lseek()s to
+			 *	      offset > FILE_LEN / 2
+			 *	   2) a process in lower half lseek()s to
+			 *	      offset < FILE_LEN / 2
+			 *	   3) the process in upper half write()s
+			 *	      BUT THE WRITE IS DONE TO LOWER HALF!
 			 *
 			 *	 This is thanks to scheduling and the fact
 			 *	 that lseek() does not consult any locks.
@@ -223,6 +223,4 @@ main(int argc, char **argv)
 	/* not reached... */
 	for (i = 0; i < NPROC; ++i)
 		(void) wait(NULL);
-
-	return (0);
 }
