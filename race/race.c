@@ -1,9 +1,9 @@
 /*
  * The program creates two processes (= 1 fork) that share 2 bytes of memory.
- * Both of them loop until a signal is received, while changing both bytes to
- * their respective value (1 or 2). Before setting those bytes a check is
- * performed whether bytes are equal. If not we have a race. After you kill it
- * with Ctrl-C you will see some statistics. Run with any argument to see races
+ * Both of them loop until a signal is received while changing both bytes to
+ * their respective value (1 and 2).  Before setting those bytes a check is
+ * performed whether bytes are equal.  If not we have a race.  After you kill it
+ * with Ctrl-C you will see some statistics.  Run with any argument to see races
  * as they happen.
  *
  * Note that with a job control, Ctrl-C makes the shell to send a SIGINT signal
@@ -15,15 +15,16 @@
 
 #define	_XOPEN_SOURCE	700
 
-#include <sys/mman.h>
+#include <err.h>
+#include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <string.h>
-#include <signal.h>
+#include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
@@ -63,15 +64,12 @@ main(int argc, char **argv)
 	write(fd, &c, 1);
 
 	addr = mmap(0, 2, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	if ((void *)addr == MAP_FAILED) {
-		perror("mmap");
-		exit(1);
-	}
+	if (addr == MAP_FAILED)
+		err(1, "mmap");
 
 	switch (fork()) {
 	case -1:
-		perror("fork");
-		exit(1);
+		err(1, "fork");
 	case 0:
 		while (run) {
 			if (addr[0] != addr[1]) {
@@ -104,6 +102,4 @@ main(int argc, char **argv)
 
 	printf("\nstats [%d]: inconsistencies %u out of %lu\n",
 	    getpid(), races, i);
-
-	return (0);
 }
