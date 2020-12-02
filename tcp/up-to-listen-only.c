@@ -55,6 +55,4 @@ main(int argc, char **argv)
 
 	/* Wait for a signal. */
 	pause();
-
-	return (0);
 }
