@@ -74,6 +74,4 @@ main(int argc, char **argv)
 		(void) close(newsock);
 		fprintf(stderr, "-- connection closed --\n");
 	}
-
-	return (0);
 }
