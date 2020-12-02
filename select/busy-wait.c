@@ -1,15 +1,17 @@
 /*
- * Example on busy waiting. The purpose of this is to show what we could do
- * without select() or poll(). The program accepts TCP connection on port from
- * the 1st parameter and reads the standard input as well. See select/select.c
- * about how to this properly.
+ * Example on busy waiting.  The purpose of this is to show what we would need
+ * to do without select() or poll().  The program accepts a TCP connection on
+ * a port from the 1st parameter,  and also reads the standard input.  See
+ * select/select.c about how to this properly.
  *
  * Note that the server is single threaded and always finishes the TCP
  * connection so it does not read from the terminal until the connection
- * terminates.
+ * terminates.  We could extend the code to even read from both sources while
+ * the TCP connection is active.
  *
- * Busy waiting is bad and since we have ways on how not to do that, do not use
- * it. You will NOT get away with that at your exam.
+ * Busy waiting is generally bad and since we have ways on how not to do that,
+ * do not use it in cases like this. You will NOT get away with that at your
+ * exam.
  *
  * Note: this example is IPv4 specific which is also bad.
  *
@@ -62,8 +64,8 @@ main(int argc, char **argv)
 		err(1, "listen");
 
 	/*
-	 * Set stdout and the listener socket to a non-blocking mode.
-	 * Notice that we are using F_SETFL, not F_SETFD.
+	 * Set stdout and the listener socket to a non-blocking mode.  Notice we
+	 * are using F_SETFL, not F_SETFD.
 	 */
 	if (fcntl(1, F_SETFL, O_NONBLOCK) == -1)
 		err(1, "fcntl");
@@ -72,8 +74,8 @@ main(int argc, char **argv)
 
 	for (;;) {
 		/*
-		 * We set fd 1 to a non-blocking mode above, not 0. Why does it
-		 * still work as expected ?
+		 * We set fd 1 to a non-blocking mode above, not 0.  Why does it
+		 * still work as expected?
 		 */
 		if ((n = read(0, buf, sizeof (buf))) >= 0) {
 			if (n == 0) {
@@ -108,8 +110,6 @@ main(int argc, char **argv)
 
 		/* Wait a little bit before the next loop. */
 		fprintf(stderr, "-- waiting --\n");
-		poll(NULL, 0, 100);
+		poll(NULL, 0, 300);
 	}
-
-	return (0);
 }
