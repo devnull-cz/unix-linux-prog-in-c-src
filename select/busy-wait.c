@@ -74,8 +74,8 @@ main(int argc, char **argv)
 
 	for (;;) {
 		/*
-		 * We set fd 1 to a non-blocking mode above, not 0.  Why does it
-		 * still work as expected?
+		 * A question to our reader: we set fd 1 to a non-blocking mode
+		 * above, not 0.  Why does this code still work as expected?
 		 */
 		if ((n = read(0, buf, sizeof (buf))) >= 0) {
 			if (n == 0) {
