@@ -1,7 +1,7 @@
 /*
- * UDP server. Read data from the net and print them onto stdout.
+ * UDP server.  Read data from the net and print them onto stdout.
  *
- * Note: this example is IPv4-only !
+ * Note: this example is IPv4-only!
  *
  * (c) jp@devnull.cz
  */
