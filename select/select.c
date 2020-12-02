@@ -3,9 +3,9 @@
  * 1st argument and reads the standard input as well.  Note that there is no
  * busy waiting.
  *
- * Note that the server always finishes the TCP connection so during that, it
- * doesn't read from the terminal until the connection terminates. You can
- * easily rewrite this program to be truly select()ive...
+ * Note that the server always finishes the TCP connection and until then it
+ * does not read from the terminal.  You can easily rewrite this program to be
+ * truly select()ive...
  *
  * Note that both the file descriptor and the socket are in blocking mode.
  *
@@ -97,5 +97,4 @@ main(int argc, char **argv)
 	}
 
 	close(s);
-	return (0);
 }
