@@ -109,12 +109,10 @@ main(int argc, char **argv)
 	}
 
 	/*
-	 * Not reached. Nevertheles, it someone rewrites the above block
-	 * e.g. to break out of the loop and refactors it is good to be
-	 * ready for it and prevent file descriptor leakage.
+	 * Not reached.  Nevertheles, if someone rewrites the above block e.g.
+	 * to break out of the loop and refactors it is good to be ready for it
+	 * and prevent file descriptor leakage.
 	 */
 	close(newsock);
 	close(s);
-
-	return (0);
 }

@@ -3,7 +3,7 @@
  * do not read.  Use with select/write-select.c.
  *
  * Instead of this program you can easily use BSD (also macOS) netcat(1).
- * GNU/Linux netcat does not help us here as it uses -i for writing only.
+ * GNU/Linux netcat does NOT help us here as it uses -i for writing only.
  *
  *	nc -i 2 localhost 2222
  *
@@ -76,5 +76,4 @@ main(int argc, char **argv)
 		(void) write(1, buf, n);
 	}
 	close(fd);
-	return (0);
 }
