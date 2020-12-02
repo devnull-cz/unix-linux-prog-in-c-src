@@ -7,9 +7,9 @@
  *	$ ./a.out 0:0:2001:1508:1003:4::
  *	a.out: inet_pton with AF_INET failed for '0:0:2001:1508:1003:4::'.
  *	Will try INET6 now.
- *	Succesfully converted an IPv6 address string.
+ *	Succesfully converted an IPv6 address string to a binary form.
  *	Succesfully converted a binary IPv6 address to a string.
- *	The address is: ::2001:1508:1003:4:0:0
+ *	The resulting address is: ::2001:1508:1003:4:0:0
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -60,7 +60,7 @@ main(int argc, char **argv)
 		}
 		printf("Succesfully converted a binary IPv6 address back "
 		    "to a string.\n");
-		printf("The address is: %s\n", dst);
+		printf("The resulting address is: %s\n", dst);
 		return (0);
 	}
 
