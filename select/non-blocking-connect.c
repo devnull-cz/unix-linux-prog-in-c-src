@@ -1,14 +1,13 @@
 /*
- * Example on how to work with a non-blocking connect. Uses fixed input and
+ * Example on how to work with a non-blocking connect.  Uses fixed input and
  * should show all 3 situations we care about - a successful connect, a refused
  * connect, and a timeout.
  *
- * Using FD_SETSIZE is not optimal - rewrite the code so that it stores
- * maximum file descriptor number and use it for select().
+ * Using FD_SETSIZE is not optimal - rewrite the code so that it stores maximum
+ * file descriptor number and use it for select().
  *
- * Also, the selection of host_t holding all file descriptors given host
- * makes the program slower as it adds needless complexity into the select()
- * loop.
+ * Also, the selection of host_t holding all file descriptors given host makes
+ * the program slower as it adds needless complexity into the select() loop.
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
@@ -46,16 +45,16 @@ host_t hosts[] = {
 	/* This will timeout. */
 	{ "www.devnull.cz", "33", {-1, -1, -1}, 0 },
 	/* This should refuse the connection on both IPv4 and IPv6. */
-	{ "mail.kolej.mff.cuni.cz", "999", {-1, -1, -1}, 0 },
+	{ "u-pl3.ms.mff.cuni.cz", "999", {-1, -1, -1}, 0 },
 	/* To see if localhost gets EINPROGRESS as well. */
 	{ "localhost", "22", {-1, -1, -1}, 0 },
 	/*
-	 * To see if localhost gets EINPROGRESS as well. Connection refusal
-	 * might be different from an open port. Port 7 is echo service,
+	 * To see if localhost gets EINPROGRESS as well.  Connection refusal
+	 * might be different from an open port.  Port 7 is the echo service,
 	 * nobody should run it these days.
 	 */
 	{ "localhost", "7", {-1, -1, -1}, 0 },
-	{ NULL, 0, {-1, -1, -1}, 0 }
+	{ NULL, 0, {-1, -1, -1}, 0 },
 };
 
 int
@@ -128,16 +127,16 @@ main(int argc, char **argv)
 					/*
 					 * This may happen right here, on
 					 * localhost for example (immediate
-					 * connection refused).
-					 * I can see that happen on FreeBSD
-					 * but not on Solaris, for example.
+					 * connection refused).  I can see that
+					 * happen on FreeBSD but not on Solaris,
+					 * for example.
 					 */
 					printf("    connect: %s\n",
 					    strerror(errno));
 					++n;
 				}
 			} else {
-				/* This may happen, on localhost for example */
+				/* This may happen on localhost, for example. */
 				printf("  %s connected OK on port %s\n",
 				    hostp->hostname, hostp->port);
 				++n;
@@ -172,10 +171,9 @@ main(int argc, char **argv)
 			tout.tv_sec = 1;
 			tout.tv_usec = 0;
 			continue;
-		} else {
-			if (error == -1)
-				err(1, "select");
 		}
+		if (error == -1)
+			err(1, "select");
 
 		/* Check all hosts. */
 		for (hostp = hosts; hostp->hostname != NULL; hostp++) {
@@ -221,7 +219,7 @@ main(int argc, char **argv)
 		wrfds = wrfds_orig;
 	}
 
-	/* those remaining in the wrfds set are those that timed out on us */
+	/* Those remaining in the wrfds set are those that timed out on us. */
 	for (hostp = hosts; hostp->hostname != NULL; hostp++) {
 		for (i = 0; i < hostp->numsock; i++) {
 			if (FD_ISSET(hostp->sockets[i], &wrfds_orig))
@@ -230,6 +228,4 @@ main(int argc, char **argv)
 				    hostp->sockets[i]);
 		}
 	}
-
-	return (0);
 }
