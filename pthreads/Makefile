@@ -6,6 +6,7 @@ PROGS=	atfork \
 	implement-barrier-fixed \
 	int-as-arg \
 	pthread-setcanceltype \
+	pthread-cleanup \
 	pthread-create \
 	pthread-detach-join \
 	pthread-join \
@@ -55,6 +56,9 @@ pthread-setcanceltype: pthread-setcanceltype.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 pthread-create: pthread-create.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+pthread-cleanup: pthread-cleanup.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 pthread-detach-join: pthread-detach-join.o
