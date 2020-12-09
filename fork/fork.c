@@ -30,7 +30,8 @@ main(void)
 		limit = 8;
 		break;
 	default:
-		printf("I'm parent, PID is %d, my child is %d\n", getpid(), pid);
+		printf("I'm parent, PID is %d, my child is %d\n",
+		    getpid(), pid);
 		name = "parent";
 		limit = 3;
 		break;
