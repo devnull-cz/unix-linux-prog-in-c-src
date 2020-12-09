@@ -108,10 +108,13 @@ main(int argc, char **argv)
 	void *ptr;
 	pthread_t t;
 
-	fprintf(stderr, "MAIN: Deferred cancellation in use, use "
-	    "with \"-a\" to get async cancellation.\n");
 	if (argc > 1 && strcmp(argv[1], "-a") == 0)
 		async = 1;
+
+	if (!async) {
+		fprintf(stderr, "MAIN: Deferred cancellation in use, use "
+		    "with \"-a\" to get async cancellation.\n");
+	}
 
 	pthread_create(&t, NULL, mythread, NULL);
 
