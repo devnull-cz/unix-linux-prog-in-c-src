@@ -4,13 +4,12 @@
 
 #define	_XOPEN_SOURCE   700
 
+#include <err.h>
+#include <errno.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <err.h>
 #include <string.h>
-#include <errno.h>
-#include <inttypes.h>
 
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
@@ -29,13 +28,11 @@ main(int argc, char *argv[])
 	for (size_t i = 0; i < numlocks; i++) {
 		if ((e = pthread_rwlock_rdlock(&rwlock)) != 0) {
 			if (e == EAGAIN) {
-				printf("lock count = %zu\n", i);
+				printf("maximum lock count = %zu\n", i);
 				exit(0);
-			} else {
-				errx(1, "rdlock: %s", strerror(e));
 			}
+			errx(1, "rdlock: %s", strerror(e));
 		}
 	}
-
-	return (0);
+	printf("succeeded\n");
 }
