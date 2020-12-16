@@ -13,15 +13,12 @@
  * machine, you should see RACE for execution without any option and correct
  * behaviour for both -a and -m. However, using -m is much slower (almost 10x
  * for my tests) than -a solution. That is due to the overhead of mutexes in
- * contrast to atomic_add() which can be used if the only access to a shared
- * data is to increase or decrease its value.
+ * contrast to atomic_add() or atomic_fetch_add() which can be used if the only
+ * access to a shared data is to increase or decrease its value.
  *
  * I caught a race also on 1-CPU amd64 machine.
  *
- * Compile with:
- *   cc atomic-add.c
- *
- * This example currently works on Solaris and systems with C11 compiler.
+ * Compile with: gcc -pthread atomic-add.c
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
