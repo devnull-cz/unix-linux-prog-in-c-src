@@ -2,7 +2,7 @@
  * A queue simulation using two threads - a consumer and a producer.
  *
  * At every interval, the producer randomly inserts a message to the queue or
- * not, and at each step, the consumer randomly takes a message or not.  One
+ * not, and at each step, the consumer randomly processes a message or not.  One
  * condition variable and one mutex is used.  Note that if we used semaphores,
  * we would need 2 of them to represent both "sleeping" states.
  *
@@ -55,11 +55,11 @@ producer(void *x)
 		in_queue = in_queue + msg_created;
 
 		/*
-		 * If the queue was empty and we produced a "message",  we must
-		 * notify the consumer so it can start working on the queue
-		 * again.  Note that the consumer actually may or may not sleep
-		 * if the queue was empty - it may yet not sleep if it didn't
-		 * get to check the queue again to find it empty.
+		 * If the queue was empty and we produced a "message", we must
+		 * notify the consumer so it can start working the queue again.
+		 * Note that the consumer actually may or may not sleep while
+		 * the queue was empty - it may not sleep if it didn't get to
+		 * check the queue again to find it empty.
 		 *
 		 * We could also signal each time we insert a message but that
 		 * is really not necessary and would be actually wasteful.
@@ -75,7 +75,6 @@ producer(void *x)
 
 		poll(NULL, 0, 95);
 	}
-
 	/* NOTREACHED */
 }
 
