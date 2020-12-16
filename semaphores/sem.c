@@ -1,7 +1,8 @@
 /*
- * POSIX semaphores demonstration using fake producer/consumer scenario.
- * (the code in usher() does not really generate anything, it merely wakes
- * the main thread up)
+ * POSIX semaphores demonstration using a fake producer/consumer scenario.  (the
+ * code in usher() does not really generate anything, it merely wakes the main
+ * thread up).
+ *
  * Note especially how sem_wait() should be treated with regards to
  * interruptions (like signals in this case or I/O delivery).
  *
@@ -36,15 +37,14 @@ sem_t sem;
 #define	PUTCHARF(x)	putc(x, stdout); fflush(stdout);
 
 int
-sem_wait_nointr(sem_t *s) {
+sem_wait_nointr(sem_t *s)
+{
 	while (sem_wait(s) != 0) {
 		if (errno != EINTR) {
 			return (-1);
-		} else {
-			PUTCHARF('!');
 		}
+		PUTCHARF('S');
 	}
-
 	return (0);
 }
 
@@ -53,7 +53,7 @@ usher(void *x)
 {
 	while (1) {
 		sem_post(&sem);
-		PUTCHARF('-');
+		PUTCHARF('+');
 		poll(NULL, 0, 100);
 	}
 }
@@ -94,7 +94,7 @@ main(int argc, char *argv[])
 			if (sem_wait(&sem) != 0)
 				err(1, "sem_wait");
 		}
-		PUTCHARF('_');
+		PUTCHARF('-');
 		/* Run more frequently than usher. */
 		poll(NULL, 0, 10);
 	}
