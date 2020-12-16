@@ -1,6 +1,6 @@
 /*
- * A naive test (like not considering complexities like lenght of queue
- * of waiting threads) to see if RW lock implementation is writer biased.
+ * A naive test (i.e. not considering complexities like length of a waiting
+ * thread queue) to see if a RW lock implementation is writer biased.
  */
 
 #define	_XOPEN_SOURCE   700
@@ -32,7 +32,7 @@ millisleep(int msec)
 void *
 writer_thread(void *arg)
 {
-	printf("writer %ld grabbing lock\n", (intptr_t)arg);
+	printf("writer %ld trying to get the lock\n", (intptr_t)arg);
 
 	pthread_rwlock_wrlock(&rwlock);
 
@@ -51,7 +51,7 @@ reader_thread(void *arg)
 {
 	int e;
 
-	printf("reader grabbing lock\n");
+	printf("reader trying to get the lock\n");
 	if ((e = pthread_rwlock_rdlock(&rwlock)) != 0)
 		errx(1, "tryrdlock: %s", strerror(e));
 
@@ -69,15 +69,19 @@ main(void)
 	int numthreads = 3, i = 0;
 	pthread_t threads[numthreads];
 
+	/* We should really not cast an int like this... */
 	pthread_create(&threads[i++], NULL, writer_thread, (void *)1);
-	millisleep(500); // give the others chance to run
+	millisleep(500); // give the writer chance to run
 
 	pthread_create(&threads[i++], NULL, reader_thread, NULL);
-	millisleep(100); // run reader first
+	millisleep(100); // let reader start
+
+	/*
+	 * Before starting this thread, we have a writer holding a lock while a
+	 * reader is waiting.
+	 * */
 	pthread_create(&threads[i++], NULL, writer_thread, (void *)2);
 
 	for (i = 0; i < numthreads; i++)
 		pthread_join(threads[i], NULL);
-
-	return (0);
 }
