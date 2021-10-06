@@ -1,0 +1,11 @@
+CFLAGS=`x=\`uname\`; \
+	if [ $${x} = FreeBSD ]; then \
+		echo '-Wall'; \
+	elif [ $${x} = SunOS ]; then \
+		echo '-v'; \
+	elif [ $${x} = Linux ]; then \
+		echo '-Wall -g'; \
+	fi`
+
+all:
+	@echo "$(CFLAGS)"
