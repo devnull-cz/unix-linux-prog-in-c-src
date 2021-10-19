@@ -48,8 +48,9 @@ do_cat(char *file, int bufsize)
 	}
 
 	/*
-	 * Never forget, this could lead to a situation similar to having memory
-	 * leaks.  Could be a problem for long running applications or daemons.
+	 * Never forget this otherwise it could lead to a situation similar to
+	 * having memory leaks.  Could be a problem for long running
+	 * applications or daemons.
 	 */
 	close(fd);
 	free(buf);
