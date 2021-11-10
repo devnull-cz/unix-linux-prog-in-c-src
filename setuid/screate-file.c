@@ -6,10 +6,14 @@
  * (c) jp@devnull.cz
  */
 
-#include <fcntl.h>
-#include <unistd.h>
 #include <assert.h>
+#include <fcntl.h>
+#include <stdio.h>
 #include <sys/stat.h>
+#include <unistd.h>
+
+#define	ABC	"/tmp/abc"
+#define	F123	ABC"/123"
 
 int
 main(void)
@@ -20,12 +24,14 @@ main(void)
 	 * Let's pretend the directory and the file do not exist and that
 	 * nothing can go wrong.
 	 */
+	printf("RUID: %d\n", getuid());
+	printf("EUID: %d\n", geteuid());
 
 	/*
 	 * After setting the SUID bit, this directory will be created with you
 	 * as the owner no matter who is running it.
 	 * */
-	ret = mkdir("/tmp/abc", 0777);
+	ret = mkdir(ABC, 0777);
 	assert(ret == 0);
 
 	/*
@@ -34,13 +40,14 @@ main(void)
 	 * not create files in our directorie unless it is writable by group or
 	 * all).
 	 */
-	ret = chmod("/tmp/abc", 0777);
+	ret = chmod(ABC, 0777);
 	assert(ret == 0);
 
 	/* Create the file using the process owner real UID. */
 	ret = setuid(getuid());
 	assert(ret == 0);
-	close(open("/tmp/abc/123", O_RDONLY | O_CREAT, 0666));
+	close(open(F123, O_RDONLY | O_CREAT, 0666));
+	printf("File %s created.\n", F123);
 
 	return (0);
 }
