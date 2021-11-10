@@ -3,6 +3,18 @@
  * a.out), anybody running it will be able to create a file /tmp/abc/123 with
  * you as an owner of "abc" directory and him/her as an owner of "123" file.
  *
+ * Expected output is for example (on OpenBSD):
+ *
+ *	RUID: 1001
+ *	EUID: 1000
+ *	Dir /tmp/abc created.
+ *	RUID: 1001
+ *	EUID: 1001
+ *	File /tmp/abc/123 created.
+ *
+ * Note that this seems not to work on Linux.  Do SUID binaries only work for
+ * root?
+ *
  * (c) jp@devnull.cz
  */
 
