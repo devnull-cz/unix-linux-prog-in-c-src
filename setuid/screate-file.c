@@ -33,6 +33,7 @@ main(void)
 	 * */
 	ret = mkdir(ABC, 0777);
 	assert(ret == 0);
+	printf("Dir %s created.\n", ABC);
 
 	/*
 	 * Make sure the real process owner will have privileges to create a
@@ -45,6 +46,8 @@ main(void)
 
 	/* Create the file using the process owner real UID. */
 	ret = setuid(getuid());
+	printf("RUID: %d\n", getuid());
+	printf("EUID: %d\n", geteuid());
 	assert(ret == 0);
 	close(open(F123, O_RDONLY | O_CREAT, 0666));
 	printf("File %s created.\n", F123);
