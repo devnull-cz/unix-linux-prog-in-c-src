@@ -17,26 +17,27 @@ main(void)
 	int ret;
 
 	/*
-	 * let's pretend the directory and the file do not exist and that
+	 * Let's pretend the directory and the file do not exist and that
 	 * nothing can go wrong.
 	 */
 
-	/* create the directory with you as the owner */
+	/*
+	 * After setting the SUID bit, this directory will be created with you
+	 * as the owner no matter who is running it.
+	 * */
 	ret = mkdir("/tmp/abc", 0777);
 	assert(ret == 0);
 
 	/*
-	 * make sure the user will have enough privileges to create a file
-	 * in here (remember - after we switch EUID to his/her own one we
-	 * can't normally create files in somebody else's directories).
+	 * Make sure the real process owner will have privileges to create a
+	 * file in here (remember - after we switch EUID to his/her UID we could
+	 * not create files in our directorie unless it is writable by group or
+	 * all).
 	 */
 	ret = chmod("/tmp/abc", 0777);
 	assert(ret == 0);
 
-	/*
-	 * create the directory with the user who started the program as the
-	 * owner.
-	 */
+	/* Create the file using the process owner real UID. */
 	ret = setuid(getuid());
 	assert(ret == 0);
 	close(open("/tmp/abc/123", O_RDONLY | O_CREAT, 0666));
