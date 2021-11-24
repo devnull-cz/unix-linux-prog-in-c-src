@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
@@ -37,17 +38,21 @@ main(int argc, char *argv[])
 	if (lseek(fd, SEEK_N, SEEK_SET) == -1)
 		err(1, "lseek");
 
-	if (mode == 1)
-		write(fd, &c, 1);
+	if (mode == 1) {
+		printf("extending before mmap()\n");
+		assert(write(fd, &c, 1) == 1);
+	}
 
 	addr = mmap(0, SEEK_N, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	if (addr == MAP_FAILED)
 		err(1, "mmap");
 
-	if (mode == 2)
-		write(fd, &c, 1);
+	if (mode == 2) {
+		printf("extending after mmap()\n");
+		assert(write(fd, &c, 1) == 1);
+	}
 
-	/* Must crash on argv1 == 0. */
+	/* Will crash with mode == 0. */
 	addr[SEEK_N - 1] = 0;
 	return (0);
 }
