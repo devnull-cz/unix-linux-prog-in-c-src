@@ -79,7 +79,7 @@ main(void)
 	/*
 	 * Before starting this thread, we have a writer holding a lock while a
 	 * reader is waiting.
-	 * */
+	 */
 	pthread_create(&threads[i++], NULL, writer_thread, (void *)2);
 
 	for (i = 0; i < numthreads; i++)
