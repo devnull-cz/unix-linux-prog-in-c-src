@@ -26,6 +26,7 @@ main(void)
 	int i, pid;
 	char *name;
 
+	printf("I'm parent before vfork(), PID is %d\n", getpid());
 	switch (pid = vfork()) {
 	case -1:
 		err(1, "fork");
@@ -34,7 +35,7 @@ main(void)
 		name = "child";
 		break;
 	default:
-		printf("I'm parent, PID is %d\n", getpid());
+		printf("I'm parent after vfork(), PID is %d\n", getpid());
 		name = "parent";
 		break;
 	}
