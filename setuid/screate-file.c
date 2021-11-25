@@ -42,7 +42,7 @@ main(void)
 	/*
 	 * After setting the SUID bit, this directory will be created with you
 	 * as the owner no matter who is running it.
-	 * */
+	 */
 	ret = mkdir(ABC, 0777);
 	assert(ret == 0);
 	printf("Dir %s created.\n", ABC);
