@@ -56,6 +56,4 @@ main(void)
 		fflush(stdout);
 		write(1, buf, size);
 	}
-
-	return (0);
 }
