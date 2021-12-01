@@ -1,7 +1,5 @@
 /*
- * Sends itself a SIGTERM signal.
- *
- * (c) jp@devnull.cz
+ * This sends itself a SIGTERM signal.
  */
 
 #define	_XOPEN_SOURCE	700
@@ -15,6 +13,4 @@ main(void)
 {
 	printf("Sending myself a SIGTERM signal...\n");
 	kill(getpid(), SIGTERM);
-
-	return (0);
 }
