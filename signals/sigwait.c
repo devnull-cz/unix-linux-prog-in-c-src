@@ -3,9 +3,9 @@
  * parent reads a character from the terminal, it puts it to the shared memory
  * and sends a signal to its child.
  *
- * The child is waiting in sigwait().  When the signal is delivered  it reads
- * the memory and prints the character to stdout.  Note that we use sigwait()
- * which does not use handlers at all.
+ * The child is waiting in sigwait().  When the signal is delivered it reads
+ * the memory and prints out the character to stdout.  Note that we use
+ * sigwait() which does not use signal handlers at all.
  *
  * On Solaris, you must compile with "-D_POSIX_PTHREAD_SEMANTICS" since by
  * default sigwait() uses only the 1st parameter there.
@@ -52,7 +52,8 @@ main(void)
 		sigprocmask(SIG_SETMASK, &set, NULL);
 		sigwait(&set, &sig);
 		assert(sig == SIGUSR1);
-		printf("%d: got '%c'\n", getpid(), addr[0]);
+		printf("%d: woken up and read '%c' from shared memory\n",
+		    getpid(), addr[0]);
 		break;
 	default:
 		printf("%d: this is a parent\n", getpid());
