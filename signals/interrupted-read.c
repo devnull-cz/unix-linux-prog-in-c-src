@@ -14,7 +14,7 @@
  * be blocked on a pipe).
  *
  * To terminate the process started with -r, either use Ctrl-\ which usually
- * sends SIGABRT or (better) type Ctrl-Z to stop the process, then kill the job
+ * sends SIGQUIT or (better) type Ctrl-Z to stop the process, then kill the job
  * with "kill %1".
  *
  * (c) jp@devnull.cz
