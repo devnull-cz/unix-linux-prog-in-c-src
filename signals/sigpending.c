@@ -12,7 +12,7 @@
 #include <err.h>
 #include <assert.h>
 
-#define	MESSAGE "SIGTERM caught !\n"
+#define	MESSAGE "SIGTERM caught!\n"
 
 void
 ctrl_c(int sig)
@@ -35,9 +35,10 @@ main(void)
 	act.sa_handler = ctrl_c;
 	sigaction(SIGTERM, &act, NULL);
 
-	char buf[1];
-
+	/* We cannot use pause() as the signal is blocked. */
 	printf("%d: send me a SIGTERM, then pres Enter\n", getpid());
+
+	char buf[1];
 	if (read(0, buf, sizeof (buf)) == -1)
 		err(1, "read");
 
