@@ -5,13 +5,17 @@
  *
  *  $ ./a.out
  *  My PID is 30794.
- *  <...send SIGTERM from another terminal>
- *  TERM signal caught !
+ *  <type Ctrl-C>
+ *  INT signal caught !
  *  a.out: read: Interrupted system call
  *
- * Use -r option for SA_RESTART.  In that case, sending SIGTERM will not
+ * Use -r option for SA_RESTART.  In that case, sending SIGINT will not
  * terminate the process as the read system call is restarted (and continues to
  * be blocked on a pipe).
+ *
+ * To terminate the process started with -r, either use Ctrl-\ which usually
+ * sends SIGABRT or (better) type Ctrl-Z to stop the process, then kill the job
+ * with "kill %1".
  *
  * (c) jp@devnull.cz
  */
@@ -23,7 +27,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define	MESSAGE "TERM signal caught !\n"
+#define	MESSAGE "INT signal caught !\n"
 
 void
 term_handler(int sig)
@@ -39,7 +43,7 @@ main(int argc, char **argv)
 	int fd[2];
 	struct sigaction act = { 0 };
 
-	(void) argc;
+	(void)argc;
 
 	printf("My PID is %d (use -r for SA_RESTART).\n", getpid());
 
@@ -47,7 +51,7 @@ main(int argc, char **argv)
 		act.sa_flags = SA_RESTART;
 
 	act.sa_handler = term_handler;
-	sigaction(SIGTERM, &act, NULL);
+	sigaction(SIGINT, &act, NULL);
 
 	if (pipe(fd) == -1)
 		err(1, "pipe");
