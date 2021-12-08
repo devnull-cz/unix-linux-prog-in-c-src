@@ -40,8 +40,8 @@ main(void)
 	pipe(p);
 
 	// Spawn the pseudo-writers.
-	for (int i = 0; i < CHILDREN; i++)
-		child(p, i + 1);
+	for (int i = 1; i <= CHILDREN; i++)
+		child(p, i);
 
 	close(p[1]);
 	printf("%d reading from the pipe\n", getpid());
