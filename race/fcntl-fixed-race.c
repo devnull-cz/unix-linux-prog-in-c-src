@@ -42,6 +42,9 @@ finish(int sig)
 	run = 0;
 }
 
+#define	LOCK(fd, fl)	lock_unlock(fd, -1, fl)
+#define	UNLOCK(fd, fl)	lock_unlock(fd, 1, fl)
+
 /* lock_unlock(1) means unlock, lock_unlock(-1) is lock */
 static void
 lock_unlock(int fd, int n, struct flock *fl)
@@ -96,7 +99,7 @@ main(int argc, char **argv)
 		err(1, "fork");
 	case 0:
 		while (run) {
-			lock_unlock(fd, -1, &fl);
+			LOCK(fd, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[child (%d/%d)] ",
@@ -104,13 +107,13 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 2;
-			lock_unlock(fd, 1, &fl);
+			UNLOCK(fd, &fl);
 			++i;
 		}
 		break;
 	default:
 		while (run) {
-			lock_unlock(fd, -1, &fl);
+			LOCK(fd, &fl);
 			if (addr[0] != addr[1]) {
 				if (dbg)
 					fprintf(stderr, "[PARENT (%d/%d)] ",
@@ -118,7 +121,7 @@ main(int argc, char **argv)
 				++j;
 			}
 			addr[0] = addr[1] = 1;
-			lock_unlock(fd, 1, &fl);
+			UNLOCK(fd, &fl);
 			++i;
 		}
 		wait(NULL);
