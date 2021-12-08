@@ -1,5 +1,5 @@
 /*
- * See race/race.c for more information. This version uses semaphores for
+ * See race.c for more information. This version uses semaphores for
  * synchronization. Note that most of the time now is spent in those
  * synchronization functions (when you kill it with Ctrl-C you see how much
  * loops was done. Try race.c and this and compare).

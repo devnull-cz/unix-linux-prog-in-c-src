@@ -1,5 +1,5 @@
 /*
- * See ../race/race.c and ../race/sem-fixed-race.c for more information.
+ * See race.c and sem-fixed-race.c for more information.
  *
  * This version uses POSIX semaphores for synchronization.  After you run this
  * and kill it with Ctrl-C you see some statistics as to how many loops were
