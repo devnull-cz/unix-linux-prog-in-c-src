@@ -1,8 +1,12 @@
-PROGS=abi-main-32 abi-main-64
-
 all: $(PROGS)
 
 include ../Makefile.common
+
+ifeq ($(UNAME_S),Darwin)
+PROGS=
+else
+PROGS=abi-main-32 abi-main-64
+endif
 
 ifeq ($(UNAME_S),Darwin)
 	MAIN_LDFLAGS=-Xlinker -rpath -Xlinker .
