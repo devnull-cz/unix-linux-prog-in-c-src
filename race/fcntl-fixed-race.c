@@ -101,9 +101,10 @@ main(int argc, char **argv)
 		while (run) {
 			LOCK(fd, &fl);
 			if (addr[0] != addr[1]) {
-				if (dbg)
+				if (dbg) {
 					fprintf(stderr, "[child (%d/%d)] ",
 					    addr[0], addr[1]);
+				}
 				++j;
 			}
 			addr[0] = addr[1] = 2;
@@ -115,9 +116,10 @@ main(int argc, char **argv)
 		while (run) {
 			LOCK(fd, &fl);
 			if (addr[0] != addr[1]) {
-				if (dbg)
+				if (dbg) {
 					fprintf(stderr, "[PARENT (%d/%d)] ",
 					    addr[0], addr[1]);
+				}
 				++j;
 			}
 			addr[0] = addr[1] = 1;
