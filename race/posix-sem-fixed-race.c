@@ -72,7 +72,11 @@ main(int argc, char **argv)
 		dbg = 0;
 	}
 
-	/* Get a semaphore. */
+	/*
+	 * Get named semaphore. Could as well used un-named semaphores
+	 * (sem_init()/sem_destroy()) because the child processes is forked
+	 * here, however un-named semaphores are not available e.g. on macOS.
+	 */
 	sem = sem_open(SEM_NAME, O_CREAT, S_IRWXU, 1);
 	if (sem == SEM_FAILED)
 		err(1, "sem_open");
