@@ -1,17 +1,29 @@
-PROGS=abi-main.o libabi-32.so libabi-64.so
+PROGS=abi-main-32 abi-main-64
 
-all: $(PROGS) abi-main.o
+all: $(PROGS)
 
-libabi-32.o: CFLAGS+=-fPIC -m32
-libabi-64.o: CFLAGS+=-fPIC -m64
+include ../Makefile.common
 
-libabi-32.so: libabi-32.o
-	$(CC) -shared -m32 -o $@ $^
+ifeq ($(UNAME_S),Darwin)
+	MAIN_LDFLAGS=-Xlinker -rpath -Xlinker .
+else
+	MAIN_LDFLAGS=-Xlinker -R=.
+endif
 
-libabi-64.so: libabi-64.o
-	$(CC) -shared -o $@ $^
+CFLAGS+=-fPIC -m32
+
+abi-main-32: abi-main.o libabi-32.$(LIB_EXT)
+	$(CC) $(CFLAGS) -o $@ abi-main.o -L. $(MAIN_LDFLAGS) -labi-32
+
+abi-main-64: abi-main.o libabi-64.$(LIB_EXT)
+	$(CC) $(CFLAGS) -o $@ abi-main.o -L. $(MAIN_LDFLAGS) -labi-64
+
+libabi-32.$(LIB_EXT): libabi-32.o
+	$(CC) -m32 $(CFLAGS_DYNLIB) -o $@ $^
+
+libabi-64.$(LIB_EXT): libabi-64.o
+	$(CC) -m32 $(CFLAGS_DYNLIB) -o $@ $^
 
 clean:
 	rm -f *.o a.out $(PROGS)
 
-include ../Makefile.common
