@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <assert.h>
+#include <err.h>
 
 #define	CHILDREN	3
 
@@ -37,7 +38,8 @@ main(void)
 	ssize_t n;
 	char buf[1];
 
-	pipe(p);
+	if (pipe(p) == -1)
+		err(1, "pipe");
 
 	// Spawn the pseudo-writers.
 	for (int i = 1; i <= CHILDREN; i++)
