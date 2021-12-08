@@ -49,11 +49,14 @@ finish(int sig)
 static void
 lock_unlock(int fd, int n, struct flock *fl)
 {
-	if (n == 1) {
+	switch (n) {
+	case 1:
 		fl->l_type = F_UNLCK;
-	} else if (n == -1) {
+		break;
+	case -1:
 		fl->l_type = F_WRLCK;
-	} else {
+		break;
+	default:
 		errx(1, "incorrect use of lock_unlock");
 	}
 
