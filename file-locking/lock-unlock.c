@@ -5,18 +5,20 @@
  * exits, for example).  I.e. it does not know how to figure out whether the
  * lock is "stale".
  *
- * You could solve the problem of stale locks by writing the PID of the process
- * owning the lock to the file, then check whether the process is still alive.
- * If not, you overwrite the lock.  However, the operation of reading the PID,
- * checking its existence, and writing the new lock file is again NOT atomic.
+ * It might be tempting to tackle the problem of stale locks by writing the PID
+ * of the process owning the lock to the file, then check whether the process is
+ * still alive. If not, you write new PID to the lock file.
+ * However, the operation of reading the PID, checking its existence, and
+ * writing the new lock file is again NOT atomic so this can lead to incorrect
+ * situations.
  *
  * See run.sh in this directory as an example script that uses this program.
  *
  * The app that uses this simple locking mechanism must busy wait.  That's
  * usually not acceptable in the real life.
  *
- * If successful, the program returns 0 if it locked or unlocked as expected, 1
- * if it can't lock since it's already locked, and 2 if either of those
+ * If successful, the program returns 0 if it locked or unlocked as expected,
+ * 1 if it can't lock since it's already locked, and 2 if either of those
  * operations failed unexpectedly.
  *
  * See ./run.sh for more information.
@@ -63,5 +65,6 @@ main(int argc, char **argv)
 
 	if (strcmp(argv[2], "lock") == 0)
 		return (lock(argv[1]));
+
 	return (unlock(argv[1]));
 }
