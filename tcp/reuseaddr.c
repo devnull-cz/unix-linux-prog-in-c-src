@@ -5,7 +5,7 @@
  * 1. run the server
  *    ./a.out 0 <port>
  * 2. connect
- *    nc <addr> <port>
+ *    nc <IPv4-server-addr> <port>
  * 3. terminate the server (e.g. with Ctrl-C) and run it again
  *    ./a.out 0 <port>
  *
@@ -38,6 +38,8 @@ main(int argc, char **argv)
 		errx(1, "usage: %s <0|1> <port_number>", argv[0]);
 
 	reuse = atoi(argv[1]);
+	if (reuse > 0)
+		printf("Setting SO_REUSEADDR flag...\n");
 
 	sa.sin_family = AF_INET;
 	sa.sin_port = htons(atoi(argv[2]));
