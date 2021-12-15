@@ -27,7 +27,7 @@ main(void)
 
 	/* Save the state. */
 	retval = setjmp(env);
-	fprintf(stderr, "%d [%d]\n", i, retval);
+	fprintf(stderr, "iter %d [retval %d]\n", i, retval);
 
 	++i;
 	if (i == 2)
