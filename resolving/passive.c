@@ -57,6 +57,7 @@ main(int argc, char **argv)
 	for (resorig = res; res != NULL; res = res->ai_next) {
 		int s = socket(res->ai_family, res->ai_socktype,
 		    res->ai_protocol);
+
 		if (s == -1) {
 			warn("socket");
 			continue;
@@ -66,11 +67,9 @@ main(int argc, char **argv)
 			warn("bind");
 			continue;
 		}
-
 		close(s);
 	}
 
 	freeaddrinfo(resorig);
-
 	return (0);
 }
