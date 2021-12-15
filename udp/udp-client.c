@@ -23,12 +23,10 @@ main(int argc, char **argv)
 {
 	int s, n;
 	char buf[BUF_LEN];
-	struct sockaddr_in taddr;
+	struct sockaddr_in taddr = { 0 };
 
 	if (argc != 3)
 		errx(1, "usage: %s <ip-address> <port>", argv[0]);
-
-	bzero(&taddr, sizeof (taddr));
 
 	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
 		err(1, "socket");
@@ -51,6 +49,4 @@ main(int argc, char **argv)
 
 	if (n == -1)
 		err(1, "read");
-
-	return (0);
 }
