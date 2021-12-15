@@ -109,7 +109,6 @@ main(int argc, char **argv)
 		}
 
 		/* Wait a little bit before the next loop. */
-		fprintf(stderr, "-- waiting --\n");
 		poll(NULL, 0, 300);
 	}
 }
