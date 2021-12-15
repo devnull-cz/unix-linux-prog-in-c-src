@@ -65,7 +65,7 @@ main(int argc, char **argv)
 		/* Here getnameinfo() is used ala inet_ntop(). */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    numhost, sizeof (numhost), NULL, 0, NI_NUMERICHOST)) != 0) {
-			errx(1, "%s", gai_strerror(error));
+			errx(1, "A: %s", gai_strerror(error));
 		}
 
 		/*
@@ -74,7 +74,7 @@ main(int argc, char **argv)
 		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    host, sizeof (host), NULL, 0, 0)) != 0)
-			errx(1, "%s", gai_strerror(error));
+			errx(1, "B: %s", gai_strerror(error));
 
 		printf("host %s resolves to %s\n", numhost, host);
 	}
