@@ -15,6 +15,8 @@
  *
  * Note: this example is IPv4 specific which is also bad.
  *
+ * Use strace on Linux to see what is happening.
+ *
  * (c) jp@devnull.cz
  */
 
