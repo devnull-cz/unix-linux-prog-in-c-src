@@ -47,7 +47,7 @@ main(void)
 	int sig, n1 = 1, n2 = 2;
 
 	sigfillset(&sset);
-	for (int i = 0; i < sizeof (sync_sigs) / sizeof (int); ++i)
+	for (int i = 0; i < sizeof (sync_sigs) / sizeof (sync_sigs[0]); ++i)
 		sigdelset(&sset, sync_sigs[i]);
 	pthread_sigmask(SIG_SETMASK, &sset, NULL);
 
