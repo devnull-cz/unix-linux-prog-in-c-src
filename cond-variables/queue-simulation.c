@@ -64,7 +64,7 @@ producer(void *x)
 		 * We could also signal each time we insert a message but that
 		 * is really not necessary and would be actually wasteful.
 		 */
-		if (in_queue == 1 && msg_created == 1) {
+		if (in_queue == 1 && msg_created > 0) {
 			pthread_mutex_unlock(&mutex);
 			(void) printf("Producer: we inserted a message to "
 			    "an empty queue, signalling the consumer.\n");
@@ -105,7 +105,7 @@ consumer(void *x)
 		 * messages again.
 		 */
 		in_queue = in_queue - msg_removed;
-		if ((in_queue + msg_removed) == capacity && msg_removed == 1) {
+		if ((in_queue + msg_removed) == capacity && msg_removed > 0) {
 			(void) printf("Consumer: queue no longer full, "
 			    "signalling the producer.\n");
 			pthread_mutex_unlock(&mutex);
