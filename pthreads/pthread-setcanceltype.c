@@ -121,7 +121,6 @@ main(int argc, char **argv)
 	/* Let the thread call pthread_setcanceltype(). */
 	poll(NULL, 0, 500);
 
-	/* We will block here until we get out of the while loop above. */
 	if ((e = pthread_cancel(t)) != 0)
 		errx(1, "pthread_cancel: %s", strerror(e));
 
