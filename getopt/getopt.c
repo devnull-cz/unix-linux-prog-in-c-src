@@ -42,7 +42,11 @@ main(int argc, char **argv)
 	argv++;
 	argc--;
 
-	while ((opt = getopt(argc, argv, "c:")) != -1) {
+	/*
+	 * With leading ':', we can distinguish between an unknown option and a
+	 * missing argument to a known option.
+	 */
+	while ((opt = getopt(argc, argv, ":c:")) != -1) {
 		switch (opt) {
 		case 'c':
 			/*
@@ -52,8 +56,12 @@ main(int argc, char **argv)
 			if ((code = strdup(optarg)) == NULL)
 				err(1, "cannot alloc memory for -c optarg");
 			break;
+		case ':':
+			fprintf(stderr, "missing argument for -%c\n", optopt);
+			usage(argv0);
+			break;
 		case '?':
-			fprintf(stderr, "unknown option: '%c'\n", optopt);
+			fprintf(stderr, "unknown option -%c\n", optopt);
 			usage(argv0);
 			break;
 		}
