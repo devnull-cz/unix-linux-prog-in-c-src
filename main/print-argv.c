@@ -25,6 +25,6 @@ main(int argc, char **argv)
 	 * the following.
 	 */
 	printf("argv guided simplified:\n");
-	while (*argv)
+	while (*argv != NULL)
 		printf("%s\n", *argv++);
 }
