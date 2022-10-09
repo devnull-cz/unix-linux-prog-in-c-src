@@ -3,7 +3,7 @@
 CC=cc
 CSTD=c99
 CFLAGS=-Wall -pedantic -std=$(CSTD) -Wshadow -Wpointer-arith -Wcast-qual \
-	-Wstrict-prototypes -Werror=implicit-function-declaration
+	-Wstrict-prototypes -Werror=implicit-function-declaration -g
 UNAME_S := $(shell uname -s)
 
 %.o: %.c
