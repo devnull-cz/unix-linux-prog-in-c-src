@@ -1,8 +1,8 @@
 #!/bin/sh
 
 #
-# An example on getopts built in shell function. See also getopt.c which is a
-# C program counterpart to this shell code.
+# An example on the getopts built-in shell function. See also getopt.c which is
+# a C program counterpart to this shell code.
 #
 # (c) jp@devnull.cz
 #
