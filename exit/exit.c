@@ -1,7 +1,5 @@
 /*
  * Show the difference between exit() and _exit() w.r.t. atexit().
- *
- * (c) vlada@devnull.cz
  */
 
 #include <stdio.h>
@@ -15,21 +13,29 @@ bye(void)
 }
 
 int
-main(void)
+main(int argc, char **argv)
 {
-	printf("setting exit handler\n");
+	(void)argv;
+
+	if (argc == 1)
+		printf("Run with any command line argument to use exit().\n");
+
+	printf("Setting exit handler.\n");
 	if (atexit(bye) != 0) {
-		fprintf(stderr, "cannot set exit function\n");
+		fprintf(stderr, "Cannot set exit function.\n");
 		exit(EXIT_FAILURE);
 	}
 
-/*
- * Define EXIT to 1 to get exit().
- */
-#ifdef EXIT
-	exit(3);
-#else
-	_exit(4);
-#endif
-	printf("not reached\n");
+	/*
+	 * Use any argument to use exit().
+	 */
+	if (argc > 1) {
+		printf("Using exit().\n");
+		exit(3);
+	} else {
+		printf("Using _exit().\n");
+		_exit(4);
+	}
+
+	printf("Never reached.\n");
 }
