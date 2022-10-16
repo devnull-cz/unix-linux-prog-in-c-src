@@ -57,7 +57,7 @@ main(int argc, char **argv)
 				err(1, "cannot alloc memory for -c optarg");
 			break;
 		case ':':
-			fprintf(stderr, "missing argument for -%c\n", optopt);
+			fprintf(stderr, "missing value for -%c\n", optopt);
 			usage(argv0);
 			break;
 		case '?':
