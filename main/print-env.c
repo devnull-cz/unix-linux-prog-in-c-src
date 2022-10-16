@@ -9,6 +9,6 @@ extern char **environ;
 int
 main(void)
 {
-	for (int i = 0; environ[i] != NULL; ++i)
-		printf("%s\n", environ[i]);
+	for (char **ep = environ; *ep != NULL; ++ep)
+		printf("%s\n", *ep);
 }
