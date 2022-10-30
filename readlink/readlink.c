@@ -32,6 +32,4 @@ main(int argc, char *argv[])
 
 	/* Obviously, something is not right.  Fix the problem. */
 	printf("%s\n", buf);
-
-	return (0);
 }
