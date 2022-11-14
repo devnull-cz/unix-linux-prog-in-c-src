@@ -46,7 +46,7 @@
 
 #define	NOT_FOUND	"read not found\n"
 
-ssize_t (*f)(int, void *, size_t);
+static ssize_t (*f)(int, void *, size_t);
 
 ssize_t
 read(int fildes, void *buf, size_t nbyte)
