@@ -35,9 +35,8 @@ main(void)
 	act.sa_handler = ctrl_c;
 	sigaction(SIGTERM, &act, NULL);
 
-	/* We cannot use pause() as the signal is blocked. */
+	/* We cannot use pause() as the signal is blocked, read() will help. */
 	printf("%d: send me a SIGTERM, then pres Enter\n", getpid());
-
 	char buf[1];
 	if (read(0, buf, sizeof (buf)) == -1)
 		err(1, "read");
@@ -45,5 +44,5 @@ main(void)
 	sigset_t freshset;
 	sigpending(&freshset);
 	assert(sigismember(&freshset, SIGTERM));
-	printf("Yes, we got a pending SIGTERM.\n");
+	printf("Yes, we have a pending SIGTERM.\n");
 }
