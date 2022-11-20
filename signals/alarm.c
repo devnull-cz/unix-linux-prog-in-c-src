@@ -45,7 +45,7 @@ main(void)
 	if ((size = read(0, buf, BUFSIZE)) == -1) {
 		if (errno != EINTR)
 			err(1, "read");
-		printf("Interrupted read()...\n");
+		warn("interrupted read(), error was");
 	}
 
 	/* Disable the repeating timer. */
