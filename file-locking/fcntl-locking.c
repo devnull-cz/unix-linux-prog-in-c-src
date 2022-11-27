@@ -1,16 +1,18 @@
 /*
  * Example on file locking.  The program creates NPROC processes.  Each child
  * goes through the file's first 70 bytes and sets the position for every
- * consecutive byte before writing its id character to it (see array 'c').  When
- * the middle is reached, if -l/-L is used, get the lock.  In other words, first
- * half of the file is always written into without any synchronization between
- * the processes, the other half may be writable to one process only and should
- * contain only one of possible NPROC characters if written and read under the
- * lock.  Only the -L solution actually works correctly though.
+ * consecutive byte before writing its ID character mark to it (see the 'c'
+ * array).  When the middle of the line is reached, if -l/-L is used, get the
+ * lock.  In other words, first half of the file is always written into without
+ * any synchronization between the processes, the other half is writable
+ * optionally to one process only and should contain only one of possible NPROC
+ * characters if written and read under the lock.  Only the -L solution actually
+ * works correctly though.
  *
  * The file middle is denoted via '|' character.
  *
- * You have three ways of running it.
+ * You have three ways of running it.  Use the 'reader' command to print the
+ * present state of the line while holding a lock.
  *
  * (1) The following will not lock at all:
  *
@@ -115,12 +117,11 @@ main(int argc, char **argv)
 	while ((r = getopt(argc, argv, "lL")) != -1) {
 		switch (r) {
 		case 'l':
-			(void) printf("will use locking with shared fd...\n");
+			(void) printf("Using locking with a shared fd.\n");
 			locking = 1;
 			break;
 		case 'L':
-			(void) printf("will use locking with private "
-			    "fd's...\n");
+			(void) printf("Using locking with private fd's.\n");
 			locking = 2;
 			break;
 		default:
@@ -135,7 +136,7 @@ main(int argc, char **argv)
 		usage(progname);
 
 	if (locking == 0)
-		printf("will not use locking at all\n");
+		printf("Not using locking.\n");
 
 	/* Create the file. */
 	char *filename = argv[0];
@@ -186,15 +187,16 @@ main(int argc, char **argv)
 #endif
 			/*
 			 * NOTE: If locking is set to 1, the file position
-			 *	 is shared among the NPROC processes so it could
-			 *	 happen that (timewise):
+			 *	 is shared among the NPROC processes so the
+			 *	 following could happen (timewise):
 			 *
-			 *	   1) process in upper half lseek()s to
-			 *		offset > FILE_LEN / 2
-			 *	   2) a process in lower half lseek()s to
-			 *		offset < FILE_LEN / 2
-			 *	   3) the process in upper half write()s
-			 *		BUT THE WRITE IS DONE TO LOWER HALF!
+			 *	   1) process in the upper half lseek()s to
+			 *	      offset > FILE_LEN / 2
+			 *	   2) a process in the lower half lseek()s to
+			 *	      offset < FILE_LEN / 2
+			 *	   3) the process in the upper half write()s
+			 *	      UNDER THE LOCK BUT WRITES TO THE LOWER
+			 *	      HALF!
 			 *
 			 *	 This is thanks to scheduling and the fact
 			 *	 that lseek() does not consult any locks.
@@ -220,7 +222,7 @@ main(int argc, char **argv)
 		}
 	}
 
-	/* not reached... */
+	/* Not reached. */
 	for (i = 0; i < NPROC; ++i)
 		(void) wait(NULL);
 }
