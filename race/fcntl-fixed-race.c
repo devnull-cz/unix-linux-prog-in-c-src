@@ -1,8 +1,8 @@
 /*
  * See race.c for more information. This version uses fcntl() for
- * synchronization. Note that most of the time now is spent in those
- * synchronization functions (when you kill it with Ctrl-C you see how many
- * loops were done. Try race.c and this and compare).
+ * synchronization.  Note that most of the time now is spent in those
+ * synchronization functions (when you kill it with Ctrl-C you get to see how
+ * many loops were executed.  Try race.c and this code, then compare).
  *
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
