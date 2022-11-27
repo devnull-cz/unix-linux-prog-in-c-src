@@ -17,36 +17,39 @@
 
 lock=./lock-unlock
 
-[ $# -ne 1 ] && echo "usage: $0 <lock-file>" && exit 1
+(($# != 1)) && echo "usage: $0 <lock-file>" && exit 1
 trap "rm -f $1; exit" INT TERM
 
-[ -x $lock ] || { echo "program '$lock' does not exist"; exit 1; }
+[[ -x $lock ]] || { echo "program '$lock' does not exist"; exit 1; }
 
+typeset -i rc
 while true; do
-	# loop until lock acquired (active/busy waiting!)
+	# Loop until lock acquired (active/busy waiting!).
 	while true; do
 		$lock $1 lock
-		ret=$?
+		rc=$?
 
-		# something bad happened
-		[ $ret -eq 2 ] && echo "UNEXPECTED FAILURE, exiting..." && \
+		# Something bad happened.
+		((rc == 2)) && echo "UNEXPECTED FAILURE, exiting..." && \
 		    return 1
 
-		# already locked
-		[ $ret -eq 1 ] && sleep 1
+		# Already locked.
+		((rc == 1)) && sleep 1
 
-		# lock OK
-		[ $ret -eq 0 ] && break
+		# Lock acquired now.
+		((rc == 0)) && break
 	done
 
-	# simulate some work by printing its PID every second
+	# Simulate some work by printing its PID every second.
 	n=$(expr $RANDOM % 3 + 1)
-	echo "lock acquired by $$, will do some work"
+	echo "Lock acquired by $$, will do some work."
 	for i in $(yes | head -$n); do
 		echo "  $$"
 		sleep 1
 	done
 	echo "$$ is releasing the lock"
+	# Does not check its return value, if the lock was removed by somebody
+	# else, we ignore it.
 	$lock $1 unlock
 	sleep 1
 done
