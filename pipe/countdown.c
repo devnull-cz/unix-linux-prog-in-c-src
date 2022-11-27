@@ -1,6 +1,6 @@
 /*
- * A pipe reader is blocked on a pipe until all the writers (= children) close
- * their pipe descriptor.
+ * A pipe reader is blocked on a pipe until all writers (= children) close their
+ * pipe descriptor.
  *
  * Note the parent does not wait() for the children.  Also note that read() is
  * interrupted with the SIGCHLD signal but restarted automatically (you can
