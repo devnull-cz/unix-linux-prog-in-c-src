@@ -72,10 +72,12 @@ main(int argc, char **argv)
 		err(1, "fork");
 	case 0:
 		while (run) {
+			/* Testing and printing is racy again! */
 			if (addr[0] != addr[1]) {
-				if (dbg)
+				if (dbg) {
 					fprintf(stderr, "[child (%d/%d)] ",
 					    addr[0], addr[1]);
+				}
 				++races;
 			}
 			addr[0] = addr[1] = 2;
@@ -84,10 +86,12 @@ main(int argc, char **argv)
 		break;
 	default:
 		while (run) {
+			/* Testing and printing is racy again! */
 			if (addr[0] != addr[1]) {
-				if (dbg)
+				if (dbg) {
 					fprintf(stderr, "[PARENT (%d/%d)] ",
 					    addr[0], addr[1]);
+				}
 				++races;
 			}
 			addr[0] = addr[1] = 1;
