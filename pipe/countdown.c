@@ -23,12 +23,12 @@ child(int p[2], int num)
 	if ((pid = fork()) == 0) {
 		close(p[0]);
 		sleep(num);
-		printf("%d exiting\n", getpid());
+		printf("%d child exiting\n", getpid());
 		// This will close the write end of the pipe,
 		// the unblocking the reader.
 		_exit(0);
 	}
-	printf("%d forked %d\n", getpid(), pid);
+	printf("%d parent forked %d\n", getpid(), pid);
 }
 
 int
@@ -46,8 +46,8 @@ main(void)
 		child(p, i);
 
 	close(p[1]);
-	printf("%d reading from the pipe\n", getpid());
+	printf("%d parent reading from the pipe\n", getpid());
 	n = read(p[0], buf, sizeof (buf));
 	assert(n == 0);
-	printf("%d got EOF\n", getpid());
+	printf("%d parent got EOF\n", getpid());
 }
