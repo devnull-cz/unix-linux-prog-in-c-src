@@ -45,7 +45,7 @@ host_t hosts[] = {
 	/* This will timeout. */
 	{ "www.devnull.cz", "33", {-1, -1, -1}, 0 },
 	/* This should refuse the connection on both IPv4 and IPv6. */
-	{ "u-pl3.ms.mff.cuni.cz", "999", {-1, -1, -1}, 0 },
+	{ "u-pl6.ms.mff.cuni.cz", "999", {-1, -1, -1}, 0 },
 	/* To see if localhost gets EINPROGRESS as well. */
 	{ "localhost", "22", {-1, -1, -1}, 0 },
 	/*
