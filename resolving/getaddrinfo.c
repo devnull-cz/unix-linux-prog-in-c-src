@@ -71,7 +71,7 @@ main(int argc, char **argv)
 		 */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    ip_str, sizeof (ip_str), port_str, sizeof (port_str),
-		    NI_NUMERICHOST|NI_NUMERICSERV)) != 0) {
+		    NI_NUMERICHOST | NI_NUMERICSERV)) != 0) {
 			errx(1, "%s", gai_strerror(error));
 		}
 
