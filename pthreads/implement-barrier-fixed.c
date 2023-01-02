@@ -40,7 +40,7 @@ int on_barrier;
 int maxrand = 50;
 
 void *
-th(void *arg)
+thread(void *arg)
 {
 	while (1) {
 		if (maxrand > 0)
@@ -101,7 +101,7 @@ main(int argc, char **argv)
 		maxrand = atoi(argv[2]);
 
 	if (max < 2)
-		errx(1, "The argument must be larger than 1.");
+		errx(1, "The argument must be bigger than 1.");
 
 	tid = malloc(sizeof (tid) * max);
 	assert(tid != NULL);
@@ -113,7 +113,7 @@ main(int argc, char **argv)
 	srandom(time(NULL));
 
 	for (i = 0; i < max; ++i)
-		(void) pthread_create(tid + i, NULL, th, id + i);
+		(void) pthread_create(tid + i, NULL, thread, id + i);
 
 	/* Never reached.  We should destroy the cv and the mutex here. */
 	for (i = 0; i < max; ++i)
