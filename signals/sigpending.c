@@ -45,4 +45,10 @@ main(void)
 	sigpending(&freshset);
 	assert(sigismember(&freshset, SIGTERM));
 	printf("Yes, we have a pending SIGTERM.\n");
+
+	/* Unblock SIGTERM. */
+	sigdelset(&sigset, SIGTERM);
+	sigprocmask(SIG_BLOCK, &sigset, NULL);
+	printf("Send another signal to terminate the program\n");
+	pause();
 }
