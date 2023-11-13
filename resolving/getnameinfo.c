@@ -19,7 +19,7 @@
  *		inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1
  *		inet 127.0.0.1 netmask 0xff000000
  *
- * We get the following output:
+ * We might get the following output:
  *
  *	$ ./getnameinfo localhost
  *	host 127.0.0.1 resolves to localhost
