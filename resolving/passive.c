@@ -63,10 +63,18 @@ main(int argc, char **argv)
 			continue;
 		}
 
-		if (bind(s, res->ai_addr, res->ai_addrlen) == -1) {
+		int bres = bind(s, res->ai_addr, res->ai_addrlen);
+		switch (bres) {
+		case 0:
+			printf("got successful bind for AF %d\n",
+			    res->ai_family);
+			break;
+		default:
 			warn("bind");
 			continue;
 		}
+
+		// Avoid leaking file descriptors.
 		close(s);
 	}
 
