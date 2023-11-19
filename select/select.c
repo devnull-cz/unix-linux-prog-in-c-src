@@ -84,7 +84,7 @@ main(int argc, char **argv)
 			 * we could read data from fd 0 while receiving data
 			 * from the network as well.
 			 *
-			 * It's left as an excercise to the reader.
+			 * It's left as an exercise to the reader.
 			 */
 			while ((n = read(newsock, buf, 100)) > 0)
 				write(1, buf, n);
