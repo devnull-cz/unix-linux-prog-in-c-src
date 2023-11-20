@@ -15,7 +15,7 @@ bye(void)
 int
 main(int argc, char **argv)
 {
-	(void)argv;
+	(void) argv;
 
 	if (argc == 1)
 		printf("Run with any command line argument to use exit().\n");
