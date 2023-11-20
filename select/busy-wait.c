@@ -112,8 +112,10 @@ main(int argc, char **argv)
 		}
 
 		/* Wait a little bit before the next loop. */
-		const struct timespec timeout = { .tv_sec = 0,
-		                                  .tv_nsec = 300000000 };
+		const struct timespec timeout = {
+		    .tv_sec = 0,
+		    .tv_nsec = 300000000
+		};
 		nanosleep(&timeout, NULL);
 	}
 }
