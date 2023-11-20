@@ -35,6 +35,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <poll.h>
+#include <time.h>
 
 #define	BUF_LEN	100
 
@@ -111,6 +112,8 @@ main(int argc, char **argv)
 		}
 
 		/* Wait a little bit before the next loop. */
-		poll(NULL, 0, 300);
+		const struct timespec timeout = { .tv_sec = 0,
+		                                  .tv_nsec = 300000000 };
+		nanosleep(&timeout, NULL);
 	}
 }
