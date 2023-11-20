@@ -191,12 +191,12 @@ main(int argc, char **argv)
 			 *	 following could happen (timewise):
 			 *
 			 *	   1) process in the upper half lseek()s to
-			 *	      offset > FILE_LEN / 2
+			 *		offset > FILE_LEN / 2
 			 *	   2) a process in the lower half lseek()s to
-			 *	      offset < FILE_LEN / 2
+			 *		offset < FILE_LEN / 2
 			 *	   3) the process in the upper half write()s
-			 *	      UNDER THE LOCK BUT WRITES TO THE LOWER
-			 *	      HALF!
+			 *		UNDER THE LOCK BUT WRITES TO THE LOWER
+			 *		HALF!
 			 *
 			 *	 This is thanks to scheduling and the fact
 			 *	 that lseek() does not consult any locks.
