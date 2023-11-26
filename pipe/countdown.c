@@ -25,7 +25,7 @@ child(int p[2], int num)
 		sleep(num);
 		printf("%d child exiting\n", getpid());
 		// This will close the write end of the pipe,
-		// the unblocking the reader.
+		// thus unblocking the reader.
 		_exit(0);
 	}
 	printf("%d parent forked %d\n", getpid(), pid);
