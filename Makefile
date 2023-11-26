@@ -30,6 +30,7 @@ SUBDIRS=assert		\
 	semaphores	\
 	session		\
 	setuid		\
+	shm		\
 	signals		\
 	sleep		\
 	stat		\
