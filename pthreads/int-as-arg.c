@@ -1,6 +1,6 @@
 /*
  * If you need to pass just a thread ID only, you can use the void pointer
- * itself. However, this way is defined as not portable in the specification
+ * itself. However, this way is defined as not portable in the C specification
  * so be careful. Compare to wrong-use-of-arg.c and correct-use-of-arg.c.
  *
  * Compile as:
