@@ -18,9 +18,9 @@ thread(void *x)
 	int i, e;
 
 	/*
-	 * This "guarantees" that when entering pthread_join() the thread is
-	 * still joinable. However, pthread_join() should return an error as
-	 * soon as the thread is made detachable.
+	 * Detaching from within the thread function means that the thread is
+	 * still joinable at this point. However, pthread_join() should return
+	 * an error as soon as the thread is made detachable.
 	 */
 	printf("Thread started.\n");
 	if ((e = pthread_detach(pthread_self())) != 0)
