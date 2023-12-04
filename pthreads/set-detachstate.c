@@ -20,8 +20,8 @@ thread(void *x)
 		poll(NULL, 0, 500);
 
 	/*
-	 * Note that we will only finish the first iteration as joining the
-	 * threads will fail.
+	 * Note that the thread will usually only finish the first iteration
+	 * as joining the threads will fail.
 	 */
 	for (i = 0; i < 10; ++i) {
 		printf("Thread %d (loop #%d).\n", *((int *)x), i);
