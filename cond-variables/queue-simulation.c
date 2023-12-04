@@ -139,6 +139,8 @@ main(int argc, char **argv)
 	 * Main thread.  Periodically print the "contents" of the queue.  A dot
 	 * means an item, a space means an empty slot.  Note that we do that
 	 * under a lock to make sure we work with consistent data.
+	 * This could be refactored into separate thread. Main thread would
+	 * have to wait for the threads to complete via pthread_join().
 	 */
 	while (1) {
 		pthread_mutex_lock(&mutex);
