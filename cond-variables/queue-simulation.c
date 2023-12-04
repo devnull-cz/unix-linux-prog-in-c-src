@@ -97,15 +97,16 @@ consumer(void *x)
 			(void) printf("Consumer: woken up.\n");
 		}
 
+		int orig_in_queue = in_queue;
 		msg_removed = random() % 2;
 
 		/*
-		 * If the queue was full and we pulled a "message" from it we
+		 * If the queue was full and we pulled a "message(s)" from it we
 		 * will signal the producer so that it can start producing
 		 * messages again.
 		 */
 		in_queue = in_queue - msg_removed;
-		if ((in_queue + msg_removed) == capacity && msg_removed > 0) {
+		if (orig_in_queue == capacity && msg_removed > 0) {
 			(void) printf("Consumer: queue no longer full, "
 			    "signalling the producer.\n");
 			pthread_mutex_unlock(&mutex);
