@@ -27,9 +27,9 @@
 
 #define	DEFAULT_MAX	10
 
-/* number of items in the queue */
+/* number of items in the queue. protected by the mutex below. */
 int in_queue;
-/* queue capacity. protected by the mutex below. */
+/* queue capacity */
 int capacity = DEFAULT_MAX;
 
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
