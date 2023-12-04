@@ -29,7 +29,7 @@
 
 /* number of items in the queue */
 int in_queue;
-/* queue capacity */
+/* queue capacity. protected by the mutex below. */
 int capacity = DEFAULT_MAX;
 
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
