@@ -73,7 +73,7 @@ producer(void *x)
 			pthread_mutex_unlock(&mutex);
 		}
 
-		poll(NULL, 0, 95);
+		poll(NULL, 0, 95);	/* sleep 95 ms */
 	}
 	/* NOTREACHED */
 }
@@ -114,7 +114,7 @@ consumer(void *x)
 			pthread_mutex_unlock(&mutex);
 		}
 
-		poll(NULL, 0, 100);
+		poll(NULL, 0, 100);	/* sleep 100 ms */
 	}
 
 	/* NOTREACHED */
