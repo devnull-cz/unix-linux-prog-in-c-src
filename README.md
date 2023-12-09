@@ -1,4 +1,4 @@
-[![Build status](https://github.com/devnull-cz/unix-linux-prog-in-c-src/workflows/Build/badge.svg)](https://github.com/devnull-cz/unix-linux-prog-in-c-src/actions?query=workflow%3A%22Build%22)
+[![Build](https://github.com/devnull-cz/unix-linux-prog-in-c-src/actions/workflows/build.yml/badge.svg)](https://github.com/devnull-cz/unix-linux-prog-in-c-src/actions/workflows/build.yml)
 
 The files in this directory and all sub-directories are used for demonstrations
 in the course of teaching "Unix programming in C" (NSWI015) at Faculty of
