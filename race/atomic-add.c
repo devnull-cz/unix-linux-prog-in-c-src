@@ -10,7 +10,7 @@
  * Tested on UltraSparc T1000 with num_of_cycles = 99999999
  *
  * On this (or similar architecture where operation 'ADD' is not atomic)
- * machine, you should see RACE for execution without any option and correct
+ * machine, you should see races for execution without any option and correct
  * behaviour for both -a and -m. However, using -m is much slower (almost 10x
  * for my tests) than -a solution. That is due to the overhead of mutexes in
  * contrast to atomic_add() or atomic_fetch_add() which can be used if the only
@@ -30,11 +30,13 @@
 #include <unistd.h>
 #include <pthread.h>
 #ifndef __STDC_NO_ATOMICS__
+/* C11 atomics */
 #include <stdatomic.h>
 #define	ATOMIC_ADD(ptr, incr)	atomic_fetch_add(ptr, incr)
 atomic_int x;
 #else
 #if defined(__sun) && defined(__SVR4)
+/* Solaris/Illumos atomic API */
 #include <atomic.h>
 #define	ATOMIC_ADD(ptr, incr)	atomic_add_32(ptr, incr)
 uint32_t x;
