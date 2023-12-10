@@ -1,7 +1,6 @@
 ALL=broken-pipe \
     deadlock-in-read \
     pipe-and-fork \
-    pipe-sig \
     countdown
 
 all: $(ALL)
@@ -13,9 +12,6 @@ deadlock-in-read: deadlock-in-read.o
 	$(CC) -o $@ $<
 
 pipe-and-fork: pipe-and-fork.o
-	$(CC) -o $@ $<
-
-pipe-sig: pipe-sig.o
 	$(CC) -o $@ $<
 
 countdown: countdown.o
