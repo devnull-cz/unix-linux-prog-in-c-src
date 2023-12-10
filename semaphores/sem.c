@@ -32,8 +32,6 @@
 #include <poll.h>
 #include <err.h>
 
-sem_t sem;
-
 #define	PUTCHARF(x)	putc(x, stdout); fflush(stdout);
 
 int
@@ -51,8 +49,10 @@ sem_wait_nointr(sem_t *s)
 void *
 usher(void *x)
 {
+	sem_t *sem = (sem_t *)x;
+
 	while (1) {
-		sem_post(&sem);
+		sem_post(sem);
 		PUTCHARF('+');
 		poll(NULL, 0, 100);
 	}
@@ -70,6 +70,7 @@ main(int argc, char *argv[])
 	pthread_t t;
 	int nointr = 0;
 	struct sigaction act;
+	sem_t sem;
 
 	if (argc == 2)
 		nointr = 1;
@@ -78,7 +79,7 @@ main(int argc, char *argv[])
 	if (sem_init(&sem, 0, 5) == -1)
 		err(1, "sem_init");
 
-	pthread_create(&t, NULL, usher, NULL);
+	pthread_create(&t, NULL, usher, &sem);
 
 	act.sa_handler = alarm_handler;
 	sigemptyset(&act.sa_mask);
