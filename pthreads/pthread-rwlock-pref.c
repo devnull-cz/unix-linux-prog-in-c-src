@@ -32,7 +32,7 @@ millisleep(int msec)
 void *
 writer_thread(void *arg)
 {
-	printf("writer %ld trying to get the lock\n", (intptr_t)arg);
+	printf("writer %ld trying to get the lock [W]\n", (intptr_t)arg);
 
 	pthread_rwlock_wrlock(&rwlock);
 
@@ -51,9 +51,9 @@ reader_thread(void *arg)
 {
 	int e;
 
-	printf("reader trying to get the lock\n");
+	printf("reader trying to get the lock [R]\n");
 	if ((e = pthread_rwlock_rdlock(&rwlock)) != 0)
-		errx(1, "tryrdlock: %s", strerror(e));
+		errx(1, "rdlock: %s", strerror(e));
 
 	printf("reader locked\n");
 	millisleep(500);
