@@ -58,6 +58,7 @@ main(int argc, char *argv[]) {
 		seq = 1;
 		optidx++;
 	}
+	optidx++;
 
 	if (strcmp(argv[optidx], argv[optidx + 1]) == 0) {
 		printf("hosts should be different to make the point\n");
