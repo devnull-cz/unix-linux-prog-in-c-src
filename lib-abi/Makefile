@@ -2,6 +2,7 @@ all: $(PROGS)
 
 include ../Makefile.common
 
+# Assumes GNU make.
 ifeq ($(UNAME_S),Darwin)
 PROGS=
 else
