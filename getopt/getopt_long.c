@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <getopt.h>
 #include <fcntl.h>
 #include <err.h>
@@ -14,7 +15,7 @@ usage(void)
 int
 main(int argc, char *argv[])
 {
-	int bflag,	ch, fd;
+	int bflag,	ch, fd = -1;
 	int daggerset;
 
 	/* options descriptor */
@@ -51,6 +52,9 @@ main(int argc, char *argv[])
 
 	argc -= optind;
 	argv += optind;
+
+	if (fd != -1)
+		close(fd);
 
 	return (0);
 }
