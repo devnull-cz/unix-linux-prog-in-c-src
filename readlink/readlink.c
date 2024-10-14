@@ -1,3 +1,8 @@
+/*
+ * demonstration on how not to use readlink(3). The example below has a
+ * certain error that needs to be fixed.
+ */
+
 #define	_XOPEN_SOURCE	600
 
 #include <sys/stat.h>
