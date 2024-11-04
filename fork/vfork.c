@@ -8,7 +8,8 @@
  * was used since a child is not supposed to use the parent's process address
  * space any other way than to exec() or _exit().  By using the return operator,
  * the parent's stack would be changed.  _exit() is used in favour of exit() to
- * avoid any atexit() routines to be called on behalf of the child.
+ * avoid any atexit() routines to be called on behalf of the child and also
+ * to avoid flushing the IO buffers.
  *
  * (c) jp@devnull.cz
  */
