@@ -24,7 +24,11 @@ main(int argc, char *argv[])
 	int fd;
 	char c = (char)'a';
 	char *addr = NULL;
-	int mode;
+	enum {
+		NO_WRITE = 0,
+		WRITE_BEFORE_MMAP,
+		WRITE_AFTER_MMAP,
+	} mode;
 
 	if (argc != 2) {
 		fprintf(stderr, "usage: %s <num>\n", argv[0]);
@@ -38,7 +42,7 @@ main(int argc, char *argv[])
 	if (lseek(fd, SEEK_N, SEEK_SET) == -1)
 		err(1, "lseek");
 
-	if (mode == 1) {
+	if (mode == WRITE_BEFORE_MMAP) {
 		printf("extending before mmap()\n");
 		assert(write(fd, &c, 1) == 1);
 	}
@@ -47,7 +51,7 @@ main(int argc, char *argv[])
 	if (addr == MAP_FAILED)
 		err(1, "mmap");
 
-	if (mode == 2) {
+	if (mode == WRITE_AFTER_MMAP) {
 		printf("extending after mmap()\n");
 		assert(write(fd, &c, 1) == 1);
 	}
