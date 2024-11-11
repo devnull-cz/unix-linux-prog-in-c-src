@@ -21,10 +21,11 @@ main(void)
 	if (pipe(fd) == -1)
 		err(1, "pipe");
 
-#if 0
+#if CLOSE_WRITE_END
 	close(fd[1]);
 #endif
 	(void) read(fd[0], &c, sizeof (c));
+
 	/* Never reached. */
 	return (0);
 }
