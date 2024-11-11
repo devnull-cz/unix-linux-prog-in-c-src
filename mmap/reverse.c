@@ -28,6 +28,10 @@ main(void)
 		err(1, "open %s", FNAME);
 
 	size = lseek(fd, 0, SEEK_END);
+	/*
+	 * MAP_SHARED has to be used in order to sync the data to the backing
+	 * store (as opposed to the MAP_PRIVATE).
+	 */
 	p1 = addr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
 	p2 = p1 + size - 1;
