@@ -31,7 +31,7 @@ handler(int sig)
 int
 main(void)
 {
-	int size;
+	ssize_t size;
 	char buf[BUFSIZE];
 	struct sigaction act = { 0 };
 
@@ -48,10 +48,10 @@ main(void)
 		warn("interrupted read(), error was");
 	}
 
-	/* Disable the repeating timer. */
+	/* Disable the timer as read() returned under SECS seconds. */
 	alarm(0);
 	if (size > 0) {
-		printf("Read %d bytes: ", size);
+		printf("Read %zd bytes: ", size);
 		/* Without \n it would not print it before write() */
 		fflush(stdout);
 		write(1, buf, size);
