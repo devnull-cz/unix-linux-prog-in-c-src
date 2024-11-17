@@ -71,7 +71,7 @@ main(int argc, char **argv)
 	 * We should block SIGINT in the parent and unblock it in the
 	 * child only after the handler is set otherwise the signal will
 	 * terminate the child before it can setup the handler.
-  	 * Use sleep as a crude way to avoid this.
+	 * Use sleep as a crude way to avoid this.
 	 */
 	printf("%d sleeping 1 second\n", getpid());
 	sleep(1);
