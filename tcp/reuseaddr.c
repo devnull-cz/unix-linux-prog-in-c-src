@@ -38,8 +38,6 @@ main(int argc, char **argv)
 		errx(1, "usage: %s <0|1> <port_number>", argv[0]);
 
 	reuse = atoi(argv[1]);
-	if (reuse > 0)
-		printf("Setting SO_REUSEADDR flag...\n");
 
 	sa.sin_family = AF_INET;
 	sa.sin_port = htons(atoi(argv[2]));
@@ -48,9 +46,12 @@ main(int argc, char **argv)
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		err(1, "socket");
 
-	if (reuse && (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
-	    &optval, sizeof (optval)) == -1))
-		err(1, "setsockopt");
+	if (reuse) {
+		printf("Setting SO_REUSEADDR flag...\n");
+		if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
+		    &optval, sizeof (optval)) == -1)
+			err(1, "setsockopt");
+	}
 
 	if (bind(fd, (struct sockaddr *) &sa, sizeof (sa)) == -1)
 		err(1, "bind");
