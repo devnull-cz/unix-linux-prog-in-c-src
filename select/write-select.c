@@ -48,7 +48,8 @@ main(int argc, char **argv)
 	fd_set wrfds;
 	char buf[BUF_LEN];
 	struct sockaddr_in sa;
-	int s, newsock, n, total = 0, optval = 1;
+	int s, newsock, n, optval = 1;
+	size_t total = 0;
 
 	if (argc != 2)
 		errx(1, "usage: %s <port>", basename(argv[0]));
@@ -104,7 +105,7 @@ main(int argc, char **argv)
 		if ((n = write(newsock, buf, sizeof (buf))) == -1)
 			err(1, "write");
 		total = total + n;
-		fprintf(stderr, "[ %d bytes written (total %d) ]\n",
+		fprintf(stderr, "[ %d bytes written (total %zu) ]\n",
 		    n, total);
 	}
 
