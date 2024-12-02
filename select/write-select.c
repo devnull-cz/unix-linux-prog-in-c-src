@@ -21,6 +21,8 @@
  * You will see that from time to time, the select() returns and the kernel
  * buffer is filled up while the netcat slowly reads the data.
  *
+ * This code is IPv4 specific which is bad.
+ *
  * (c) jp@devnull.cz
  */
 
