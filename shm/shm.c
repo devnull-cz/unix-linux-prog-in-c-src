@@ -16,8 +16,10 @@ main(int argc, char *argv[])
 	if (argc != 2)
 		errx(1, "usage: shm <shm_name>");
 
-	// The name should have a leading slash.
 	const char *shm_name = argv[1];
+	if (shm_name[0] != '/')
+		errx(1, "The name should have a leading slash.");
+
 	int fd = shm_open(shm_name, O_RDWR | O_CREAT,
 	    S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	if (fd == -1)
