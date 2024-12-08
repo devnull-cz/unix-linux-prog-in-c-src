@@ -25,7 +25,7 @@ main(int argc, char *argv[])
 	if (fd == -1)
 		err(1, "shm_open");
 
-	size_t size = 1024;
+	size_t size = 4444;
 	assert(ftruncate(fd, size) == 0);
 
 	// There would be no write-back with MAP_PRIVATE.
