@@ -117,6 +117,11 @@ unlock(int fd, struct flock *fl)
 		err(1, "fcntl");
 }
 
+/*
+ * Dump the contents of the file to stdout. If any kind of locking is in use,
+ * adhere to the locking range to get meaningful output in the presence
+ * of advisory locking.
+ */
 static void
 dump_file(char *filename, bool locking)
 {
