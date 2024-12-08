@@ -13,8 +13,8 @@
 int
 main(int argc, char *argv[])
 {
-	if (argc != 2)
-		errx(1, "usage: shm <shm_name>");
+	if (argc != 3)
+		errx(1, "usage: shm <shm_name> <char>");
 
 	const char *shm_name = argv[1];
 	if (shm_name[0] != '/')
@@ -36,7 +36,7 @@ main(int argc, char *argv[])
 	close(fd);
 
 	for (char *q = p; q < p + size; q++)
-		*q = 'D';
+		*q = argv[2][0];
 
 	// Uncomment to destroy the shared memory segment:
 	// shm_unlink(shm_name);
