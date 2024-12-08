@@ -113,9 +113,9 @@ main(int argc, char **argv)
 	act.sa_flags = 0;
 	(void) sigaction(SIGINT, &act, NULL);
 
-	int r;
-	while ((r = getopt(argc, argv, "lL")) != -1) {
-		switch (r) {
+	int opt;
+	while ((opt = getopt(argc, argv, "lL")) != -1) {
+		switch (opt) {
 		case 'l':
 			(void) printf("Using locking with a shared fd.\n");
 			locking = 1;
