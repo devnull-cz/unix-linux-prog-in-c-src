@@ -135,11 +135,8 @@ dump_file(char *filename, bool locking)
 
 	while (1) {
 		/* Lock only the 2nd half of the file. */
-		if (locking) {
-			fl.l_type = F_RDLCK;
-			if (fcntl(fd, F_SETLKW, &fl) == -1)
-				err(1, "fcntl");
-		}
+		if (locking)
+			lock(fd, &fl);
 
 		(void) lseek(fd, SEEK_SET, 0);
 		memset(buf, 0, sizeof (buf));
@@ -148,11 +145,9 @@ dump_file(char *filename, bool locking)
 		(void) printf(" %zd\n", n);
 
 		sleep(1);
-		if (locking) {
-			fl.l_type = F_UNLCK;
-			if (fcntl(fd, F_SETLKW, &fl) == -1)
-				err(1, "fcntl");
-		}
+
+		if (locking)
+			unlock(fd, &fl);
 
 		/* Let the writers do their job. */
 		sleep(1);
