@@ -74,6 +74,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <assert.h>
+#include <stdbool.h>
 
 #define	FILE_LEN	70
 /* if you change this you MUST change the 'c' array below */
@@ -98,6 +99,67 @@ static void
 usage(char *progname)
 {
 		errx(1, "usage: %s [-l|-L] <filename>", progname);
+}
+
+static void
+lock(int fd, struct flock *fl)
+{
+	fl->l_type = F_WRLCK;
+	if (fcntl(fd, F_SETLKW, fl) == -1)
+		err(1, "fcntl");
+}
+
+static void
+unlock(int fd, struct flock *fl)
+{
+	fl->l_type = F_UNLCK;
+	if (fcntl(fd, F_SETLKW, fl) == -1)
+		err(1, "fcntl");
+}
+
+static void
+dump_file(char *filename, bool locking)
+{
+	struct flock fl;
+	char buf[FILE_LEN];
+	ssize_t n;
+	int fd;
+
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		err(1, "open");
+
+	/* Set the structure. */
+	fl.l_whence = SEEK_SET;
+	fl.l_start = FILE_LEN / 2;
+	fl.l_len = FILE_LEN / 2;
+
+	while (1) {
+		/* Lock only the 2nd half of the file. */
+		if (locking) {
+			fl.l_type = F_RDLCK;
+			if (fcntl(fd, F_SETLKW, &fl) == -1)
+				err(1, "fcntl");
+		}
+
+		(void) lseek(fd, SEEK_SET, 0);
+		memset(buf, 0, sizeof (buf));
+		n = read(fd, buf, sizeof (buf));
+		(void) write(1, buf, sizeof (buf));
+		(void) printf(" %zd\n", n);
+
+		sleep(1);
+		if (locking) {
+			fl.l_type = F_UNLCK;
+			if (fcntl(fd, F_SETLKW, &fl) == -1)
+				err(1, "fcntl");
+		}
+
+		/* Let the writers do their job. */
+		sleep(1);
+	}
+
+	/* not reached */
+	close(fd);
 }
 
 int
@@ -174,11 +236,9 @@ main(int argc, char **argv)
 		while (1) {
 			/* Lock only the 2nd half of the file. */
 			if (j == FILE_LEN / 2) {
-				if (locking > NO_LOCK) {
-					fl.l_type = F_WRLCK;
-					if (fcntl(fd, F_SETLKW, &fl) == -1)
-						err(1, "fcntl");
-				}
+				if (locking > NO_LOCK)
+					lock(fd, &fl);
+
 				/* Mark the 2nd half of the file. */
 				(void) lseek(fd, j++, SEEK_SET);
 				(void) write(fd, "|", 1);
@@ -218,16 +278,13 @@ main(int argc, char **argv)
 			 */
 			if (j == FILE_LEN) {
 				j = 0;
-				if (locking > NO_LOCK) {
-					fl.l_type = F_UNLCK;
-					if (fcntl(fd, F_SETLKW, &fl) == -1)
-						err(1, "fcntl");
-				}
+				if (locking > NO_LOCK)
+					unlock(fd, &fl);
 			}
 		}
 	}
 
-	/* Not reached. */
+	dump_file(filename, locking > NO_LOCK);
 	for (i = 0; i < NPROC; ++i)
 		(void) wait(NULL);
 }

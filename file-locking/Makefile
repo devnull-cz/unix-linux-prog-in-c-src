@@ -1,4 +1,4 @@
-PROGS=fcntl-locking lock-unlock	lockf reader
+PROGS=fcntl-locking lock-unlock	lockf
 
 all: $(PROGS)
 
@@ -9,9 +9,6 @@ lock-unlock: lock-unlock.o
 	$(CC) -o $@ $^
 
 lockf: lockf.o
-	$(CC) -o $@ $^
-
-reader: reader.o
 	$(CC) -o $@ $^
 
 clean:
