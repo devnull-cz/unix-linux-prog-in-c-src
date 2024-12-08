@@ -104,9 +104,14 @@ int
 main(int argc, char **argv)
 {
 	struct sigaction act;
-	int i, j, fd, locking = 0;
+	int i, j, fd;
 	struct flock fl;
 	char *progname = argv[0];
+	enum {
+		NO_LOCK = 0,
+		SHARED_FD,
+		EXCLUSIVE_FD
+	} locking = NO_LOCK;
 
 	act.sa_handler = sigint_handler;
 	sigemptyset(&act.sa_mask);
@@ -118,11 +123,11 @@ main(int argc, char **argv)
 		switch (opt) {
 		case 'l':
 			(void) printf("Using locking with a shared fd.\n");
-			locking = 1;
+			locking = SHARED_FD;
 			break;
 		case 'L':
 			(void) printf("Using locking with private fd's.\n");
-			locking = 2;
+			locking = EXCLUSIVE_FD;
 			break;
 		default:
 			usage(progname);
@@ -135,14 +140,14 @@ main(int argc, char **argv)
 	if (argc != 1)
 		usage(progname);
 
-	if (locking == 0)
+	if (locking == NO_LOCK)
 		printf("Not using locking.\n");
 
 	/* Create the file. */
 	char *filename = argv[0];
 	if ((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
 		err(1, "open");
-	if (locking == 2)
+	if (locking == EXCLUSIVE_FD)
 		close(fd);
 
 	/* extend the file to FILE_LEN bytes */
@@ -160,7 +165,7 @@ main(int argc, char **argv)
 			continue;
 
 		/* child */
-		if (locking == 2) {
+		if (locking == EXCLUSIVE_FD) {
 			if ((fd = open(filename, O_WRONLY, 0666)) == -1)
 				err(1, "open");
 		}
@@ -169,7 +174,7 @@ main(int argc, char **argv)
 		while (1) {
 			/* Lock only the 2nd half of the file. */
 			if (j == FILE_LEN / 2) {
-				if (locking > 0) {
+				if (locking > NO_LOCK) {
 					fl.l_type = F_WRLCK;
 					if (fcntl(fd, F_SETLKW, &fl) == -1)
 						err(1, "fcntl");
@@ -186,9 +191,9 @@ main(int argc, char **argv)
 			}
 #endif
 			/*
-			 * NOTE: If locking is set to 1, the file position
-			 *	 is shared among the NPROC processes so the
-			 *	 following could happen (timewise):
+			 * NOTE: If locking is set to SHARED_FD, the file
+			 *	 position is shared among the NPROC processes
+			 *	 so the following could happen (timewise):
 			 *
 			 *	   1) process in the upper half lseek()s to
 			 *		offset > FILE_LEN / 2
@@ -213,7 +218,7 @@ main(int argc, char **argv)
 			 */
 			if (j == FILE_LEN) {
 				j = 0;
-				if (locking > 0) {
+				if (locking > NO_LOCK) {
 					fl.l_type = F_UNLCK;
 					if (fcntl(fd, F_SETLKW, &fl) == -1)
 						err(1, "fcntl");
