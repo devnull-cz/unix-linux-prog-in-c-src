@@ -110,6 +110,14 @@ lock(int fd, struct flock *fl)
 }
 
 static void
+lockr(int fd, struct flock *fl)
+{
+	fl->l_type = F_RDLCK;
+	if (fcntl(fd, F_SETLKW, fl) == -1)
+		err(1, "fcntl");
+}
+
+static void
 unlock(int fd, struct flock *fl)
 {
 	fl->l_type = F_UNLCK;
@@ -141,7 +149,7 @@ dump_file(char *filename, bool locking)
 	while (1) {
 		/* Lock only the 2nd half of the file. */
 		if (locking)
-			lock(fd, &fl);
+			lockr(fd, &fl);
 
 		(void) lseek(fd, SEEK_SET, 0);
 		memset(buf, 0, sizeof (buf));
