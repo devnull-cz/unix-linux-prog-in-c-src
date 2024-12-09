@@ -106,7 +106,7 @@ lock(int fd, struct flock *fl)
 {
 	fl->l_type = F_WRLCK;
 	if (fcntl(fd, F_SETLKW, fl) == -1)
-		err(1, "fcntl");
+		err(1, "fcntl lock W");
 }
 
 static void
@@ -114,7 +114,7 @@ lockr(int fd, struct flock *fl)
 {
 	fl->l_type = F_RDLCK;
 	if (fcntl(fd, F_SETLKW, fl) == -1)
-		err(1, "fcntl");
+		err(1, "fcntl lock R");
 }
 
 static void
@@ -122,7 +122,7 @@ unlock(int fd, struct flock *fl)
 {
 	fl->l_type = F_UNLCK;
 	if (fcntl(fd, F_SETLKW, fl) == -1)
-		err(1, "fcntl");
+		err(1, "fcntl unlock");
 }
 
 /*
