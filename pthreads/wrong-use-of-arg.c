@@ -16,11 +16,11 @@
  * (c) jp@devnull.cz, vlada@devnull.cz
  */
 
-#include <err.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <err.h>
+#include <pthread.h>
 
 #define	NUM_THREADS	5
 #define	NUM_LOOPS	3
@@ -39,7 +39,7 @@ int
 main(int argc, char *argv[])
 {
 	int i, e, yield = 0;
-	pthread_t t[NUM_THREADS];
+	pthread_t t;
 	void *p;
 
 	printf("Run with any argument to use sched_yield().\n");
@@ -51,7 +51,7 @@ main(int argc, char *argv[])
 
 	for (i = 0; i < NUM_THREADS; ++i) {
 		/* Note we are forgetting the created threads. */
-		pthread_create(t + i, NULL, thread, &i);
+		pthread_create(&t, NULL, thread, &i);
 		if (yield)
 			sched_yield();
 	}
@@ -64,7 +64,7 @@ main(int argc, char *argv[])
 
 	for (int j = 0; j < NUM_THREADS; ++j) {
 		printf("Joining thread (%d)", j);
-		if ((e = pthread_join(*(t + j), &p)) != 0)
+		if ((e = pthread_join(t, &p)) != 0)
 			warnx(": error: %s", strerror(e));
 		else
 			printf(".\n");
