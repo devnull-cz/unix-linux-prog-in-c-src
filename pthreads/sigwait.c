@@ -53,7 +53,7 @@ main(void)
 	pthread_create(&t1, NULL, thread, &n1);
 	pthread_create(&t2, NULL, thread, &n2);
 
-	printf("You can to ^C, ^\\, or ^Z me now.  Use 'kill -9 %d' " \
+	printf("You can ^C, ^\\, or ^Z me now.  Use 'kill -9 %d' " \
 	    "from separate terminal to get rid of me.\n", getpid());
 	while (1) {
 		sigwait(&sset, &sig);
