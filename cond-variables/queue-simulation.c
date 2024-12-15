@@ -6,8 +6,8 @@
  * One condition variable and one mutex is used.  Note that if we used
  * semaphores, we would need 2 of them to represent both "sleeping" states.
  *
- * On a full queue, insertion will put the producer to sleep, on an empty queue,
- * taking a message puts the consumer to sleep.
+ * On a full queue, the producer will be put to sleep; on an empty queue,
+ * consumer will be put to sleep.
  *
  * A randomness factor is used here to have the queue get some items in it and
  * also to hit both boundary cases (empty and full queue) from time to time.
