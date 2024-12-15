@@ -2,9 +2,9 @@
  * A queue simulation using two threads - a consumer and a producer.
  *
  * At every interval, the producer randomly inserts a message to the queue or
- * not, and at each step, the consumer randomly processes a message or not.  One
- * condition variable and one mutex is used.  Note that if we used semaphores,
- * we would need 2 of them to represent both "sleeping" states.
+ * not, and at each step, the consumer randomly processes a message or not.
+ * One condition variable and one mutex is used.  Note that if we used
+ * semaphores, we would need 2 of them to represent both "sleeping" states.
  *
  * On a full queue, insertion will put the producer to sleep, on an empty queue,
  * taking a message puts the consumer to sleep.
