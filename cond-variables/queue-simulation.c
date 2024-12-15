@@ -11,7 +11,7 @@
  *
  * A randomness factor is used here to have the queue get some items in it and
  * also to hit both boundary cases (empty and full queue) from time to time.
- * When hitting a boundary, one of the thread actualy gets blocked on the
+ * When hitting a boundary, one of the threads actualy gets blocked on the
  * condition variable.
  *
  * (c) jp@devnull.cz
@@ -41,6 +41,12 @@ producer(void *x)
 	int msg_created;
 
 	while (1) {
+		poll(NULL, 0, 95);	/* sleep 95 ms */
+
+		msg_created = random() % 2;
+		if (msg_created == 0)
+			continue;
+
 		pthread_mutex_lock(&mutex);
 		/* We can't insert a "message" when the queue is full. */
 		while (in_queue == capacity) {
@@ -50,9 +56,7 @@ producer(void *x)
 			(void) printf("Producer: woken up.\n");
 		}
 
-		msg_created = random() % 2;
-
-		in_queue = in_queue + msg_created;
+		in_queue += msg_created;
 
 		/*
 		 * If the queue was empty and we produced a "message", we must
@@ -64,16 +68,12 @@ producer(void *x)
 		 * We could also signal each time we insert a message but that
 		 * is really not necessary and would be actually wasteful.
 		 */
-		if (in_queue == 1 && msg_created > 0) {
-			pthread_mutex_unlock(&mutex);
+		if (in_queue == 1) {
 			(void) printf("Producer: we inserted a message to "
 			    "an empty queue, signalling the consumer.\n");
 			pthread_cond_signal(&cond);
-		} else {
-			pthread_mutex_unlock(&mutex);
 		}
-
-		poll(NULL, 0, 95);	/* sleep 95 ms */
+		pthread_mutex_unlock(&mutex);
 	}
 	/* NOTREACHED */
 }
@@ -84,6 +84,12 @@ consumer(void *x)
 	int msg_removed;
 
 	while (1) {
+		poll(NULL, 0, 100);	/* sleep 100 ms */
+
+		msg_removed = random() % 2;
+		if (msg_removed == 0)
+			continue;
+
 		pthread_mutex_lock(&mutex);
 
 		/*
@@ -98,24 +104,19 @@ consumer(void *x)
 		}
 
 		int orig_in_queue = in_queue;
-		msg_removed = random() % 2;
 
 		/*
-		 * If the queue was full and we pulled a "message(s)" from it we
-		 * will signal the producer so that it can start producing
+		 * If the queue was full and we pulled a "message(s)" from it,
+		 * signal the producer so that it can start producing
 		 * messages again.
 		 */
-		in_queue = in_queue - msg_removed;
-		if (orig_in_queue == capacity && msg_removed > 0) {
+		in_queue -= msg_removed;
+		if (orig_in_queue == capacity) {
 			(void) printf("Consumer: queue no longer full, "
 			    "signalling the producer.\n");
-			pthread_mutex_unlock(&mutex);
 			pthread_cond_signal(&cond);
-		} else {
-			pthread_mutex_unlock(&mutex);
 		}
-
-		poll(NULL, 0, 100);	/* sleep 100 ms */
+		pthread_mutex_unlock(&mutex);
 	}
 
 	/* NOTREACHED */
