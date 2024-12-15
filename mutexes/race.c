@@ -1,9 +1,9 @@
 /*
  * From two threads, work with members of a global variable.  At every loop,
  * each thread sets both members to the value passed in by pthread_create().
- * Before the assignment it checks whether the structure members are equal.  If
- * not, the thread prints its identification character.  You should see a lot of
- * races even on a single CPU system.
+ * Before the assignment it checks whether the structure members are equal.
+ * If not, the thread prints its identification character.
+ * You should see a lot of races even on a single CPU system.
  *
  * Any character printed means a race.
  *

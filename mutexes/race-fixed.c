@@ -1,8 +1,8 @@
 /*
  * From two threads, work with members of a global variable.  At every loop,
  * each thread sets both members to the value passed in by pthread_create().
- * Before the assignment it checks whether the structure members are equal.  If
- * not, the thread prints its identification character.  There should be no
+ * Before the assignment it checks whether the structure members are equal.
+ * If not, the thread prints its identification character.  There should be no
  * races since access to the structure is protected by a mutex.  No races means
  * there is no output.
  *
