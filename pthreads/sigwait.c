@@ -19,8 +19,6 @@
 
 #define	CYCLES	100
 
-sigset_t sset;
-
 void *
 thread(void *x)
 {
@@ -45,6 +43,7 @@ main(void)
 {
 	pthread_t t1, t2;
 	int sig, n1 = 1, n2 = 2;
+	sigset_t sset;
 
 	sigfillset(&sset);
 	for (int i = 0; i < sizeof (sync_sigs) / sizeof (sync_sigs[0]); ++i)
