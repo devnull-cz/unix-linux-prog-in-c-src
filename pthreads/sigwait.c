@@ -22,6 +22,8 @@
 void *
 thread(void *x)
 {
+	pthread_detach(pthread_self());
+
 	int i;
 
 	for (i = 0; i < CYCLES; ++i) {
