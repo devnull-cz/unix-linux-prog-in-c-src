@@ -1,6 +1,6 @@
 /*
  * Use time(1) to measure all three different modes of execution - no option,
- * -a option and -m option. Use multiprocessor machine if possible.
+ * -a option and -m option. Use multicore/multiprocessor machine if possible.
  *
  * The program creates two threads and let them each sum up 1+2+3+..+<n>, using
  * a shared 32 bit integer variable.  So, if increment is an atomic operation,
