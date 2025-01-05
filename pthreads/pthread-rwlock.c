@@ -28,6 +28,8 @@ pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
 void *properties[MAX_PROPS];
 
+#define	MAX_ITER	100
+
 static void
 millisleep(int msec)
 {
@@ -89,9 +91,11 @@ writer_thread(void *arg)
 static void *
 reader_thread(void *arg)
 {
-	int rnd = random() % MAX_PROPS;
-	void *val = prop_get(rnd);
-	printf("got %p for %d\n", val, rnd);
+	for (int i = 0; i < MAX_ITER; i++) {
+		int rnd = random() % MAX_PROPS;
+		void *val = prop_get(rnd);
+		printf("got %p for %d\n", val, rnd);
+	}
 	return (NULL);
 }
 
