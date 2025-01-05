@@ -119,8 +119,8 @@ main(int argc, char **argv)
 
 	/*
 	 * And don't worry about overflows, we just look for races, not the
-	 * correct sum.  With unsigned int (32 bits), we get the overflow for n
-	 * ~ 92k.
+	 * correct sum.  With unsigned int (32 bits), we get the overflow
+	 * for n ~ 92k.
 	 */
 	pthread_create(&t1, NULL, count, (void *)&n1);
 	pthread_create(&t2, NULL, count, (void *)&n2);
