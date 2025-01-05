@@ -1,5 +1,6 @@
 /*
- * Find out the lock count limit on your system.
+ * Find out the lock count limit on your system, assuming it is less than
+ * ULONG_MAX.
  */
 
 #define	_XOPEN_SOURCE   700
@@ -10,19 +11,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
 
 int
 main(int argc, char *argv[])
 {
-	size_t numlocks;
+	size_t numlocks = ULONG_MAX;
 	int e;
 
-	if (argc != 2)
-		errx(1, "usage: %s num_locks", argv[0]);
-
-	numlocks = strtoll(argv[1], NULL, 10);
 	printf("will try: %zu\n", numlocks);
 
 	for (size_t i = 0; i < numlocks; i++) {
