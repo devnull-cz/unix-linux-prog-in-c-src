@@ -1,9 +1,9 @@
-PROGS=sem \
+PROGS=posix-unnamed-sem \
       talking-heads
 
 all: $(PROGS)
 
-sem: sem.o
+posix-unnamed-sem: posix-unnamed-sem.o
 	$(CC) -o $@ $^ -lpthread
 
 talking-heads: talking-heads.o
