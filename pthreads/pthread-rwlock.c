@@ -83,7 +83,6 @@ writer_thread(void *arg)
 {
 	int rnd = random() % MAX_PROPS;
 	prop_set(rnd, arg);
-
 	return (NULL);
 }
 
