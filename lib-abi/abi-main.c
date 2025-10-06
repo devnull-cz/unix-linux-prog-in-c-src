@@ -7,7 +7,7 @@
  * Run like this:
  *
  *   $ gcc -m32 -shared -o libabi.so libabi-32.c
- *   $ gcc -m32 -L. -Xlinker -R . -labi abi-main.c
+ *   $ gcc -m32 -L. -Xlinker -R . abi-main.c -labi
  *   $ ./a.out 7 4
  *   10002000
  *   result: 11
