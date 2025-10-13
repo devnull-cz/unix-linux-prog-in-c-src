@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/* Assumes that the standard descriptors are present. */
 int
 main(int argc, char **argv)
 {
