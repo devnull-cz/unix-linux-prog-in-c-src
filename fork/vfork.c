@@ -2,7 +2,7 @@
  * vfork() is obsolete but let's see how it works.  This is the same program as
  * fork/fork.c aside from changing fork() into vfork() and letting both
  * processes execute the same amount of iterations.  Now, the parent is stopped
- * until the child finishes which is easily seen from the output.
+ * until the child finishes or calls exec() which is easily seen from the output.
  *
  * See vfork() man page for details.  This program could core dump if return
  * was used since a child is not supposed to use the parent's process address
