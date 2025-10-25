@@ -24,6 +24,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <dirent.h>
+#include <err.h>
 
 int nonini1;
 int ini1 = 3;
@@ -40,10 +41,8 @@ main(int argc, char **argv)
 		to_alloc = atoi(argv[1]);
 
 	if (to_alloc > 0) {
-		if ((p = malloc(to_alloc)) == NULL) {
-			fprintf(stderr, "malloc failed: %s\n", strerror(errno));
-			return (1);
-		}
+		if ((p = malloc(to_alloc)) == NULL)
+			err(1, "malloc");
 	}
 
 	printf("addresses:\n");
