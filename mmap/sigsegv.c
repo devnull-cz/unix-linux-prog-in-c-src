@@ -8,7 +8,7 @@
  *     the end of 2nd page (index 12288).
  *   - For 32-bit SPARC process on Solaris (8K pages) accesing 0-8191 is OK,
  *     8192 generates SIGSEGV.
- *   - 64-bit program on Intel OS X gets SIGSEGV after access behind 1st
+ *   - 64-bit program on Intel macOS gets SIGSEGV after access behind 1st
  *     4k page.
  *
  * You may get a SIGBUS as well.
