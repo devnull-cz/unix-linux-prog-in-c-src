@@ -39,32 +39,34 @@ main(int argc, char *argv[])
 		exit(1);
 	}
 
+	size_t rec1_len = atoi(argv[1]), rec2_len = atoi(argv[2]);
+
 	if ((fd = open("test.dat", O_CREAT | O_RDWR | O_TRUNC, 0666)) == -1) {
 		perror("open");
 		exit(1);
 	}
 
 	/* Create the 1st record. */
-	num = atoi(argv[1]);
+	num = rec1_len;
 	write(fd, &num, sizeof (num));
-	for (i = 0; i < atoi(argv[1]); i++)
+	for (i = 0; i < rec1_len; i++)
 		write(fd, &c, 1);
 
 	/* Create the 2nd record. */
-	num = atoi(argv[2]);
+	num = rec2_len;
 	write(fd, &num, sizeof (num));
 	c++;
-	for (i = 0; i < atoi(argv[1]); i++)
+	for (i = 0; i < rec2_len; i++)
 		write(fd, &c, 1);
 
-	addr = mmap(0, 2 * sizeof (num) + atoi(argv[1]) + atoi(argv[2]),
+	addr = mmap(0, 2 * sizeof (num) + rec1_len + rec2_len,
 	    PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	if ((void *)addr == MAP_FAILED) {
 		perror("mmap");
 		exit(1);
 	}
 	/* One byte past the file end. */
-	eofptr = addr + 2 * sizeof (num) + atoi(argv[1]) + atoi(argv[2]);
+	eofptr = addr + 2 * sizeof (num) + rec1_len + rec2_len;
 
 	/* Read the 1st record. */
 	tag = (uint32_t *)addr;
