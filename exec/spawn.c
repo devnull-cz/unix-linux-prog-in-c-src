@@ -9,17 +9,18 @@
 #include <spawn.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <err.h>
 
 static void
 spawnit(char *progname)
 {
-	int err, status;
+	int error, status;
 	pid_t pid;
 	char *argv[3] = { "ps", "-j", NULL };
 
-	if ((err = posix_spawn(&pid, progname, NULL, NULL, argv,
+	if ((error = posix_spawn(&pid, progname, NULL, NULL, argv,
 	    NULL)) != 0) {
-		fprintf(stderr, "posix_spawn for %s: %d\n", progname, err);
+		warn("posix_spawn for %s", progname);
 		return;
 	}
 
