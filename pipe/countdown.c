@@ -3,8 +3,8 @@
  * pipe descriptor.
  *
  * Note the parent does not wait() for the children.  Also note that read() is
- * interrupted with the SIGCHLD signal but restarted automatically (you can
- * verify that with strace(1)).
+ * interrupted with the SIGCHLD signal but restarted automatically
+ * (on Linux distributions you can verify that with strace(1)).
  */
 
 #include <stdio.h>
