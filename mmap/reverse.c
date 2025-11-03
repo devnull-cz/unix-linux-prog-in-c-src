@@ -21,7 +21,8 @@ int
 main(void)
 {
 	char c;
-	int fd, size;
+	int fd;
+	off_t size;
 	char *addr, *p1, *p2;
 
 	if ((fd = open(FNAME, O_RDWR)) == -1)
