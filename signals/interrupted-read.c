@@ -32,7 +32,10 @@
 void
 term_handler(int sig)
 {
-	/* write(2) is safe to use from signal handlers. */
+	/*
+	 * write(2) is safe to use from signal handlers
+	 * and the global variable it uses is a string literal.
+	 */
 	write(1, MESSAGE, sizeof (MESSAGE) - 1);
 }
 
