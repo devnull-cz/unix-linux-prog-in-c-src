@@ -16,6 +16,10 @@
 #include <stdlib.h>
 #include <poll.h>
 
+/*
+ * safe to use w.r.t potential reordering by the compiler and
+ * atomicity of read/write, respectively.
+ */
 volatile sig_atomic_t delivered = 0;
 
 void
