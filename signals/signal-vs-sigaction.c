@@ -43,7 +43,7 @@ main(void)
 
 	/*
 	 * You may experiment with other signals but note that some shell might
-	 * automatically block some of them; bash(1) sometimes block SIGHUP in
+	 * automatically block some of them; bash(1) sometimes blocks SIGHUP in
 	 * the new process, for example.
 	 */
 	printf("Setting signal handler: ");
