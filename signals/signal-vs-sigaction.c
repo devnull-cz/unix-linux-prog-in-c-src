@@ -21,17 +21,17 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-/*
- * Using unsafe printf() for simplicity.
- */
+#define	GOT_SIG_MSG	"Got signal! Sleeping.\n"
+#define	RET_SIG_MSG	"returning from signal handler\n"
+
 void
 sig_handler(int s)
 {
-	printf("Got signal! Sleeping.\n");
+	write(1, GOT_SIG_MSG, sizeof (GOT_SIG_MSG) - 1);
 
 	sleep(10);
 
-	printf("returning from signal handler\n");
+	write(1, RET_SIG_MSG, sizeof (RET_SIG_MSG) - 1);
 }
 
 int
