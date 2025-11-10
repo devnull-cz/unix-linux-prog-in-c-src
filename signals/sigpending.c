@@ -47,8 +47,9 @@ main(void)
 	printf("Yes, we have a pending SIGTERM.\n");
 
 	/* Unblock SIGTERM. */
-	sigdelset(&sigset, SIGTERM);
-	sigprocmask(SIG_BLOCK, &sigset, NULL);
+	printf("Ublocking SIGTERM\n");
+	sigprocmask(SIG_UNBLOCK, &sigset, NULL);
+
 	printf("Send another signal to terminate the program\n");
 	pause();
 }
