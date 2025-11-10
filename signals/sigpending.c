@@ -15,7 +15,7 @@
 #define	MESSAGE "SIGTERM caught!\n"
 
 void
-ctrl_c(int sig)
+handler(int sig)
 {
 	write(1, MESSAGE, strlen(MESSAGE));
 }
@@ -32,7 +32,7 @@ main(void)
 	sigprocmask(SIG_BLOCK, &sigset, NULL);
 
 	/* Install SIGTERM handler. */
-	act.sa_handler = ctrl_c;
+	act.sa_handler = handler;
 	sigaction(SIGTERM, &act, NULL);
 
 	/* We cannot use pause() as the signal is blocked, read() will help. */
