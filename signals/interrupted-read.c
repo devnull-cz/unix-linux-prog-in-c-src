@@ -1,7 +1,7 @@
 /*
- * An example on an interrupted read(2).  Run the program, then kill it from
- * another terminal.  read(2) should return an error, with the EINTR errno,
- * and the process exists.
+ * An example on an interrupted read(2).  Run the program, then send SIGINT
+ * to it (e.g. by hitting Ctrl-C). read(2) should return an error,
+ * with the EINTR errno, and the process exists.
  *
  *  $ ./a.out
  *  My PID is 30794.
