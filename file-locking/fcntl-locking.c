@@ -145,6 +145,13 @@ dump_file(char *filename, bool locking)
 		if (locking)
 			lockr(fd, &fl);
 
+		/*
+		 * The file size is not hard-coded here so that one can
+		 * see the contents of the file before it is fully written.
+		 * This can totally happen, the parent can get to calling
+		 * dump_file() because any of the children finish the complete
+		 * write.
+		 */
 		(void) lseek(fd, SEEK_SET, 0);
 		memset(buf, 0, sizeof (buf));
 		n = read(fd, buf, sizeof (buf));
