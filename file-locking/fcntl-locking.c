@@ -36,8 +36,7 @@
  * You will see something "better" but obviously it does not work correctly.
  * The first half sees contention which is fine but the 2nd half should have
  * been composed from the same character since only one process is allowed to
- * write to it and the reader acquired the lock (drop -l to see what happens if
- * we read it without the lock):
+ * write to it and the reader acquired the lock.
  *
  *	__///////____+_+_+++_______++_++___|///_////////////////_/////////////
  *
@@ -49,8 +48,7 @@
  * is not much random because of the scheduler and a side effect of the implicit
  * ordering based on synchronization on the file middle position.  The important
  * thing though is that the 2nd half does consist of one character only while
- * the 1st does not.  Also, try to use the reader without the -l option to see
- * what happens.
+ * the 1st does not.
  *
  *	########_________________________..|##################################
  *
