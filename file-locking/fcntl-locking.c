@@ -11,14 +11,8 @@
  *
  * The file middle is denoted via '|' character.
  *
- * You have three ways of running it.  Use the 'reader' command to print the
- * present state of the line while holding a lock.
- *
- * (1) The following will not lock at all:
- *
- *   terminal1$ ./fcntl-locking xxx
- *
- *   terminal2$ ./reader -l xxx
+ * The parent process will periodically dump the file contents while adhering
+ * to the locking protocol.
  *
  * You could also use the shell to print the file without locking on read:
  *
@@ -28,12 +22,16 @@
  *
  *	_###./#./////_///.__#_____/_#___._#_|####_//..._#/.##._#.../..#####__#
  *
+ * You have three ways of running it:
+ *
+ * (1) The following will not lock at all:
+ *
+ *   terminal1$ ./fcntl-locking xxx
+ *
  * (2) Will use locking for the 2nd half of the file with descriptor sharing
  * (that's the wrong solution, see "NOTE" below in the code):
  *
  *   terminal1$ ./fcntl-locking -l xxx
- *
- *   terminal2$ ./reader -l xxx
  *
  * You will see something "better" but obviously it does not work correctly.
  * The first half sees contention which is fine but the 2nd half should have
@@ -46,8 +44,6 @@
  * (3) Will use locking for the 2nd half of the file without descriptor sharing:
  *
  *   terminal1$ ./fcntl-locking -L xxx
- *
- *   terminal2$ ./reader -l xxx
  *
  * You should see something like the following output.  Note that the 1st half
  * is not much random because of the scheduler and a side effect of the implicit
