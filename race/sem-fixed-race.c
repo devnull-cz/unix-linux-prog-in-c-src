@@ -9,13 +9,8 @@
 
 #define	_XOPEN_SOURCE	700
 
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/ipc.h>
-#include <sys/stat.h>
-#include <sys/sem.h>
-#include <sys/mman.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -23,6 +18,12 @@
 #include <signal.h>
 #include <errno.h>
 #include <err.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/ipc.h>
+#include <sys/stat.h>
+#include <sys/sem.h>
+#include <sys/mman.h>
 
 unsigned long i;	/* number of loops per process */
 			/* u_long should be enough for basic demo */
@@ -75,13 +76,13 @@ main(int argc, char **argv)
 {
 	key_t key;
 	char c = 0;
-	int dbg = 0;
+	bool dbg = false;
 	struct sigaction act;
 
 	if (argc == 1)
 		printf("run with any argument to see some debug info\n");
 	else
-		dbg = 1;
+		dbg = true;
 
 	/* get a semaphore */
 	key = ftok("/etc/passwd", 0);
