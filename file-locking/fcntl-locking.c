@@ -174,7 +174,8 @@ int
 main(int argc, char **argv)
 {
 	struct sigaction act;
-	int i, j, fd;
+	unsigned int i, j;
+	int fd;
 	struct flock fl;
 	char *progname = argv[0];
 	enum {
