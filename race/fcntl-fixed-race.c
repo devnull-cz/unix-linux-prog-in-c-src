@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
@@ -71,7 +72,8 @@ int
 main(int argc, char **argv)
 {
 	char c = 0;
-	int fd, dbg = 0;
+	int fd;
+	bool dbg = false;
 	char *addr = NULL;
 	struct sigaction act;
 	/* l_len is not relevant since the locking is used as bracketing. */
@@ -80,7 +82,7 @@ main(int argc, char **argv)
 	if (argc == 1)
 		printf("run with any argument to see some debug info\n");
 	else
-		dbg = 1;
+		dbg = true;
 
 	memset(&act, '\0', sizeof (act));
 	act.sa_handler = finish;
