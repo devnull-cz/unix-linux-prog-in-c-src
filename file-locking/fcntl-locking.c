@@ -174,7 +174,8 @@ int
 main(int argc, char **argv)
 {
 	struct sigaction act;
-	unsigned int i, j;
+	unsigned int i;
+	off_t j;
 	int fd;
 	struct flock fl;
 	char *progname = argv[0];
