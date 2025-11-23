@@ -1,3 +1,9 @@
+/*
+ * A simple example on using POSIX shared memory API.
+ *
+ * (c) vlada@kotalovi.cz
+ */
+
 #define	_XOPEN_SOURCE	700	// for ftruncate on Linux
 
 #include <sys/mman.h>
