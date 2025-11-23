@@ -15,6 +15,7 @@
 
 #define	_XOPEN_SOURCE	700
 
+#include <stdbool.h>
 #include <err.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -41,14 +42,15 @@ int
 main(int argc, char **argv)
 {
 	char c = 0;
-	int fd, dbg = 0;
+	int fd;
+	bool dbg = false;
 	char *addr = NULL;
 	struct sigaction act;
 
 	if (argc == 1)
 		printf("run with any argument to see some debug info\n");
 	else
-		dbg = 1;
+		dbg = true;
 
 	memset(&act, '\0', sizeof (act));
 	act.sa_handler = finish;
