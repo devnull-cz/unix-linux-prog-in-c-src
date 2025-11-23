@@ -213,8 +213,10 @@ main(int argc, char **argv)
 	char *filename = argv[0];
 	if ((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0666)) == -1)
 		err(1, "open");
-	if (locking == EXCLUSIVE_FD)
+	if (locking == EXCLUSIVE_FD) {
 		close(fd);
+		fd = -1;
+	}
 
 	/* extend the file to FILE_LEN bytes */
 	(void) lseek(fd, SEEK_SET, FILE_LEN - 1);
@@ -287,6 +289,9 @@ main(int argc, char **argv)
 			}
 		}
 	}
+
+	if (fd != -1)
+		close(fd);
 
 	dump_file(filename, locking > NO_LOCK);
 	for (i = 0; i < NPROC; ++i)
