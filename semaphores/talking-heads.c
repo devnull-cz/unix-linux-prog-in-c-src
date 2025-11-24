@@ -50,7 +50,6 @@
 #define	MAXSECS		7
 
 sem_t *sem;
-int parent;
 volatile sig_atomic_t run = 1;
 
 void
@@ -64,7 +63,7 @@ cleanup(int id)
 {
 	/* You should check the return values here for all the calls. */
 	(void) sem_close(sem);
-	if (parent) {
+	if (id == 0) {
 		fprintf(stderr, "Cleaning up for parent.\n");
 		(void) sem_unlink(SEM_NAME);
 	} else {
@@ -124,7 +123,7 @@ main(int argc, char **argv)
 	if (sem == SEM_FAILED)
 		err(1, "sem_open");
 
-	for (i = 0; i < nproc; ++i) {
+	for (i = 1; i <= nproc; ++i) {
 		if ((pid = fork()) == -1)
 			err(1, "fork");
 
@@ -132,7 +131,7 @@ main(int argc, char **argv)
 			printf("Child %d born (%d).\n", i, getpid());
 			/* Child */
 			srand(getpid());
-			/* Desynchronize the output. */
+			/* Make the output non uniform. */
 			poll(NULL, 0, 100 * i);
 			while (run) {
 				sem_wait(sem);
@@ -147,7 +146,6 @@ main(int argc, char **argv)
 	}
 
 	/* Parent here. */
-	parent = 1;
 	for (i = 0; i < nproc; ++i)
 		(void) wait(NULL);
 	cleanup(0);
