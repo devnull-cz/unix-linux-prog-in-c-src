@@ -1,6 +1,10 @@
 /*
  * A simple example on using POSIX shared memory API.
  *
+ * If the shared memory segment is not destroyed at the end of the program run,
+ * it will be visible under the /dev/shm/ directory on Linux.
+ * Compile with -DDESTROY to destroy the shared memory segment.
+ *
  * (c) vlada@kotalovi.cz
  */
 
@@ -44,6 +48,8 @@ main(int argc, char *argv[])
 	for (char *q = p; q < p + size; q++)
 		*q = argv[2][0];
 
-	// Uncomment to destroy the shared memory segment:
-	// shm_unlink(shm_name);
+	// Destroy the shared memory segment.
+#ifdef DESTROY
+	shm_unlink(shm_name);
+#endif
 }
