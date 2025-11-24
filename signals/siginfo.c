@@ -5,9 +5,9 @@
  * the signalled process.  Among that is a PID of the signalling process and its
  * UID. Example:
  *
- * $ ./a.out 		# and now kill 4114 with SIGINT ("kill -INT 4114")
+ * $ ./siginfo 		# and now kill 4114 with SIGINT ("kill -INT 4114")
  * PID 4114 started...
- * sig received: TERM
+ * sig received: Interrupt
  * signalled by PID: 3764
  * and process was owned by: janp
  *
