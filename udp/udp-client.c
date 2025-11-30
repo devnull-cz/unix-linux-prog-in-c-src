@@ -37,6 +37,11 @@ main(int argc, char **argv)
 	if (inet_pton(AF_INET, argv[1], &(taddr.sin_addr)) != 1)
 		errx(1, "inet_pton failed for '%s'", argv[1]);
 
+	/*
+	 * At this point connect() can be used to fixate the address
+	 * and then send() can be used instead of sendto() call below.
+	 */
+
 	/* read the standard input and feed the other side */
 	while ((n = read(0, buf, sizeof (buf))) > 0) {
 		fprintf(stderr, "DBG: sending %d bytes...\n", n);
