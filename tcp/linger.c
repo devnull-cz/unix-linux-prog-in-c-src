@@ -76,7 +76,7 @@ main(int argc, char **argv)
 		errx(1, "no address");
 
 	if (linger >= 0) {
-		printf("setting linger\n");
+		printf("setting linger to %d seconds\n", linger);
 		lstr.l_onoff = 1;
 		lstr.l_linger = linger;
 
