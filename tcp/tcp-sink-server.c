@@ -5,7 +5,7 @@
  * Note: this example is IPv4 only!
  *
  * Try on a machine connected to the Internet and then point your browser to it,
- * eg. start it like this:
+ * e.g. start it like this:
  *
  * 	$ ./tcp-sink-server 8080
  *
