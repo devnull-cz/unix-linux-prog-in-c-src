@@ -39,7 +39,7 @@ main(int argc, char **argv)
 	 * Convert a dotted format to 4 bytes suitable for use in
 	 * sockaddr_in.
 	 */
-	if (inet_pton(AF_INET, argv[1], &(in.sin_addr)) != 1)
+	if (inet_pton(AF_INET, argv[1], &in.sin_addr) != 1)
 		errx(1, "inet_pton failed for '%s'", argv[1]);
 
 	if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
