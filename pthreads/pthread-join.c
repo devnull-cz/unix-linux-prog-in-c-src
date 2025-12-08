@@ -19,6 +19,10 @@ thread(void *x)
 		sleep(1);
 	}
 
+	/*
+	 * This cast is implementation dependent in the C99 specification.
+	 * Use with care.
+	 */
 	return ((void *)x);
 }
 
