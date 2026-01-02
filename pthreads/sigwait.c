@@ -33,7 +33,7 @@ thread(void *x)
 
 /*
  * We should never mask synchronnous signals like SIGSEGV.  It is undefined what
- * happens if such a signal is delivered when masked (module some specific
+ * happens if such a signal is delivered when masked (modulo some specific
  * situations we dot care about here).
  */
 int sync_sigs[] = { SIGFPE, SIGILL, SIGSEGV, SIGBUS };
