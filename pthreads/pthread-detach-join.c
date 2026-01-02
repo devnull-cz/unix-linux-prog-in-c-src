@@ -15,7 +15,7 @@
 void *
 thread(void *x)
 {
-	int i, e;
+	int e;
 
 	/*
 	 * Detaching from within the thread function means that the thread is
@@ -27,8 +27,8 @@ thread(void *x)
 		errx(1, "pthread_detach: %s", strerror(e));
 	printf("Thread detached.\n");
 
-	for (i = 0; i < 5; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *) x), i);
+	for (unsigned int i = 0; i < 5; ++i) {
+		printf("Thread %d (loop #%u).\n", *((int *) x), i);
 		sleep(1);
 	}
 
