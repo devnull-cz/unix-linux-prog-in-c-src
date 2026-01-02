@@ -26,7 +26,7 @@
 #include <signal.h>
 
 void
-recurse(int n)
+recurse(unsigned int n)
 {
 	/* Intentionally unused variable to make the stack bigger */
 	char foo[1024];
@@ -47,7 +47,7 @@ recurse(int n)
 void *
 thread(void *x)
 {
-	recurse((intptr_t)x);
+	recurse((uintptr_t)x);
 
 	return (NULL);
 }
@@ -56,7 +56,7 @@ int
 main(int argc, char *argv[])
 {
 	pthread_t t;
-	int max;
+	unsigned int max;
 	pthread_attr_t attr;
 	size_t stacksize;
 	int e;

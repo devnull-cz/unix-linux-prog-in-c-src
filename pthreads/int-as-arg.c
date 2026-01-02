@@ -42,7 +42,7 @@ main(void)
 	assert(sizeof (int) <= sizeof (void *));
 
 	for (i = 0; i < NUM_THREADS; ++i) {
-		pthread_create(&t[i], NULL, thread, (void *)(intptr_t)i);
+		pthread_create(&t[i], NULL, thread, (void *)i);
 	}
 
 	/* Avoid pthread_join() for now. */
