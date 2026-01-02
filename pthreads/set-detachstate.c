@@ -14,17 +14,15 @@
 void *
 thread(void *x)
 {
-	int i;
-
-	if (*((int *)x) == 1)
+	if (*((unsigned int *)x) == 1)
 		poll(NULL, 0, 500);
 
 	/*
 	 * Note that the thread will usually only finish the first iteration
 	 * as joining the threads will fail.
 	 */
-	for (i = 0; i < 10; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *)x), i);
+	for (unsigned int i = 0; i < 10; ++i) {
+		printf("Thread %u (loop #%u).\n", *((unsigned int *)x), i);
 		sleep(1);
 	}
 
@@ -36,7 +34,8 @@ main(void)
 {
 	pthread_t t, t2;
 	pthread_attr_t a;
-	int e, n1 = 1, n2 = 2;
+	int e;
+	unsigned int n1 = 1, n2 = 2;
 
 	pthread_attr_init(&a);
 	pthread_attr_setdetachstate(&a, PTHREAD_CREATE_DETACHED);
