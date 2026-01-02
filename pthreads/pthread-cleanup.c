@@ -11,9 +11,7 @@ cleanup(void *p)
 void *
 thread(void *x)
 {
-	int i;
-
-	for (i = 0; i < 5; ++i) {
+	for (unsigned int i = 0; i < 5; ++i) {
 		int doit = 0;
 		pthread_cleanup_push(cleanup, NULL);
 		(void) printf("thread loop #%d\n", i);
