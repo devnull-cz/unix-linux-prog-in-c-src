@@ -46,20 +46,20 @@ typedef struct {
 enum {
 	FORKER = 0,
 	COUNTER = 1,
-	MAX = 2,
+	MAX_ID = 2,
 } thread_idx;
 
 pthread_mutex_t mutex;
-thread_info_t threads[MAX];
+thread_info_t threads[MAX_ID];
 
 /*
  * This is a scheme to deal with thread IDs in a transparent way - in general we
  * cannot rely on thread IDs to be of a known type (e.g. integers).
  */
-char *
-print_id(void)
+static char *
+get_id(void)
 {
-	for (int i = 0; i < MAX; i++) {
+	for (unsigned int i = 0; i < MAX_ID; i++) {
 		if (pthread_equal(pthread_self(), threads[i].t) != 0)
 			return (threads[i].name);
 	}
@@ -73,7 +73,7 @@ forker(void *x)
 	threads[FORKER].t = pthread_self();
 	strncpy(threads[FORKER].name, "forker", sizeof (threads[FORKER].name));
 
-	printf("%d/%s: forking a process\n", getpid(), print_id());
+	printf("%d/%s: forking a process\n", getpid(), get_id());
 	if ((pid = fork()) == -1)
 		err(1, "fork");
 	if (pid == 0)
@@ -85,12 +85,12 @@ forker(void *x)
 	 * By correctly using the pthread_atfork(), it is guaranteed that we
 	 * will be able to lock the mutex now.
 	 */
-	printf("%d/%s: locking mutex\n", getpid(), print_id());
+	printf("%d/%s: locking mutex\n", getpid(), get_id());
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
-	printf("%d/%s: mutex locked\n", getpid(), print_id());
+	printf("%d/%s: mutex locked\n", getpid(), get_id());
 
-	printf("%d/%s: releasing mutex\n", getpid(), print_id());
+	printf("%d/%s: releasing mutex\n", getpid(), get_id());
 	if (pthread_mutex_unlock(&mutex) != 0)
 		printf("mutex unlock failed\n");
 
@@ -106,7 +106,7 @@ counter(void *arg)
 
 	while (1) {
 		printf("%d/%s: just counting seconds...\n", getpid(),
-		    print_id());
+		    get_id());
 		sleep(1);
 	}
 
@@ -120,11 +120,11 @@ void
 before(void)
 {
 	printf("%d/%s: in the \"BEFORE\" handler, grabbing the mutex...\n",
-	    getpid(), print_id());
+	    getpid(), get_id());
 	if (pthread_mutex_lock(&mutex) != 0)
 		printf("mutex lock failed\n");
 	printf("%d/%s: leaving the \"BEFORE\" handler holding the mutex\n",
-	    getpid(), print_id());
+	    getpid(), get_id());
 }
 
 /*
@@ -134,11 +134,11 @@ void
 after(void)
 {
 	printf("%d/%s: in the \"AFTER\" handler, releasing the mutex\n",
-	    getpid(), print_id());
+	    getpid(), get_id());
 	if (pthread_mutex_unlock(&mutex) != 0)
 		printf("mutex unlock failed\n");
 	printf("%d/%s: leaving the \"AFTER\" handler with the mutex released\n",
-	    getpid(), print_id());
+	    getpid(), get_id());
 }
 
 int
