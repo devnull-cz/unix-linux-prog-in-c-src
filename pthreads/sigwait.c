@@ -24,10 +24,8 @@ thread(void *x)
 {
 	pthread_detach(pthread_self());
 
-	int i;
-
-	for (i = 0; i < CYCLES; ++i) {
-		printf("thread %d (loop #%d)\n", *((int *) x), i);
+	for (unsigned int i = 0; i < CYCLES; ++i) {
+		printf("thread %d (loop #%u)\n", *((int *) x), i);
 		sleep(1);
 	}
 	return (NULL);
