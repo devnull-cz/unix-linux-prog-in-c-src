@@ -14,7 +14,7 @@ thread(void *x)
 	for (unsigned int i = 0; i < 5; ++i) {
 		int doit = 0;
 		pthread_cleanup_push(cleanup, NULL);
-		(void) printf("thread loop #%d\n", i);
+		(void) printf("thread loop #%u\n", i);
 		if (i > 2)
 			doit = 1;
 		(void) sleep(1);
