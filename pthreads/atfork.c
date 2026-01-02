@@ -64,7 +64,7 @@ get_id(void)
 			return (threads[i].name);
 	}
 
-	return (NULL);
+	return ("N/A");
 }
 
 void *
