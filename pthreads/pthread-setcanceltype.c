@@ -50,7 +50,7 @@
 
 int cancel_type;
 
-/* Should we use asynchronous cancel or not. */
+/* Should we use asynchronous cancellation or not. */
 int async = 0;
 
 void *
