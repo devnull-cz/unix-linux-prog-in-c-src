@@ -12,10 +12,8 @@
 void *
 thread(void *x)
 {
-	int i;
-
-	for (i = 0; i < 5; ++i) {
-		printf("Thread %d (loop #%d).\n", *((int *)x), i);
+	for (unsigned int i = 0; i < 5; ++i) {
+		printf("Thread %d (loop #%u).\n", *((int *)x), i);
 		sleep(1);
 	}
 
